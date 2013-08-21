@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
 from flask import Flask
+from .config import ProConfig
 
 def create_app(config=None):
     """App factory, optionally passed a config file path from Manager"""
@@ -20,4 +21,3 @@ def bootstrap_blueprints(app):
     """Register blueprints on app."""
     for bp in app.config['BLUEPRINTS']:
         app.register_blueprint(bp)
-
