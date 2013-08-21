@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask.ext.script import Manager, Server
-from flask import Flask
-#from hairshopsearch import create_app, db
+from hairshopsearch import create_app
 
-#app = create_app()
-app = Flask('hairshopsearch')
-manager = Manager(app)
+manager = Manager(create_app)
 
 @manager.command
 def init_db():
