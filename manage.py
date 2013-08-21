@@ -14,7 +14,8 @@ manager.add_command('run', Server(host='127.0.0.1',port=9007))
 manager.add_option(
         '-c', '--config', dest='config',
         required=False, 
-        help='''Application config file to be used. Intended for local dev config.'''
+        help='''Application config file to be used. Intended for local dev \
+                config.'''
         )
 
 if __name__ == '__main__':
