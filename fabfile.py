@@ -3,7 +3,7 @@ from fabric.api import *
 project = 'Hair Shop Search'
 
 env.user = "no"
-env.hosts = [""]
+env.hosts = ["hairshopsearch.com"]
 
 def setup():
     """Set up venv"""
@@ -20,11 +20,10 @@ def reset():
     local("python manage.py init_db")
 
 def d():
-    """Run app in debug"""
+    """Run app in dev"""
 
     reset()
-    local("python manage.py init_db")
-    local("python manage.py run")
+    local("python manage.py -c dev.cfg run")
 
 def pack():
     local("python setup.py sdist --formats=gztar")
