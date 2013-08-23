@@ -1,13 +1,17 @@
 # -*- encoding: utf-8 -*-
 import os
 from flask import Flask
-from .config import ProConfig
+from .frontend import frontend
 
-def create_app(config=None):
+BLUEPRINTS = [frontend]
+
+def create_app(config=None, blueprints=None):
     """App factory, optionally passed a config file path from Manager"""
+    if blueprints is None:
+        blueprints = BLUEPRINTS
     app = Flask('hairshopsearch')
     configure_app(app, config)
-    bootstrap_blueprints(app)
+    bootstrap_blueprints(app, blueprints)
     return app
 
 def configure_app(app, config):
@@ -17,7 +21,7 @@ def configure_app(app, config):
 
     app.config.from_pyfile(config)
 
-def bootstrap_blueprints(app):
+def bootstrap_blueprints(app, blueprints):
     """Register blueprints on app."""
-    for bp in app.config['BLUEPRINTS']:
+    for bp in blueprints:
         app.register_blueprint(bp)
