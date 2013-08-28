@@ -1,5 +1,5 @@
 from flask.ext.sqlalchemy import db
-from werkzeug import create_password_hash, check_password_hash
+from werkzeug import generate_password_hash, check_password_hash
 from ..util import ROLES
 
 class User():
@@ -10,11 +10,21 @@ class User():
      
     _password   = db.Column(db.String())
 
+    @property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self, password):
+        self._password = generate_password_hash(password)
+
+    def _check_password(password):
+        if password is None:
+            return False
+        return check_password_hash(self._password, password)
+
     # customer, salon manager, stylist, product vendor
     _role_code  = db.Column(db.Integer())
-
-    # active? 
-    _status     = db.Column(db.Integer())
 
     @proptery
     def role(self):
@@ -24,9 +34,16 @@ class User():
     def role(self, role):
         pass
 
+    # active? 
+    _status     = db.Column(db.Integer())
+
     @property
     def active(self):
         return self._status
+
+    @active.setter
+    def active(self, value):
+        self._status = value
 
 
     def is_authenticated():
@@ -38,5 +55,5 @@ class User():
     def is_active(self):
         return self.active or None
 
-    def get_id():
-        pass
+    def get_id(self, user):
+        return user.id
