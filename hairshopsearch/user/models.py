@@ -8,7 +8,7 @@ class User():
     first_name  = db.Column(db.String(128))
     last_name   = db.Column(db.String(128))
      
-    _password   = db.Column(db.String())
+    _password   = db.Column(db.String(), nullable=False)
 
     @property
     def password(self):
