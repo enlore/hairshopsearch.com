@@ -5,8 +5,8 @@ from forms import SalonManagerForm
 from ..extensions import db
 from ..util import SALON_MANAGER
 
-salonmanager = Blueprint('salonmanager', 'salonmanager',
-        template_folder='salonmanager/templates', url_prefix='/salon')
+salonmanager = Blueprint('salonmanager', __name__,
+        template_folder='templates', url_prefix='/salon')
 
 @salonmanager.route('/')
 def index():

@@ -2,11 +2,11 @@
 
 {% extends "layouts/base.html" %}
 
+{% block container %}
 <h1> Register A SalonManager </h1>
+<pre> blueprint local </pre>
 
 {% if form %} 
     {{  render_form(url_for('salonmanager.register'), form) }}
 {% endif %}
-
-
-
+{% endblock  %}
