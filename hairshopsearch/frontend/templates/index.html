@@ -6,6 +6,7 @@
 <h1> HairShopSearch Prototype version 0.0.1 </h1>
 <a href="{{ url_for('salonmanager.register') }}">Register a Salon</a>
 <a href="{{ url_for('stylist.register') }}">Register a Stylist</a>
+<a href="{{ url_for('customer.register') }}">Register a Customer</a>
 
 <h2> Records: </h2>
 <h3> Salons </h3>
@@ -44,6 +45,17 @@
         <li> {{ stylist.salon_manager_id }} </li>
     </ul>
     {% endfor %}
+{% endif %}
+
+<h3> Customers </h3>
+{% if customers %}
+{% for customer in customers %}
+<ul>
+    <li> {{ customer.user.first_name }} </li>
+    <li> {{ customer.user.last_name }} </li>
+    <li> {{ customer.user.email }} </li>
+</ul>
+{% endfor %}
 {% endif %}
 
 <hr>
