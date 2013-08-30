@@ -3,12 +3,12 @@ from werkzeug import generate_password_hash, check_password_hash
 from ..util import ROLES
 
 class User(db.Model):
-    id          = db.Column(db.Integer, primary_key=True)
-    email       = db.Column(db.String(256), unique=True)
-    first_name  = db.Column(db.String(128))
-    last_name   = db.Column(db.String(128))
-    salonmanager_id = db.Column(db.Integer, db.ForeignKey('salon_manager.id'))
-    stylist_id      = db.Column(db.Integer(2), db.ForeignKey('stylist.id'))
+    id                  = db.Column(db.Integer, primary_key=True)
+    email               = db.Column(db.String(256), unique=True)
+    first_name          = db.Column(db.String(128))
+    last_name           = db.Column(db.String(128))
+    salonmanager_id     = db.Column(db.Integer, db.ForeignKey('salon_manager.id'))
+    stylist_id          = db.Column(db.Integer(2), db.ForeignKey('stylist.id'))
      
     _password   = db.Column(db.String(), nullable=False)
 
