@@ -8,7 +8,9 @@ class User(db.Model):
     first_name          = db.Column(db.String(128))
     last_name           = db.Column(db.String(128))
     salonmanager_id     = db.Column(db.Integer, db.ForeignKey('salon_manager.id'))
-    stylist_id          = db.Column(db.Integer(2), db.ForeignKey('stylist.id'))
+    stylist_id          = db.Column(db.Integer, db.ForeignKey('stylist.id'))
+    customer_id         = db.Column(db.Integer,
+            db.ForeignKey('customer.id'))
      
     _password   = db.Column(db.String(), nullable=False)
 
