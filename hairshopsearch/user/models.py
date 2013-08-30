@@ -1,12 +1,14 @@
-from flask.ext.sqlalchemy import db
+from ..extensions import db
 from werkzeug import generate_password_hash, check_password_hash
 from ..util import ROLES
 
-class User():
+class User(db.Model):
     id          = db.Column(db.Integer, primary_key=True)
     email       = db.Column(db.String(256), unique=True)
     first_name  = db.Column(db.String(128))
     last_name   = db.Column(db.String(128))
+    salonmanager_id = db.Column(db.Integer, db.ForeignKey('salon_manager.id'))
+    stylist_id      = db.Column(db.Integer(2), db.ForeignKey('stylist.id'))
      
     _password   = db.Column(db.String(), nullable=False)
 
@@ -24,15 +26,15 @@ class User():
         return check_password_hash(self._password, password)
 
     # customer, salon manager, stylist, product vendor
-    _role_code  = db.Column(db.Integer())
+    _role_code  = db.Column(db.Integer(8))
 
-    @proptery
+    @property
     def role(self):
         return ROLES[this._role_code]
 
     @role.setter
     def role(self, role):
-        pass
+        self._role_code = role
 
     # active? 
     _status     = db.Column(db.Integer())
@@ -57,3 +59,7 @@ class User():
 
     def get_id(self, user):
         return user.id
+
+    def __repr__(self):
+        return '<User> %s, %s, %s, %s' % (self.id, self.email, self.first_name,
+                self.password)

@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Hair Shop Search is Go!{% endblock %}
+
+{% block container %}
+<h1> HairShopSearch Prototype version 0.0.1 </h1>
+<a href="{{ url_for('salonmanager.register') }}">Register a Salon</a>
+<a href="{{ url_for('stylist.register') }}">Register a Stylist</a>
+
+<h2> Records: </h2>
+<h3> Salons </h3>
+{% if s_ms %}
+    {% for sm in s_ms %}
+    <ul class="salon records">
+        <li> {{ sm.user.first_name }} </li>
+        <li> {{ sm.user.last_name }} </li>
+        <li> {{ sm.user.email }} </li>
+        <li> {{ sm.business_name }} </li>
+        <li> {{ sm.hours }} </li>
+        <li> {{ sm.phone }} </li>
+        <li> {{ sm.street_address }}</li>
+        <li> {{ sm.city }}, {{ sm.state }} {{ sm.zip_code }}</li>
+        <li> {{ sm.avatar }} </li>
+        {% if sm.stylists %} 
+        <ul>
+            {% for stylist in sm.stylists %} 
+            <li> {{ stylist.first_name }} </li> 
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </ul>
+    {% endfor %}
+{% endif %}
+
+<h3> Stylists </h3>
+{% if stylists %}
+    {% for stylist in stylists %}
+    <ul class="stylist records">
+        <li> {{ stylist.user.first_name }} </li>
+        <li> {{ stylist.user.last_name }} </li>
+        <li> {{ stylist.user.email }} </li>
+        <li> {{ stylist.blurb }} </li>
+        <li> {{ stylist.avatar }} </li>
+        <li> {{ stylist.salon_manager_id }} </li>
+    </ul>
+    {% endfor %}
+{% endif %}
+
+<hr>
+{% if config %}
+<table>
+    {% for key, val in config.items() %}
+    <tr><td> {{ key }}</td><td>{{ val }}</td></tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
