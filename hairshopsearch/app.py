@@ -6,8 +6,9 @@ from .user import user
 from .extensions import db
 from .salonmanager import salonmanager
 from .stylist.views import stylist
+from .customer.views import customer
 
-BLUEPRINTS = [frontend, user, salonmanager, stylist]
+BLUEPRINTS = [frontend, user, salonmanager, stylist, customer]
 
 def create_app(config=None, blueprints=None):
     """App factory, optionally passed a config file path from Manager"""
