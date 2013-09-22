@@ -7,6 +7,6 @@ def create_app(config=None):
     return app
 
 def config_app(app, config):
-    app.config.from_obj(Config)
-    if config not None:
+    app.config.from_object(Config)
+    if config is not None:
         app.config.from_pyfile(config)
