@@ -5,14 +5,6 @@ project = 'hairshopsearch'
 env.user = 'no'
 env.hosts = ['hairshopsearch.com']
 
-def setup():
-    """Set up venv"""
-
-    local('mkvirtualenv %s' % project)
-    local('workon %s' % project)
-    local('python setup.py install')
-    reset()
-
 def reset():
     """Reset local dev environment"""
 
