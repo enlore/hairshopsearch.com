@@ -1,6 +1,6 @@
 *.py[cod]
-venv
 files
+tests
 
 # C extensions
 *.so
