@@ -1,6 +1,6 @@
 #!/home/no/.venvs/hairshopsearch/bin/python
 from flask.ext.script import Manager, Server, Shell 
-from app.factory import create_app
+from app import create_app
 
 m = Manager(create_app)
 
