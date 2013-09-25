@@ -17,6 +17,15 @@ def _config_app(app, config):
         app.config.from_pyfile(config)
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
+    """Sniff the blueprints out of the modules contained in the package's src
+    tree and register them.
+
+    Shoutout to @mattupstate, from whom I totally ganked this pattern.
+
+    :param app: Flask instance
+    :param pkg_name: Name of the package (__name__)
+    :param pkg_path: Path where the package lives (__path__)
+    """
     blueprints = []
     for _, name, _ in pkgutil.iter_modules(pkg_path):
         module = importlib.import_module('%s.%s' % (pkg_name, name))
