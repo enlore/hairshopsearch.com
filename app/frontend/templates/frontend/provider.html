@@ -1,6 +1,7 @@
 {% if provider %}
 <h2> {{ provider.business_name }} </h2>
 <img src="{{ provider.avatar.url }}">
+<h3> {{ provider.phone }} </h3>
 
 <address>
     <table>
@@ -9,26 +10,68 @@
         <tr><td>{{ provider.address.city }}</td></tr>
         <tr><td>{{ provider.address.state }}</td></tr>
         <tr><td>{{ provider.address.zip_code }}</td></tr>
-        <tr><td><a href="mailto:{{ provider.email }}">
-            {{ provider.email }} 
-        </a></td></tr>
-
-        {% for val in provider.payment_methods.split(',') %} 
-        <tr><td>{{ val }}</td></tr>
-        {% endfor %}
-        {% for k, v in provider.hours.items() %}
-        <tr><td>{{ k }}:</td><td>{{ v }}</td></tr>
-        {% endfor %}
+        <tr>
+            <td>
+                <a href="mailto:{{ provider.email }}">
+                    {{ provider.email }}
+                </a>
+            </td>
+        </tr>
         <tr><td><a href="{{ provider.links }}">
                     {{ provider.links }}
-        </a></td></td>
+        </a></td></tr>
+        <tr><td><a href="{{ provider.fb_url }}">FB</a></td> </tr>
+        <tr>
+            <td>
+                <a href="{{ provider.twitter_url }}">
+                    @{{ provider.business_name }}
+                </a>
+            </td>
+        </tr>
     </table>
 </address>
 
-<a href="{{ provider.fb_url }}">FB</a>
-<a href="{{ provider.twitter_url }}">@{{ provider.business_name }}</a>
+<div class="payment-and-hours">
+    <h3> Accepted Forms of Payment </h3>
+    <table>
+        {% for val in provider.payment_methods.split(',') %} 
+        <tr><td>{{ val.capitalize() }}</td></tr>
+        {% endfor %}
+    </table>
+    <h3> Hours </h3>
+    <table>
+        {% for k, v in provider.hours.items() %}
+        <tr><td>{{ k }}:</td><td>{{ v }}</td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="menus">
+    {% for menu in provider.menus %}
+        <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
+        <table class="menu {{ menu.menu_type }}">
+            {% for k, v in menu.menu_pickle.items() %}
+            <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</div>
+
+<div class="reviews">
+    <h3> Customer Reviews</h3>
+    <ul>
+    {% for review in provider.reviews %}
+    <li>
+        {{ review.body }}
+        <br>
+        <a href="mailto:{{ review.user.email }}">{{ review.user.email }}</a>
+    </li>
+    {% endfor %}
+    </ul>
+</div>
 
 <div class="gallery">
+    <h3> Gallery of Our Work </h3>
 {% for photo in provider.gallery.photos %}
 <img src="{{ photo.url }}">
 {% endfor %}
