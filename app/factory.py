@@ -1,5 +1,8 @@
 from flask import Flask, Blueprint
-from config import Config
+from flask.ext.security import Security
+from flask.ext.mail import Mail
+from .config import Config
+from .core import db, security, mail
 import pkgutil
 import importlib
 
@@ -8,6 +11,7 @@ def _create_app(pkg_name, pkg_path, config):
     """
     app = Flask(pkg_name)
     _config_app(app, config)
+    _register_extensions(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
     return app
 
@@ -15,6 +19,11 @@ def _config_app(app, config):
     app.config.from_object(Config)
     if config is not None:
         app.config.from_pyfile(config)
+
+def _register_extensions(app):
+    db.init_app(app)
+    security.init_app(app)
+    mail.init_app(app)
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
     """Sniff the blueprints out of the modules contained in the package's src

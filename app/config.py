@@ -8,6 +8,9 @@ class DevConfig(Default):
     DEBUG = True
     DEBUG_TB_PROFILER_ENABLED = True
 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/hairshopsearch.db'
+    SQLALCHEMY_ECHO = True
+
     WTF_CSRF_ENABLED = True
 
     MAIL_SERVER = 'smtp.mailgun.org'
@@ -22,6 +25,7 @@ class DevConfig(Default):
     SECURITY_CONFIRMABLE = True
     SECURITY_TRACKABLE = True
     SECURITY_PASSWORD_HASH = 'bcrypt'
+    SECURITY_PASSWORD_SALT = 'salty'
     SECURITY_RECOVERABLE = True
     SECURITY_CHANGEABLE = True
 

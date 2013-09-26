@@ -1,0 +1,39 @@
+{% if provider %}
+<h2> {{ provider.business_name }} </h2>
+<img src="{{ provider.avatar.url }}">
+
+<address>
+    <table>
+        <tr><td>{{ provider.address.street_1 }}</td></tr>
+        <tr><td>{{ provider.address.street_2 }}</td></tr>
+        <tr><td>{{ provider.address.city }}</td></tr>
+        <tr><td>{{ provider.address.state }}</td></tr>
+        <tr><td>{{ provider.address.zip_code }}</td></tr>
+        <tr><td><a href="mailto:{{ provider.email }}">
+            {{ provider.email }} 
+        </a></td></tr>
+
+        {% for val in provider.payment_methods.split(',') %} 
+        <tr><td>{{ val }}</td></tr>
+        {% endfor %}
+        {% for k, v in provider.hours.items() %}
+        <tr><td>{{ k }}:</td><td>{{ v }}</td></tr>
+        {% endfor %}
+        <tr><td><a href="{{ provider.links }}">
+                    {{ provider.links }}
+        </a></td></td>
+    </table>
+</address>
+
+<a href="{{ provider.fb_url }}">FB</a>
+<a href="{{ provider.twitter_url }}">@{{ provider.business_name }}</a>
+
+<div class="gallery">
+{% for photo in provider.gallery.photos %}
+<img src="{{ photo.url }}">
+{% endfor %}
+</div>
+
+
+
+{% endif %}
