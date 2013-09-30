@@ -4,8 +4,15 @@ from app import create_app
 from app.core import db, ud
 from app.user.models import (User, Role, Provider, Address, Photo, Review,
                                 Gallery)
+from tests.data import mockup_data
 
 m = Manager(create_app)
+
+@m.command
+def reset_db():
+    db.drop_all()
+    db.create_all()
+    mockup_data()
 
 def _make_context():
     return dict(
