@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+{% block body %}
+    {% if form %}
+        {{ form.csrf_token() }}
+        <h2> Edit </h2>
+            {% for key in form._fields.keys() %}
+                {% if key != 'submit' and key != 'csrf_token' %}
+                <div class="control-group">
+                    <div class="control-label">
+                        {{ form._fields[key].label() }}
+                    </div>
+                    <div class="control">
+                        {{ form._fields[key]() }}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {{ form.submit() }}
+    {% endif %}
+{% endblock %}
