@@ -1,3 +1,5 @@
+{% extends "layouts/base.html" %}
+{% block body %}
 {% if provider %}
 <h2> {{ provider.business_name }} </h2>
 <img src="{{ provider.avatar.url }}">
@@ -76,7 +78,5 @@
 <img src="{{ photo.url }}">
 {% endfor %}
 </div>
-
-
-
 {% endif %}
+{% endblock %}

@@ -1,3 +1,5 @@
+{% extends "layouts/base.html" %}
+{% block body %}
 <h1> Consumer Profile </h1>
 {% if consumer %}
 <h2> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h2>
@@ -38,3 +40,4 @@
 </div>
 
 {% endif %}
+{% endblock %}
