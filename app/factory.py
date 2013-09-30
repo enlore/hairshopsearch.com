@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
+from flask_wtf import CsrfProtect
 from .config import Config
 from .core import db, ud, mail
 import pkgutil
@@ -10,6 +11,11 @@ def _create_app(pkg_name, pkg_path, config):
     """Internal app factory.
     """
     app = Flask(pkg_name)
+
+    # a little jinja config - whitespace control
+    app.jinja_env.lstrip_blocks = True
+    app.jinja_env.trim_blocks = True
+
     _config_app(app, config)
     _register_extensions(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
@@ -25,6 +31,7 @@ def _register_extensions(app):
     Security(app, ud)
     mail.init_app(app)
     toolbar = DebugToolbarExtension(app)
+    CsrfProtect(app)
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
     """Sniff the blueprints out of the modules contained in the package's src
