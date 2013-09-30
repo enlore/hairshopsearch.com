@@ -1,6 +1,9 @@
-recursive-include hairshopsearch *.py
-recursive-include hairshopsearch *.cfg
-recursive-include hairshopsearch/templates *
-recursive-include hairshopsearch/static *
+recursive-include app *.py
+recursive-include app *.cfg
+recursive-include app/templates *
+recursive-include app/static *
+recursive-include app/user *
+recursive-include app/frontend *
+
 
 recursive-exclude *.pyc
