@@ -29,12 +29,17 @@ def profile():
 @frontend.route('/edit_nap', methods=['GET', 'POST'])
 @login_required
 def edit_nap():
-    form = AddressForm()
+    form = AddressForm(obj=current_user.provider.address)
     if form.validate_on_submit():
+        form.populate_obj(current_user.provider.address)
+        db.session.add(current_user.provider.address)
+        db.session.commit()
         return redirect(url_for('frontend.profile'))
     else:
+        current_app.logger.info('flashing')
         flash(form.errors)
-    return render_template('frontend/edit_profile.html', form=form)
+    return render_template('frontend/edit_profile.html', form=form,
+        url=url_for('frontend.edit_nap'))
 
 @frontend.route('/test_provider')
 def test_provider():
