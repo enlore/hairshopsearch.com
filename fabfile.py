@@ -3,7 +3,7 @@ from fabric.api import *
 project = 'hairshopsearch'
 
 env.user = 'no'
-env.hosts = ['hairshopsearch.com']
+env.hosts = ['demo.hairshopsearch.com']
 
 def reset():
     """Reset local dev environment"""
@@ -20,4 +20,11 @@ def pack():
     local('python setup.py sdist --formats=gztar')
 
 def deploy():
-    pass
+    dist = local('python setup.py --fullname', capture=True).strip()
+    put('dist/%s.tar.gz' % dist, '/tmp/%s.tar.gz' % dist)
+    with cd('/tmp'):
+        run('tar xzf /tmp/%s.tar.gz' % dist)
+        with cd('%s' % dist):
+            run('/var/www/hss-proto/venv/bin/python setup.py install')
+
+    run('rm -rf /tmp/%s.tar.gz /tmp/%s' % (dist, dist))
