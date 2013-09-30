@@ -1,5 +1,6 @@
 from flask_wtf import Form
-from wtforms import TextField, SubmitField
+from wtforms import (TextField, TextAreaField, FileField, SelectMultipleField,
+        FormField, SubmitField)
 from wtforms.validators import Required
 
 
@@ -20,7 +21,7 @@ class ReviewForm(Form):
     submit      = SubmitField(u'Submit')
 
 
-class PhotoForm(Form)
+class PhotoForm(Form):
     image       = FileField(u'Upload Image')
     submit      = SubmitField(u'Submit')
 
@@ -41,14 +42,15 @@ class AddressForm(Form):
     city            = TextField(u'City')
     state           = TextField(u'State')
     zip_code        = TextField(u'Zip Code')
+    submit              = SubmitField(u'Submit')
 
 
+payment_methods = [('visa', 'Visa'), ('mastercard', 'Mastercard'), ('amex',
+    'Amex') ]
 class BusinessInfoForm(Form):
     business_name       = TextField(u'Business Name')
     payment_methods     = SelectMultipleField(u'Payment Methods',
                             choices=payment_methods)
-    hours               = FormField(HoursForm, u'Hours')
-    address             = FormField(AddressForm, u'Address')
     submit              = SubmitField(u'Submit')
 
 
