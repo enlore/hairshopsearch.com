@@ -99,19 +99,22 @@ class Provider(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
                             uselist=False)
+
+    avatar              = db.relationship('Photo', uselist=False)
+
     business_name       = db.Column(db.String)
     phone               = db.Column(db.String)
+    email               = db.Column(db.String)
+    hours               = db.Column(db.PickleType, default={})
+    address             = db.relationship('Address', uselist=False,
+                            backref=db.backref('provider'))
+    payment_methods     = db.Column(db.String, default='')
+
     bio                 = db.Column(db.Text)
     fb_url              = db.Column(db.String)
     twitter_url         = db.Column(db.String)
-    email               = db.Column(db.String)
-    hours               = db.Column(db.PickleType)
-    payment_methods     = db.Column(db.String)
     links               = db.Column(db.String)
 
-    address             = db.relationship('Address', uselist=False,
-                            backref=db.backref('provider'))
-    avatar              = db.relationship('Photo', uselist=False)
     reviews             = db.relationship('Review',
                             backref=db.backref('provider'))
     menus               = db.relationship('Menu',
