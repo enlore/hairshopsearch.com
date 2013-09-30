@@ -7,5 +7,28 @@ setup(
     packages=["app"],
     include_package_data=True,
     zip_safe=False,
-    install_requires=[]
+    install_requires=[
+        'Flask==0.10.1',
+        'Flask-DebugToolbar==0.8.0',
+        'Flask-Login==0.2.7',
+        'Flask-Mail==0.9.0',
+        'Flask-Principal==0.4.0',
+        'Flask-SQLAlchemy==1.0',
+        'Flask-Script==0.6.2',
+        'Flask-Security==1.6.9',
+        'Flask-WTF==0.9.2',
+        'Jinja2==2.7.1',
+        'MarkupSafe==0.18',
+        'SQLAlchemy==0.8.2',
+        'WTForms==1.0.5',
+        'Werkzeug==0.9.4',
+        'argparse==1.2.1',
+        'blinker==1.3',
+        'distribute==0.6.34',
+        'gunicorn==18.0',
+        'itsdangerous==0.23',
+        'passlib==1.6.1',
+        'py-bcrypt==0.4',
+        'wsgiref==0.1.2'
+        ]
 )
