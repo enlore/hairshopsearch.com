@@ -1,8 +1,8 @@
 from flask import Flask, Blueprint
+from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
-from flask.ext.mail import Mail
 from .config import Config
-from .core import db, security, mail
+from .core import db, ud, mail
 import pkgutil
 import importlib
 
@@ -22,8 +22,9 @@ def _config_app(app, config):
 
 def _register_extensions(app):
     db.init_app(app)
-    security.init_app(app)
+    Security(app, ud)
     mail.init_app(app)
+    toolbar = DebugToolbarExtension(app)
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
     """Sniff the blueprints out of the modules contained in the package's src
