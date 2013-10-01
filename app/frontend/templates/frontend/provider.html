@@ -2,12 +2,11 @@
 {% block body %}
 {% if provider %}
 <style>
-    fieldset {border: 2px solid grey;}
+    section {margin: 2em; border: 2px solid grey;}
 </style>
 
-<fieldset>
+<section>
     <h2> {{ provider.business_name }} </h2>
-    <a href="">Edit Business Name</a>
     <br>
 
     {% if provider.avatar.url %}
@@ -36,8 +35,10 @@
             </tr>
         </table>
     </address>
-    <a href="{{ url_for('frontend.edit_nap') }}">Edit Phone, Address, Email</a>
+    <a href="{{ url_for('frontend.edit_nap') }}">Edit Business Info</a>
+</section>
 
+<section>
     <div class="payment-and-hours">
         <h3> Accepted Forms of Payment </h3>
         <table>
@@ -45,10 +46,10 @@
             <tr><td>{{ val.capitalize() }}</td></tr>
             {% endfor %}
         </table>
-        <a href="">Edit Payment Methods</a>
-</fieldset>
+        <a href="{{ url_for('frontend.edit_payment') }}">Edit Payment Methods</a>
+</section>
 
-<fieldset>
+<section>
         <h3> Hours </h3>
         <table>
             {% for k, v in provider.hours.items() %}
@@ -56,15 +57,15 @@
             {% endfor %}
         </table>
     </div>
-    <a href="">Edit Hours</a>
-</fieldset>
+    <a href="{{ url_for('frontend.edit_hours') }}">Edit Hours</a>
+</section>
 
-<fieldset>
+<section>
     <p> {{ provider.bio }} </p>
-    <a href=""> Edit Bio </a>
-</fieldset>
+    <a href="{{ url_for('frontend.edit_bio') }}">Edit Bio</a>
+</section>
 
-<fieldset>
+<section>
     <h3> Social Media </h3>
     <table>
         <tr><td><a href="{{ provider.links }}">
@@ -79,9 +80,10 @@
             </td>
         </tr>
     </table>
-    <a href="">Edit Social Media Links</a>
-</fieldset>
+    <a href="{{ url_for('frontend.edit_social_media') }}">Edit Social Media Links</a>
+</section>
 
+<section>
 <div class="menus">
     {% for menu in provider.menus %}
         <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
@@ -89,11 +91,13 @@
             {% for k, v in menu.menu_pickle.items() %}
             <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
             {% endfor %}
-            <a href="">Edit {{ menu.menu_type.capitalize() }} Menu</a>
+            <a href="{{ url_for('frontend.edit_menu') }}/{{ menu.menu_type }}">Edit {{ menu.menu_type.capitalize() }} Menu</a>
         </table>
     {% endfor %}
 </div>
+</section>
 
+<section>
 <div class="reviews">
     <h3> Customer Reviews</h3>
     <ul>
@@ -106,15 +110,18 @@
     {% endfor %}
     </ul>
 </div>
+</section>
 
+<section>
 <div class="gallery">
     <h3> Gallery of Our Work </h3>
     <a href="">Upload Photo to Gallery </a>
-
+    <br>
     {% for photo in provider.gallery.photos %}
     <img src="{{ photo.url }}">
     {% endfor %}
 </div>
+</section>
 
 {% endif %}
 {% endblock %}
