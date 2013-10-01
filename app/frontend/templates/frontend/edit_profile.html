@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% block body %}
     {% if form %}
-    <form action="{{ url }}') }}" method="POST">
+    <form action="{{ url }}" method="POST">
         {{ form.csrf_token() }}
         <h2> Edit </h2>
             {% for key in form._fields.keys() %}
