@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
 
 
 class Address(db.Model):
-    id              = db.Column(db.Integer, primary_key=True)
+    id                  = db.Column(db.Integer, primary_key=True)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     street_1            = db.Column(db.String)
     street_2            = db.Column(db.String)
