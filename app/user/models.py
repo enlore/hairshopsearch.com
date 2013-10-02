@@ -55,10 +55,16 @@ class Review(db.Model):
 
 class Menu(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
-    menu_type           = db.Column(db.String)
-    menu_pickle         = db.Column(db.PickleType)
-
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
+    menu_type           = db.Column(db.String)
+    menu_items          = db.relationship('MenuItem', backref='menu')
+
+
+class MenuItem(db.Model):
+    id                  = db.Column(db.Integer, primary_key=True)
+    menu_id             = db.Column(db.Integer, db.ForeignKey('menu.id'))
+    name                = db.Column(db.String)
+    price               = db.Column(db.Integer)
 
 
 class Photo(db.Model):
