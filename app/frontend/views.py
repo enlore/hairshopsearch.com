@@ -3,9 +3,9 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
-from ..user.models import Provider, Consumer
+from ..user.models import Provider, Consumer, Menu, MenuItem
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
-    SocialMediaForm, )
+    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm, )
 from ..core import db
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -14,30 +14,53 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 def index():
     return render_template('frontend/index.html')
 
-@frontend.route('/edit_menu', methods=['GET', 'POST'])
-@frontend.route('/edit_menu/<menu_type>', methods=['GET', 'POST'])
-@login_required
-def edit_menu(menu_type):
-    return 'edit %s' % menu_type
 
 @frontend.route('/profile')
 @login_required
 def profile():
+    rm_menu_item_form = RemoveItemForm()
     if current_user.consumer:
         return render_template('frontend/consumer.html',
                 consumer=current_user.consumer)
 
     if current_user.provider:
         return render_template('frontend/provider.html',
-                provider=current_user.provider)
+                provider=current_user.provider,
+                rm_menu_item_form=rm_menu_item_form)
+
+@frontend.route('/menu/<menu_id>/rm/<item_id>', methods=['POST'])
+def rm_menu_item(item_id, menu_id):
+    menu = Menu.query.filter(Menu.id==menu_id).first()
+    menu_item = MenuItem.query.filter(MenuItem.id==item_id).first()
+    menu.menu_items.remove(menu_item)
+    db.session.add(menu)
+    db.session.commit()
+    return redirect(url_for('frontend.profile'))
+
+@frontend.route('/menu/add/<menu_id>', methods=['GET', 'POST'])
+def add_menu_item(menu_id):
+    form = MenuItemForm()
+    menu = Menu.query.filter(Menu.id==menu_id).first()
+    if form.validate_on_submit():
+        menu.menu_items.append(MenuItem(
+            name=form.name.data,
+            price=form.price.data))
+        current_user.provider.menus.append(menu)
+        db.session.add(current_user.provider)
+        db.session.commit()
+        return redirect(url_for('frontend.profile'))
+
+    return render_template('frontend/edit_profile.html', form=form,
+            url=url_for('frontend.add_menu_item', menu_id=menu_id))
 
 @frontend.route('/edit_nap', methods=['GET', 'POST'])
 @login_required
 def edit_nap():
-    form = AddressForm(obj=current_user.provider.address)
     p = current_user.provider
-    form.business_name.data  = p.business_name
-    form.phone.data          = p.phone 
+    form = AddressForm(
+            obj=current_user.provider.address,
+            business_name=p.business_name,
+            phone=p.phone)
 
     if form.validate_on_submit():
         p.address.street_1  = form.street_1.data
@@ -55,35 +78,78 @@ def edit_nap():
         return redirect(url_for('frontend.profile'))
 
     else:
-        current_app.logger.info('flashing')
         flash(form.errors)
 
     return render_template('frontend/edit_profile.html', form=form,
         url=url_for('frontend.edit_nap'))
 
 @frontend.route('/edit_payment', methods=['GET', 'POST'])
+@login_required
 def edit_payment():
     form = PaymentsForm()
+    if form.validate_on_submit():
+
+        current_user.provider.payment_methods = \
+            ','.join(form.payment_methods.data)
+
+        db.session.add(current_user.provider)
+        db.session.commit()
+
+        return redirect(url_for('frontend.profile'))
+
     return render_template('frontend/edit_profile.html', form=form,
             url=url_for('frontend.edit_payment'))
 
 @frontend.route('/edit_hours', methods=['GET', 'POST'])
+@login_required
 def edit_hours():
     form = HoursForm()
+    if form.validate_on_submit():
+        return redirect(url_for('frontend.profile'))
     return render_template('frontend/edit_profile.html', form=form,
             url=url_for('frontend.edit_hours'))
 
 @frontend.route('/edit_bio', methods=['GET', 'POST'])
+@login_required
 def edit_bio():
     form = BioForm()
+    if form.validate_on_submit():
+        current_user.provider.bio = form.bio.data
+
+        db.session.add(current_user.provider)
+        db.session.commit()
+
+        return redirect(url_for('frontend.profile'))
+
     return render_template('frontend/edit_profile.html', form=form,
             url=url_for('frontend.edit_bio'))
 
 @frontend.route('/edit_social_media', methods=['GET', 'POST'])
+@login_required
 def edit_social_media():
-    form = SocialMediaForm()
+    form = SocialMediaForm(obj=current_user.provider)
+
+    if form.validate_on_submit():
+        current_user.provider.fb_url        = form.fb_url.data
+        current_user.provider.twitter_url   = form.twitter_url.data
+        current_user.provider.links         = form.link.data
+
+        db.session.add(current_user.provider)
+        db.session.commit()
+        current_app.logger.info(current_user.provider.fb_url)
+
+        return redirect(url_for('frontend.profile'))
+
     return render_template('frontend/edit_profile.html', form=form,
             url=url_for('frontend.edit_social_media'))
+
+@frontend.route('/upload_photo', methods=['GET', 'POST'])
+def upload_photo():
+    form = PhotoForm()
+    if form.validate_on_submit():
+        return redirect(url_for('frontend.profile'))
+    return render_template('frontend/edit_profile.html', form=form,
+            url=url_for('frontend.upload_photo'))
 
 @frontend.route('/test_provider')
 def test_provider():
