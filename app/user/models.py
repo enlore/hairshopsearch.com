@@ -64,7 +64,7 @@ class MenuItem(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
     menu_id             = db.Column(db.Integer, db.ForeignKey('menu.id'))
     name                = db.Column(db.String)
-    price               = db.Column(db.Integer)
+    price               = db.Column(db.Float(precision=2))
 
 
 class Photo(db.Model):
