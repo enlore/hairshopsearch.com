@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% from "macros/_form.html" import render_form %}
 {% block body %}
 {% if provider %}
 <style>
@@ -71,7 +72,7 @@
         <tr><td><a href="{{ provider.links }}">
                     {{ provider.links }}
         </a></td></tr>
-        <tr><td><a href="{{ provider.fb_url }}">FB</a></td> </tr>
+        <tr><td><a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a></td> </tr>
         <tr>
             <td>
                 <a href="{{ provider.twitter_url }}">
@@ -88,10 +89,19 @@
     {% for menu in provider.menus %}
         <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
         <table class="menu {{ menu.menu_type }}">
-            {% for k, v in menu.menu_pickle.items() %}
-            <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+            {% for item in menu.menu_items %}
+                <tr>
+                    <td>{{ item.name }} </td>
+                    <td>{{ item.price | cash }}</td>
+                    <td>
+                        {{ render_form(rm_menu_item_form,
+                        url_for('frontend.rm_menu_item', item_id=item.id,
+                        menu_id=menu.id )) }}
+                    </td>
+                </tr>
             {% endfor %}
-            <a href="{{ url_for('frontend.edit_menu') }}/{{ menu.menu_type }}">Edit {{ menu.menu_type.capitalize() }} Menu</a>
+            <tr><td></td><td><a href="{{ url_for('frontend.add_menu_item',
+                        menu_id=menu.id)   }}">Add Item</a></td></tr>
         </table>
     {% endfor %}
 </div>
