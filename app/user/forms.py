@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import (TextField, TextAreaField, FileField, SelectMultipleField,
-        SelectField, FormField, SubmitField)
+        DecimalField, SelectField, FormField, SubmitField)
 from wtforms.validators import Required
 
 
@@ -53,13 +53,20 @@ times = [('5:00am', '5:00am'), ('5:15am', '5:15am'), ('5:30am', '5:30am'),
         ('11:45pm', '11:45pm'), ('12:00am', '12:00am')]
 
 class HoursForm(Form):
-    monday          = SelectField(u'Monday', choices=times)
-    tuesday         = SelectField(u'Tuesday',choices=times)
-    wednesday       = SelectField(u'Wednesday', choices=times)
-    thursday        = SelectField(u'Thursday', choices=times)
-    friday          = SelectField(u'Friday', choices=times)
-    saturday        = SelectField(u'Saturday', choices=times)
-    sunday          = SelectField(u'Sunday', choices=times)
+    monday_open     = SelectField(u'Monday', choices=times)
+    monday_close    = SelectField(u'Monday', choices=times)
+    tuesday_open    = SelectField(u'Tuesday',choices=times)
+    tuesday_close   = SelectField(u'Tuesday',choices=times)
+    wednesday_open  = SelectField(u'Wednesday', choices=times)
+    wednesday_close = SelectField(u'Wednesday', choices=times)
+    thursday_open   = SelectField(u'Thursday', choices=times)
+    thursday_close  = SelectField(u'Thursday', choices=times)
+    friday_open     = SelectField(u'Friday', choices=times)
+    friday_close    = SelectField(u'Friday', choices=times)
+    saturday_open   = SelectField(u'Saturday', choices=times)
+    saturday_close  = SelectField(u'Saturday', choices=times)
+    sunday_open     = SelectField(u'Sunday', choices=times)
+    sunday_close    = SelectField(u'Sunday', choices=times)
     submit          = SubmitField(u'Submit')
 
 
@@ -75,6 +82,8 @@ class AddressForm(Form):
 
 
 payment_methods = [
+        ('cash', 'Cash'),
+        ('check', 'Check'),
         ('visa', 'Visa'),
         ('mastercard', 'Mastercard'),
         ('amex', 'Amex')
@@ -90,11 +99,19 @@ class BioForm(Form):
     bio         = TextAreaField(u'About Me')
     submit      = SubmitField(u'Submit')
 
-class SocialMediaForm(Form):
-    fb          = TextField(u'Facebook url')
-    twitter     = TextField(u'Twiiter url')
-    link       = TextAreaField(u'Personal Website')
-    submit      = SubmitField(u'Submit')
 
-class MenuForm(Form):
-    pass
+class SocialMediaForm(Form):
+    fb_url          = TextField(u'Facebook url')
+    twitter_url     = TextField(u'Twiiter url')
+    link            = TextAreaField(u'Personal Website')
+    submit          = SubmitField(u'Submit')
+
+
+class RemoveItemForm(Form):
+    submit          = SubmitField(u'Remove')
+
+
+class MenuItemForm(Form):
+    name            = TextField(u'Name')
+    price           = DecimalField(u'Price', places=2, rounding=None)
+    submit          = SubmitField(u'Submit')
