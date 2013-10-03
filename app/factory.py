@@ -6,6 +6,12 @@ from .config import Config
 from .core import db, ud, mail
 import pkgutil
 import importlib
+import locale
+
+locale.setlocale(locale.LC_ALL, '')
+
+def pretty_cash(amount):
+    return locale.currency(amount)
 
 def _create_app(pkg_name, pkg_path, config):
     """Internal app factory.
@@ -15,6 +21,8 @@ def _create_app(pkg_name, pkg_path, config):
     # a little jinja config - whitespace control
     app.jinja_env.lstrip_blocks = True
     app.jinja_env.trim_blocks = True
+
+    app.jinja_env.filters['cash'] = pretty_cash
 
     _config_app(app, config)
     _register_extensions(app)
