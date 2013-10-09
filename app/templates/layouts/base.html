@@ -26,7 +26,7 @@
             <ul>
                 <li><a href="{{ url_for('frontend.index') }}">Home</a></li>
                 {% if current_user.is_authenticated() %}
-                <li><a href="{{ url_for('frontend.profile') }}">My Profile</a></li>
+                <li><a href="{{ url_for('dashboard.profile') }}">My Profile</a></li>
                 <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
                 {% else %}
                 <li><a href="{{ url_for('security.login') }}">Login</a></li>
