@@ -1,10 +1,12 @@
 #!/home/no/.venvs/hairshopsearch/bin/python
-from flask.ext.script import Manager, Server, Shell 
+from flask.ext.script import Manager, Server, Shell
 from app import create_app
 from app.core import db, ud
 from app.user.models import (User, Role, Provider, Address, Photo, Review,
                                 Gallery)
+from app.helpers import JSONEncoder
 from tests.data import mockup_data
+from pprint import pprint
 
 m = Manager(create_app)
 
@@ -22,10 +24,13 @@ def _make_context():
            User=User,
            Role=Role,
            Provider=Provider,
-           Review=Review,  
-           Address=Address, 
+           Review=Review,
+           Address=Address,
            Gallery=Gallery,
-           Photo=Photo
+           Photo=Photo,
+           p=Provider.query.first(),
+           jsoner=JSONEncoder(),
+           pprint=pprint
             )
 
 m.add_command('run', Server(port='9016'))
