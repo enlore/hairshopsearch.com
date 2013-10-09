@@ -28,3 +28,8 @@ def deploy():
             run('/var/www/hss-proto/venv/bin/python setup.py install')
 
     run('rm -rf /tmp/%s.tar.gz /tmp/%s' % (dist, dist))
+
+    local('tar czvf static.tar.gz app/static/')
+    put('static.tar.gz', '/tmp/static.tar.gz')
+    with cd('/var/www/hss-proto'):
+        run('tar xzvf /tmp/static.tar.gz')
