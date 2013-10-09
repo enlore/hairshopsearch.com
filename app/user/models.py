@@ -1,5 +1,6 @@
 from flask.ext.security import UserMixin, RoleMixin
 from ..core import db
+from ..helpers import JSONSerializer
 
 # association object
 roles_users = db.Table('roles_users',
@@ -35,7 +36,11 @@ class User(db.Model, UserMixin):
     reviews             = db.relationship('Review', backref=db.backref('user'))
 
 
-class Address(db.Model):
+class AddressSerializer(JSONSerializer):
+    __json_hidden__ = ['provider']
+
+
+class Address(db.Model, AddressSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     street_1            = db.Column(db.String)
@@ -46,21 +51,33 @@ class Address(db.Model):
     zip_code            = db.Column(db.Integer)
 
 
-class Review(db.Model):
+class ReviewSerializer(JSONSerializer):
+    __json_hidden__ = ['user', 'provider']
+
+
+class Review(db.Model, ReviewSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user_id             = db.Column(db.Integer, db.ForeignKey('user.id'))
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     body                = db.Column(db.Text)
 
 
-class Menu(db.Model):
+class MenuSerializer(JSONSerializer):
+    __json_hidden__ = ['provider']
+
+
+class Menu(db.Model, MenuSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     menu_type           = db.Column(db.String)
     menu_items          = db.relationship('MenuItem', backref='menu')
 
 
-class MenuItem(db.Model):
+class MenuItemSerializer(JSONSerializer):
+    __json_hidden__ = ['menu']
+
+
+class MenuItem(db.Model, MenuItemSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     menu_id             = db.Column(db.Integer, db.ForeignKey('menu.id'))
     name                = db.Column(db.String)
@@ -81,14 +98,22 @@ class Gallery(db.Model):
     photos              = db.relationship('Photo', backref='gallery')
 
 
-class Article(db.Model):
+class ArticleSerializer(JSONSerializer):
+    __json_hidden__ = ['consumer']
+
+
+class Article(db.Model, ArticleSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     body                = db.Column(db.Text)
     title               = db.Column(db.String)
 
 
-class Product(db.Model):
+class ProductSerializer(JSONSerializer):
+    __json_hidden__ = ['consumer', 'provider']
+
+
+class Product(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     name                = db.Column(db.String)
     description         = db.Column(db.String)
@@ -96,12 +121,41 @@ class Product(db.Model):
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
 
 
+class HoursSerializer(JSONSerializer):
+    __json_hidden__ = ['provider']
+
+
+class Hours(db.Model, HoursSerializer):
+    id                      = db.Column(db.Integer, primary_key=True)
+    provider_id             = db.Column(db.Integer,
+                                db.ForeignKey('provider.id'))
+    monday_open             = db.Column(db.String)
+    monday_close            = db.Column(db.String)
+    tuesday_open            = db.Column(db.String)
+    tuesday_close           = db.Column(db.String)
+    wednesday_open          = db.Column(db.String)
+    wednesday_close         = db.Column(db.String)
+    thursday_open           = db.Column(db.String)
+    thursday_close          = db.Column(db.String)
+    friday_open             = db.Column(db.String)
+    friday_close            = db.Column(db.String)
+    saturday_open           = db.Column(db.String)
+    saturday_close          = db.Column(db.String)
+    sunday_open             = db.Column(db.String)
+    sunday_close            = db.Column(db.String)
+
+
 consumers_providers = db.Table('consumers_providers',
         db.Column('consumer_id', db.Integer, db.ForeignKey('consumer.id')),
         db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
         )
 
-class Provider(db.Model):
+class ProviderSerializer(JSONSerializer):
+    __json_hidden__ = [
+            'gallery', 'avatar', 'products',
+            'hours', 'user', 'favorited_by']
+
+class Provider(db.Model, ProviderSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
                             uselist=False)
@@ -111,7 +165,7 @@ class Provider(db.Model):
     business_name       = db.Column(db.String)
     phone               = db.Column(db.String)
     email               = db.Column(db.String)
-    hours               = db.Column(db.PickleType, default={})
+    hours               = db.relationship('Hours', uselist=False)
     address             = db.relationship('Address', uselist=False,
                             backref=db.backref('provider'))
     payment_methods     = db.Column(db.String, default='')
@@ -129,7 +183,7 @@ class Provider(db.Model):
     products            = db.relationship('Product', backref='provider')
 
 
-class Consumer(db.Model):
+class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
