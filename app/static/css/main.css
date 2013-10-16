@@ -21,6 +21,10 @@ body {
   padding-bottom: 4em;
 }
 
+img {
+    display: block;
+}
+
 .inset-shadow-top-bottom {
             box-shadow: inset 0  10px 10px -3px #1a1a1a,
                         inset 0 -10px 10px -3px #1a1a1a;
@@ -34,10 +38,40 @@ body {
   margin-top: 1em;
 }
 
+.nav-container {
+    max-width: 1360px;
+    margin: 0 auto;
+}
 .navbar-brand {
     padding: 0;
+    padding-left: 15px;
     padding-top: 11px;
 }
+
+@media screen and (min-width: 960px) {
+    form.navbar-form {
+        padding-right: 5em;
+    }
+}
+
+form.navbar-form div.form-group {
+    padding-right: 10px;
+}
+
+form.navbar-form input.input-sm {
+    height: 26px;
+}
+
+form.navbar-form input.inset-shadow {
+    box-shadow: inset 1px 1px 2px 1px #888;
+    border: none;
+}
+
+form.navbar-form input.apple-round {
+    border-radius: 16px;
+    -moz-border-radius: 16px;
+}
+
 
 @media screen and (min-width: 768px) {
   .container {
@@ -59,6 +93,10 @@ body {
 
 .jumbotron img {
     margin: 0 auto;
+}
+
+.jumbotron .row {
+    margin-top: 0;
 }
 
 .profile-header {
@@ -102,12 +140,4 @@ body {
 .profile-map {
     display: block;
     margin: 0 auto;
-}
-
-form.navbar-left {
-    padding-left: 17px;
-    padding-top: 11px;
-}
-
-.form-inline .form-group input {
 }
