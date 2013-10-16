@@ -28,13 +28,15 @@ def _make_context():
            Address=Address,
            Gallery=Gallery,
            Photo=Photo,
-           p=Provider.query.first(),
+#           p=Provider.query.first(),
            jsoner=JSONEncoder(),
            pprint=pprint
             )
 
+m.add_option('-c', '--config', dest='config', required=False)
 m.add_command('run', Server(port='9016'))
 m.add_command('shell', Shell(make_context=_make_context))
+
 
 if __name__ == '__main__':
     m.run()
