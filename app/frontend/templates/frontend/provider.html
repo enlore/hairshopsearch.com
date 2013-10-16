@@ -1,149 +1,271 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-<section>
-    <div class="business-info">
-    <h2> {{ provider.business_name }} </h2>
-    {% if provider.avatar.url %}
-    <img src="{{ provider.avatar.url }}">
-    {% else %}
-    <img src="http://placehold.it/225x300">
-    {% endif %}
-    <h3> {{ provider.phone }} </h3>
-    <address>
-        <table>
-            <tr><td>{{ provider.address.street_1 }}</td></tr>
-            <tr><td>{{ provider.address.street_2 }}</td></tr>
-            <tr><td>{{ provider.address.city }}</td></tr>
-            <tr><td>{{ provider.address.state }}</td></tr>
-            <tr><td>{{ provider.address.zip_code }}</td></tr>
-            <tr><td>
-                    <a href="mailto:{{ provider.email }}">
-                        {{ provider.email }}
-                    </a>
-            </td></tr>
-        </table>
-    </address>
-</div>
-</section>
+        <div class="jumbotron inset-shadow-top-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img class="img-responsive"
+                            src="http://placehold.it/425x370&text=Hero">
+                    </div>
 
-<section>
-    <div class="payment-methods">
-        <h3> Payment Methods </h3>
-        <ul>
-            {% for method in provider.payment_methods.split(',') %}
-            <li>{{ method.capitalize() }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
+                    <div class="col-md-7 hidden-sm hidden-xs">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                        </div>
 
-<section>
-    <div class="hours">
-    <h3> Hours </h3>
-    <table>
-        <tr>
-            <td> Monday </td>
-            <td> from {{ provider.hours.monday_open }} </td>
-            <td> to {{ provider.hours.monday_close }} </td>
-        </tr>
-        <tr>
-            <td> Tuesday </td>
-            <td> from {{ provider.hours.tuesday_open }} </td>
-            <td> to {{ provider.hours.tuesday_close }} </td>
-        </tr>
-        <tr>
-            <td> Wednesday </td>
-            <td> from {{ provider.hours.wednesday_open }} </td>
-            <td> to {{ provider.hours.wednesday_close }} </td>
-        </tr>
-        <tr>
-            <td> Thursday </td>
-            <td> from {{ provider.hours.thursday_open }} </td>
-            <td> to {{ provider.hours.thursday_close }} </td>
-        </tr>
-        <tr>
-            <td> Friday </td>
-            <td> from {{ provider.hours.friday_open }} </td>
-            <td> to {{ provider.hours.friday_close }} </td>
-        </tr>
-        <tr>
-            <td> Saturday </td>
-            <td> from {{ provider.hours.saturday_open }} </td>
-            <td> to {{ provider.hours.saturday_close }} </td>
-        </tr>
-        <tr>
-            <td> Sunday </td>
-            <td> from {{ provider.hours.sunday_open }} </td>
-            <td> to {{ provider.hours.sunday_close }} </td>
-        </tr>
-    </table>
-</div>
-</section>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<section>
-    <div class="about-us">
-        <h3> About Us </h3>
-        <p>{{ provider.bio }}</p>
-    </div>
-</section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-header">
+                                <h3> Bio & Service Menu </h3>
+                            </div>
+                                <div class="profile-content">
+                                    <div>
+                                    <p>
+                                        Cupidatat beard wayfarers, post-ironic roof
+                                        party selvage Etsy Neutra chia plaid trust
+                                        fund Wes Anderson viral. Truffaut ethnic
+                                        narwhal, gastropub Pinterest ennui deserunt
+                                        letterpress do irony selvage direct trade.  Craft beer next level bespoke single-origin
+                                        coffee Tonx. Banjo actually blog, aute Vice
+                                        nostrud non Williamsburg aesthetic polaroid
+                                        beard. Consequat viral cardigan meggings,
+                                        tofu Tumblr kogi. Banh mi narwhal
+                                        gastropub, nostrud iPhone paleo accusamus
+                                        mumblecore Neutra Portland elit. Irony
+                                        velit Portland literally, put a bird on it
+                                        Intelligentsia fanny pack commodo kogi
+                                        wayfarers roof party 8-bit lo-fi culpa.
 
-<section>
-    <div class="links">
-        <h3> Social Media </h3>
-        <table cellspacing="0">
-            <tr>
-                <td> FaceBook: </td>
-                <td> {{ provider.fb_url }} </td>
-            </tr>
-            <tr>
-                <td>Twitter:</td>
-                <td> {{ provider.twitter_url }} </td>
-            </tr>
-            <tr>
-                <td> Personal Site: </td>
-                <td> {{ provider.links }} </td>
-            </tr>
-        </table>
-    </div>
-</section>
+                                        Anim officia shabby chic Cosby sweater
+                                        chia, aliqua sunt tempor tofu whatever aute
+                                        authentic irure mlkshk four loko. Neutra
+                                        pariatur plaid viral tofu, Vice whatever.
+                                        Pour-over Blue Bottle Neutra ad officia
+                                        cray, lomo Helvetica Echo Park eu
+                                        Williamsburg ethnic biodiesel quinoa.
+                                        Master cleanse mlkshk dolore, skateboard
+                                        meggings hoodie XOXO banjo occaecat eu.
+                                        Pitchfork vero ennui, sriracha tempor et
+                                        ethical banh mi cliche farm-to-table PBR&B.
+                                        Gluten-free roof party asymmetrical,
+                                        skateboard hella aesthetic art party elit
+                                        magna High Life et pug. Readymade viral
+                                        sint flexitarian vinyl quinoa.
+                                    </p>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
 
-<section>
-    <div class="menus">
-        {% for menu in provider.menus %}
-        <h4> {{ menu.menu_type }} </h4>
-        <table cellspacing="0">
-            {% for item in menu.menu_items %}
-            <tr>
-                <td> {{ item.name }} </td>
-                <td> {{ item.price | cash }} </td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endfor %}
-    </div>
-</section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-header">
+                                <h3> Reviews </h3>
+                            </div>
+                            <div class="profile-content">
+                                <div>
+                                <ul>
+                                    <li>
+                                        <h5> Lovely </h5> 
+                                        <p>
+                                            ote bag fap irony, do ea pickled
+                                            farm-to-table mollit leggings.
+                                            Shoreditch squid adipisicing Marfa,
+                                            street art biodiesel Blue Bottle
+                                            pop-up. Squid hella kale chips
+                                            8-bit. Irure cupidatat anim sunt in
+                                            keytar. Tattooed excepteur selfies
+                                            Intelligentsia Tonx proident.
+                                            Bitters mustache
+                                        </p>
+                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                        <hr>
+                                    </li>
+                                    <li>
+                                        <h5> Lovely </h5> 
+                                        <p>
+                                            ote bag fap irony, do ea pickled
+                                            farm-to-table mollit leggings.
+                                            Shoreditch squid adipisicing Marfa,
+                                            street art biodiesel Blue Bottle
+                                            pop-up. Squid hella kale chips
+                                            8-bit. Irure cupidatat anim sunt in
+                                            keytar. Tattooed excepteur selfies
+                                            Intelligentsia Tonx proident.
+                                            Bitters mustache
+                                        </p>
+                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                        <hr>
+                                    </li>
+                                    <li>
+                                        <h5> Lovely </h5> 
+                                        <p>
+                                            ote bag fap irony, do ea pickled
+                                            farm-to-table mollit leggings.
+                                            Shoreditch squid adipisicing Marfa,
+                                            street art biodiesel Blue Bottle
+                                            pop-up. Squid hella kale chips
+                                            8-bit. Irure cupidatat anim sunt in
+                                            keytar. Tattooed excepteur selfies
+                                            Intelligentsia Tonx proident.
+                                            Bitters mustache
+                                        </p>
+                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                        <hr>
+                                    </li>
+                                    <li>
+                                        <h5> Lovely </h5> 
+                                        <p>
+                                            ote bag fap irony, do ea pickled
+                                            farm-to-table mollit leggings.
+                                            Shoreditch squid adipisicing Marfa,
+                                            street art biodiesel Blue Bottle
+                                            pop-up. Squid hella kale chips
+                                            8-bit. Irure cupidatat anim sunt in
+                                            keytar. Tattooed excepteur selfies
+                                            Intelligentsia Tonx proident.
+                                            Bitters mustache
+                                        </p>
+                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                        <hr>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
 
-<section>
-    <div class="reviews">
-        <h3> Customer Reviews </h3>
-        <ul>
-            {% for review in provider.reviews %}
-            <li>
-                {{ review.body }}
-                <br>
-                {{ review.user.first_name }} | {{ review.user.email }}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-header">
+                                <h3> Gallery </h3>
+                            </div>
+                            <div class="profile-content">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                </div>
 
-<section>
-    <div class="gallery">
-        <h3> Check Out Our Work </h3>
-        {% for photo in provider.gallery.photos %}
-            <img src="{{ photo.url }}">
-        {% endfor %}
-    </div>
-</section>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-4">
+                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- ./ 2/3 left col -->
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Contact -->
+                            <div class="profile-sidebar">
+                                <h3> Contact </h3>
+                                <hr>
+                                <p> (921) 139-1299 </p>
+                                <a href="mailto:bleepbloop@gmail.com">
+                                    bleepbloop@gmail.com </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Hours -->
+                        <div class="col-md-12">
+                            <div class="profile-sidebar">
+                                <table cellspacing="0">
+                                    <h3> Hours </h3>
+                                    <hr >
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m. </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
+                                        <td> 9:00 p.m.  </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Location -->
+                        <div class="col-md-12">
+                            <div class="profile-sidebar">
+                                <h3> Location </h3>
+                                <hr>
+                                <img class="profile-map"
+                                src="http://placehold.it/267x267&text=Map">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container -->
 {% endblock %}
