@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
 from flask_wtf import CsrfProtect
 from .config import Config
-from .core import db, ud, mail
+from .core import db, ud, mail, HSSError
 import pkgutil
 import importlib
 import locale
@@ -24,6 +24,10 @@ def _create_app(pkg_name, pkg_path, config):
 
     app.jinja_env.filters['cash'] = pretty_cash
 
+    @app.errorhandler(HSSError)
+    def handle_internal_error(error):
+        raise error
+
     _config_app(app, config)
     _register_extensions(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
@@ -32,7 +36,7 @@ def _create_app(pkg_name, pkg_path, config):
 def _config_app(app, config):
     app.config.from_object(Config)
     if config is not None:
-        app.config.from_pyfile(config)
+        app.config.from_pyfile(config, silent=True)
 
 def _register_extensions(app):
     db.init_app(app)
