@@ -6,12 +6,15 @@ class DevConfig(Default):
     FILE_LOG = '/tmp/hairshopsearch.info.log'
     SECRET_KEY = 'dev key'
     DEBUG = True
-    DEBUG_TB_ENABLED = True
+    DEBUG_TB_ENABLED = DEBUG
     DEBUG_TB_PROFILER_ENABLED = True
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+    ACCEPTABLE_URL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop\
+qrstuvwxyz0123456789_"
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/hairshopsearch.db'
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     WTF_CSRF_ENABLED = True
 
@@ -30,7 +33,7 @@ class DevConfig(Default):
     SECURITY_PASSWORD_SALT = 'salty'
     SECURITY_RECOVERABLE = True
     SECURITY_CHANGEABLE = True
-    SECURITY_POST_LOGIN_VIEW = '/profile'
+    SECURITY_POST_LOGIN_VIEW = '/dashboard/profile'
     SECURITY_POST_REGISTER_VIEW = '/welcome'
 
 class Config(DevConfig):
