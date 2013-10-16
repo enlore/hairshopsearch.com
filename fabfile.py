@@ -16,6 +16,16 @@ def d():
     reset()
     local('python manage.py -c dev.cfg run')
 
+def r():
+    """Run app as is"""
+
+    local('python manage.py -c dev.cfg run')
+def sh():
+    """Gimme that fancy script Shell
+    """
+
+    local('python manage.py --config dev.cfg shell')
+
 def pack():
     local('python setup.py sdist --formats=gztar')
 
