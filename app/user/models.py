@@ -1,6 +1,7 @@
+from flask import current_app
 from flask.ext.security import UserMixin, RoleMixin
 from ..core import db
-from ..helpers import JSONSerializer
+from ..helpers import JSONSerializer, acceptable_url_string
 
 # association object
 roles_users = db.Table('roles_users',
@@ -145,6 +146,16 @@ class Hours(db.Model, HoursSerializer):
     sunday_close            = db.Column(db.String)
 
 
+class LocationSerializer(JSONSerializer):
+    pass
+
+class Location(db.Model, LocationSerializer):
+    id              = db.Column(db.Integer, primary_key=True)
+    provider_id     = db.Column(db.Integer, db.ForeignKey('provider.id'))
+    lat             = db.Column(db.Float)
+    lon             = db.Column(db.Float)
+
+
 consumers_providers = db.Table('consumers_providers',
         db.Column('consumer_id', db.Integer, db.ForeignKey('consumer.id')),
         db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
@@ -163,6 +174,17 @@ class Provider(db.Model, ProviderSerializer):
     avatar              = db.relationship('Photo', uselist=False)
 
     business_name       = db.Column(db.String)
+    _business_url       = db.Column(db.String)
+
+    @property
+    def business_url(self):
+        return self._business_url
+
+    @business_url.setter
+    def business_url(self, value):
+        self._business_url = acceptable_url_string(value,
+                current_app.config['ACCEPTABLE_URL_CHARS'])
+
     phone               = db.Column(db.String)
     email               = db.Column(db.String)
     hours               = db.relationship('Hours', uselist=False)
@@ -181,7 +203,7 @@ class Provider(db.Model, ProviderSerializer):
                             backref=db.backref('provider'))
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
-
+    loc                 = db.relationship('Location')
 
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
