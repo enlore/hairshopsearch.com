@@ -4,7 +4,7 @@ from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 from ..user.models import Provider, Consumer, Menu, MenuItem
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
-    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm, )
+    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm)
 from ..core import db
 
 dashboard = Blueprint('dashboard', __name__,
@@ -26,6 +26,8 @@ def profile():
         return render_template('dashboard/provider.html',
                 provider=current_user.provider,
                 rm_menu_item_form=rm_menu_item_form)
+
+    return redirect(url_for('frontend.welcome'))
 
 @dashboard.route('/menu/<menu_id>/rm/<item_id>', methods=['GET'])
 def rm_menu_item(menu_id, item_id):
