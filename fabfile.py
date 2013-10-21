@@ -5,6 +5,12 @@ project = 'hairshopsearch'
 env.user = 'no'
 env.hosts = ['demo.hairshopsearch.com']
 
+def t():
+    """Run tha tests
+    """
+
+    local('nosetests')
+
 def reset():
     """Reset local dev environment"""
 
