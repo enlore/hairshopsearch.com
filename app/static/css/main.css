@@ -203,3 +203,12 @@ h3.active {
     overflow: hidden;
     position: fixed;
 }
+
+.lg-logo {
+    margin: 0 auto;
+}
+
+.index-form {
+    margin: 0 auto;
+    width: 640px;
+}
