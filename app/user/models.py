@@ -244,3 +244,8 @@ class Consumer(db.Model, JSONSerializer):
     hair_articles       = db.relationship('Article')
 
 
+class ConsumerInstance(db.Model):
+    __table_name__      = 'consumer_instance'
+
+    name                = db.Column(db.String, primary_key=True)
+    count               = db.Column(db.Integer)
