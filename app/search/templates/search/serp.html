@@ -1,8 +1,9 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-    {% if names %}
-        {% for name in names %}
-            <h2> {{ name }} </h2>
+<h1> SERP <h6> yo </h6></h5>
+    {% if providers %}
+        {% for provider in providers %}
+            <h2> {{ provider.business_name }} </h2>
         {% endfor %}
     {% endif %}
 {% endblock %}
