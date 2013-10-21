@@ -4,26 +4,35 @@
 
 {% block body %}
 <div class="container">
-    {% if search_form %}
-    <form class="form-inline" role="form"
-        action="{{ url_for('search._search') }}"
-        method="POST">
-        {% for field in search_form %}
-            {% if field.__class__.__name__ == 'SubmitField' %}
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive lg-logo" src="{{ url_for('static', filename='img/logo-lg.png') }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if search_form %}
+            <form class="form-inline index-form" role="form"
+                action="{{ url_for('search._search') }}"
+                method="POST">
+                {% for field in search_form %}
+                {% if field.__class__.__name__ == 'SubmitField' %}
                 {{ field(class_="btn btn-default") }}
-            {% endif %}
+                {% endif %}
 
-            {% if field.name != 'csrf_token' and field.name != 'submit' %}
-            <div class="form-group">
-                {{ field.label(class_="sr-only") }}
-                {{ field(class_="form-control", placeholder=field.label.text) }}
+                {% if field.name != 'csrf_token' and field.name != 'submit' %}
+                <div class="form-group">
+                    {{ field.label(class_="sr-only") }}
+                    {{ field(class_="form-control", placeholder=field.label.text) }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
             </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+        </div>
 
-    <h1> Index </h1>
-    <h3><a href="{{ url_for('frontend.test_consumer') }}">Test Consumer</a></h3>
-    <h3><a href="{{ url_for('frontend.test_provider') }}">Test Provider</a></h3>
-</div>
-{% endblock %}
+        <h1> Index </h1>
+        <h3><a href="{{ url_for('frontend.test_consumer') }}">Test Consumer</a></h3>
+        <h3><a href="{{ url_for('frontend.test_provider') }}">Test Provider</a></h3>
+    </div>
+    {% endblock %}
