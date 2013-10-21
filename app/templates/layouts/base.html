@@ -69,13 +69,6 @@
         </div><!-- / nav stuff -->
         {% endblock %}
 
-        {% block search_bar %}
-            <div class="container">
-                {% if search_form %}
-                    {{ render_form(search_form, url_for('search._search')) }}
-                {% endif %}
-            </div>
-        {% endblock %}
 
 
         {% block body %}
