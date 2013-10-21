@@ -51,6 +51,16 @@ class Address(db.Model, AddressSerializer):
     state               = db.Column(db.String)
     zip_code            = db.Column(db.Integer)
 
+    def __repr__(self):
+        return '%s %s %s, %s, %s %s' %(
+               self.street_1,
+               self.street_2,
+               self.apartment,
+               self.city,
+               self.state,
+               self.zip_code
+                )
+
 
 class ReviewSerializer(JSONSerializer):
     __json_hidden__ = ['user', 'provider']
@@ -64,7 +74,7 @@ class Review(db.Model, ReviewSerializer):
 
 
 class MenuSerializer(JSONSerializer):
-    __json_hidden__ = ['provider']
+    __json_hidden__ = ['provider', 'provider_id', 'id']
 
 
 class Menu(db.Model, MenuSerializer):
@@ -147,7 +157,7 @@ class Hours(db.Model, HoursSerializer):
 
 
 class LocationSerializer(JSONSerializer):
-    pass
+    __json_hidden__ = ['provider_id', 'id']
 
 class Location(db.Model, LocationSerializer):
     id              = db.Column(db.Integer, primary_key=True)
@@ -164,7 +174,10 @@ consumers_providers = db.Table('consumers_providers',
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
             'gallery', 'avatar', 'products',
-            'hours', 'user', 'favorited_by']
+            'hours', 'user', 'favorited_by',
+            'reviews', 'fb_url', 'links', 'twitter_url', 'phone',
+            '_business_url', 'email', 'bio', 'address', 'payment_methods',
+            'business_name']
 
 class Provider(db.Model, ProviderSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
@@ -182,8 +195,18 @@ class Provider(db.Model, ProviderSerializer):
 
     @business_url.setter
     def business_url(self, value):
-        self._business_url = acceptable_url_string(value,
+        test_string = acceptable_url_string(
+                value,
                 current_app.config['ACCEPTABLE_URL_CHARS'])
+
+        like_string = '{}%'.format(test_string)
+
+        count = Provider.query.filter(
+                Provider._business_url.like(like_string)).count()
+
+        proper_url = '{}-{}'.format(test_string, count)
+
+        self._business_url = proper_url
 
     phone               = db.Column(db.String)
     email               = db.Column(db.String)
@@ -203,7 +226,7 @@ class Provider(db.Model, ProviderSerializer):
                             backref=db.backref('provider'))
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
-    loc                 = db.relationship('Location')
+    location            = db.relationship('Location', uselist=False)
 
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
