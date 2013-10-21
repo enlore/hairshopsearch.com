@@ -1,173 +1,213 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-        <div class="jumbotron inset-shadow-top-bottom">
-            <div class="container">
+<div id="left-sticker" class="left-sticker rotate-90">
+    <div class="masque" id="sticker-masque">
+        <span>
+        Honkey Tonk Salon Is Is Is
+        </span>
+    </div>
+</div>
+
+
+<div id="profile-jumbotron" class="jumbotron inset-shadow-top-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <img class="img-responsive"
+                src="http://placehold.it/425x370&text=Hero">
+            </div>
+
+            <div class="col-md-7 hidden-sm hidden-xs">
                 <div class="row">
-                    <div class="col-md-5">
-                        <img class="img-responsive"
-                            src="http://placehold.it/425x370&text=Hero">
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
                     </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                    </div>
+                </div>
 
-                    <div class="col-md-7 hidden-sm hidden-xs">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="container">
+<div class="container">
+    <h1> {{ provider.business_name }} </h1>
+    <a href="{{ url_for('frontend.favorite',
+        provider_id=provider.id) }}">
+        Favorite
+    </a>
+    <div class="row">
+        <div class="col-md-8">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="profile-header">
-                                <h3> Bio & Service Menu </h3>
-                            </div>
-                                <div class="profile-content">
-                                    <div>
+                <div class="col-md-12">
+                    <div class="profile-header"
+                        data-toggle="collapse"
+                        data-target="#menus">
+                        <h3> Menus </h3>
+                    </div>
+
+                    <div class="profile-content collapse" id="menus">
+                        <div>
+                            <table cellspacing="0">
+                                <tr>
+                                    <th>
+                                        Item
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Item
+                                        </td>
+                                        <td>
+                                            $15.00
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-header"
+                        data-toggle="collapse"
+                        data-target="#bio">
+                        <h3> Bio </h3>
+                    </div>
+                    <div class="profile-content collapse" id="bio">
+                        <div>
+                            <p>
+                                Cupidatat beard wayfarers, post-ironic roof
+                                party selvage Etsy Neutra chia plaid trust
+                                fund Wes Anderson viral. Truffaut ethnic
+                                narwhal, gastropub Pinterest ennui deserunt
+                                letterpress do irony selvage direct trade.
+                                Craft beer next level bespoke single-origin
+                                coffee Tonx. Banjo actually blog, aute Vice
+                                nostrud non Williamsburg aesthetic polaroid
+                                beard. Consequat viral cardigan meggings,
+                                tofu Tumblr kogi. Banh mi narwhal
+                                gastropub, nostrud iPhone paleo accusamus
+                                mumblecore Neutra Portland elit. Irony
+                                velit Portland literally, put a bird on it
+                                Intelligentsia fanny pack commodo kogi
+                                wayfarers roof party 8-bit lo-fi culpa.
+
+                                Anim officia shabby chic Cosby sweater
+                                chia, aliqua sunt tempor tofu whatever aute
+                                authentic irure mlkshk four loko. Neutra
+                                pariatur plaid viral tofu, Vice whatever.
+                                Pour-over Blue Bottle Neutra ad officia
+                                cray, lomo Helvetica Echo Park eu
+                                Williamsburg ethnic biodiesel quinoa.
+                                Master cleanse mlkshk dolore, skateboard
+                                meggings hoodie XOXO banjo occaecat eu.
+                                Pitchfork vero ennui, sriracha tempor et
+                                ethical banh mi cliche farm-to-table PBR&B.
+                                Gluten-free roof party asymmetrical,
+                                skateboard hella aesthetic art party elit
+                                magna High Life et pug. Readymade viral
+                                sint flexitarian vinyl quinoa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-header"
+                        data-toggle="collapse"
+                        data-target="#reviews">
+                        <h3> Reviews </h3>
+                    </div>
+                    <div class="profile-content collapse" id="reviews">
+                        <div>
+                            <ul>
+                                <li>
+                                    <h5> Lovely </h5>
                                     <p>
-                                        Cupidatat beard wayfarers, post-ironic roof
-                                        party selvage Etsy Neutra chia plaid trust
-                                        fund Wes Anderson viral. Truffaut ethnic
-                                        narwhal, gastropub Pinterest ennui deserunt
-                                        letterpress do irony selvage direct trade.  Craft beer next level bespoke single-origin
-                                        coffee Tonx. Banjo actually blog, aute Vice
-                                        nostrud non Williamsburg aesthetic polaroid
-                                        beard. Consequat viral cardigan meggings,
-                                        tofu Tumblr kogi. Banh mi narwhal
-                                        gastropub, nostrud iPhone paleo accusamus
-                                        mumblecore Neutra Portland elit. Irony
-                                        velit Portland literally, put a bird on it
-                                        Intelligentsia fanny pack commodo kogi
-                                        wayfarers roof party 8-bit lo-fi culpa.
-
-                                        Anim officia shabby chic Cosby sweater
-                                        chia, aliqua sunt tempor tofu whatever aute
-                                        authentic irure mlkshk four loko. Neutra
-                                        pariatur plaid viral tofu, Vice whatever.
-                                        Pour-over Blue Bottle Neutra ad officia
-                                        cray, lomo Helvetica Echo Park eu
-                                        Williamsburg ethnic biodiesel quinoa.
-                                        Master cleanse mlkshk dolore, skateboard
-                                        meggings hoodie XOXO banjo occaecat eu.
-                                        Pitchfork vero ennui, sriracha tempor et
-                                        ethical banh mi cliche farm-to-table PBR&B.
-                                        Gluten-free roof party asymmetrical,
-                                        skateboard hella aesthetic art party elit
-                                        magna High Life et pug. Readymade viral
-                                        sint flexitarian vinyl quinoa.
+                                        ote bag fap irony, do ea pickled
+                                        farm-to-table mollit leggings.
+                                        Shoreditch squid adipisicing Marfa,
+                                        street art biodiesel Blue Bottle
+                                        pop-up. Squid hella kale chips
+                                        8-bit. Irure cupidatat anim sunt in
+                                        keytar. Tattooed excepteur selfies
+                                        Intelligentsia Tonx proident.
+                                        Bitters mustache
                                     </p>
-                                </div>
-                                </div>
+                                    <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                    <hr>
+                                </li>
+                                <li>
+                                    <h5> Smelled Like Cheese</h5>
+                                    <p>
+                                        I love cheese.
+                                    </p>
+                                    <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                    <hr>
+                                </li>
+                                <li>
+                                    <h5> Lovely </h5>
+                                    <p>
+                                        ote bag fap irony, do ea pickled
+                                        farm-to-table mollit leggings.
+                                        Shoreditch squid adipisicing Marfa,
+                                        street art biodiesel Blue Bottle
+                                        pop-up. Squid hella kale chips
+                                        8-bit. Irure cupidatat anim sunt in
+                                        keytar. Tattooed excepteur selfies
+                                        Intelligentsia Tonx proident.
+                                        Bitters mustache
+                                    </p>
+                                    <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                    <hr>
+                                </li>
+                                <li>
+                                    <h5> Would Use Again</h5>
+                                    <p>
+                                        Totally.  Awesome sauce.
+                                    </p>
+                                    <a href="mailto:bob@gmail.com">bob@gmail.com</a>
+                                    <hr>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </div>
+            </div>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="profile-header">
-                                <h3> Reviews </h3>
-                            </div>
-                            <div class="profile-content">
-                                <div>
-                                <ul>
-                                    <li>
-                                        <h5> Lovely </h5> 
-                                        <p>
-                                            ote bag fap irony, do ea pickled
-                                            farm-to-table mollit leggings.
-                                            Shoreditch squid adipisicing Marfa,
-                                            street art biodiesel Blue Bottle
-                                            pop-up. Squid hella kale chips
-                                            8-bit. Irure cupidatat anim sunt in
-                                            keytar. Tattooed excepteur selfies
-                                            Intelligentsia Tonx proident.
-                                            Bitters mustache
-                                        </p>
-                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
-                                        <hr>
-                                    </li>
-                                    <li>
-                                        <h5> Lovely </h5> 
-                                        <p>
-                                            ote bag fap irony, do ea pickled
-                                            farm-to-table mollit leggings.
-                                            Shoreditch squid adipisicing Marfa,
-                                            street art biodiesel Blue Bottle
-                                            pop-up. Squid hella kale chips
-                                            8-bit. Irure cupidatat anim sunt in
-                                            keytar. Tattooed excepteur selfies
-                                            Intelligentsia Tonx proident.
-                                            Bitters mustache
-                                        </p>
-                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
-                                        <hr>
-                                    </li>
-                                    <li>
-                                        <h5> Lovely </h5> 
-                                        <p>
-                                            ote bag fap irony, do ea pickled
-                                            farm-to-table mollit leggings.
-                                            Shoreditch squid adipisicing Marfa,
-                                            street art biodiesel Blue Bottle
-                                            pop-up. Squid hella kale chips
-                                            8-bit. Irure cupidatat anim sunt in
-                                            keytar. Tattooed excepteur selfies
-                                            Intelligentsia Tonx proident.
-                                            Bitters mustache
-                                        </p>
-                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
-                                        <hr>
-                                    </li>
-                                    <li>
-                                        <h5> Lovely </h5> 
-                                        <p>
-                                            ote bag fap irony, do ea pickled
-                                            farm-to-table mollit leggings.
-                                            Shoreditch squid adipisicing Marfa,
-                                            street art biodiesel Blue Bottle
-                                            pop-up. Squid hella kale chips
-                                            8-bit. Irure cupidatat anim sunt in
-                                            keytar. Tattooed excepteur selfies
-                                            Intelligentsia Tonx proident.
-                                            Bitters mustache
-                                        </p>
-                                        <a href="mailto:bob@gmail.com">bob@gmail.com</a>
-                                        <hr>
-                                    </li>
-                                </ul>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="profile-header">
+                            <div class="profile-header"
+                                data-toggle="collapse"
+                                data-target="#gallery">
                                 <h3> Gallery </h3>
                             </div>
-                            <div class="profile-content">
+                            <div class="profile-content collapse" id="gallery">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4">
                                         <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
@@ -268,4 +308,5 @@
                     </div>
                 </div>
             </div><!-- /.container -->
+        </div>
 {% endblock %}
