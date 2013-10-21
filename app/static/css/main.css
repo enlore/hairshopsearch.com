@@ -22,6 +22,7 @@ p,span {
 
 body {
   padding-top: 8em;
+  padding-bottom: 10em;
 }
 
 img {
@@ -200,5 +201,5 @@ h3.active {
     bottom: 0;
     width: 100%;
     overflow: hidden;
-    margin-top: 6em;
+    position: fixed;
 }
