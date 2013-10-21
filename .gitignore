@@ -1,6 +1,8 @@
 *.py[cod]
 files
 tests
+*.swp
+*.swq
 
 # C extensions
 *.so
