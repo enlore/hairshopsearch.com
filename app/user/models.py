@@ -1,5 +1,6 @@
 from flask import current_app
 from flask.ext.security import UserMixin, RoleMixin
+from sqlalchemy.ext.hybrid import hybrid_property
 from ..core import db
 from ..helpers import JSONSerializer, acceptable_url_string
 
@@ -232,6 +233,7 @@ class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
+    _consumer_url       = db.Column(db.String)
     hair_type           = db.Column(db.String)
     hair_products       = db.relationship('Product', backref='consumer')
     hair_routine        = db.Column(db.Text)
@@ -242,6 +244,14 @@ class Consumer(db.Model, JSONSerializer):
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
     hair_articles       = db.relationship('Article')
+
+    @hybrid_property
+    def consumer_url(self):
+        return self._consumer_url
+
+    @consumer_url.setter
+    def consumer_url(self, value):
+        self._consumer_url = value
 
 
 class ConsumerInstance(db.Model):
