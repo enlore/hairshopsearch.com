@@ -64,32 +64,53 @@
                         </div>
                         <button type="submit" class="btn btn-sm">Submit</button>
                     </form>
-
                 </div>
             </div>
         </div><!-- / nav stuff -->
         {% endblock %}
 
         {% block search_bar %}
-        {% if search_form %}
-        {{ render_form(search_form, url_for('search._search')) }}
-        {% endif %}
+            <div class="container">
+                {% if search_form %}
+                    {{ render_form(search_form, url_for('search._search')) }}
+                {% endif %}
+            </div>
         {% endblock %}
 
         {% block messages %}
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        {% for cat, message in messages %}
-        <div class="message {{ cat }}">
-            <p> {{ message }} </p>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for cat, message in messages %}
+                    <div class="message {{ cat }}">
+                        <p> {{ message }} </p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         {% endblock %}
 
         {% block body %}
         {% endblock %}
+
+        <div class="footer">
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-4">
+                        <ul>
+                            <li> <a href="/">Home</a> </li>
+                            <li> <a href="/about-us">About Us</a> </li>
+                            <li> <a href="mailto:info@hairshopsearch.com">Get In Touch</a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <p> &copy;2013 HairShopSearch </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p> lol hai </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
