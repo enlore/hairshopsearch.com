@@ -12,13 +12,16 @@ h1,h2,h3,h4,h5,h6 {
     font-family: 'HSSMinion', serif;
 }
 
+ul, ol {
+    list-style: none;
+}
+
 p,span {
     font-family: 'HSSMyriad', sans-serif;
 }
 
 body {
-  padding-top: 4em;
-  padding-bottom: 4em;
+  padding-top: 8em;
 }
 
 img {
@@ -83,6 +86,48 @@ form.navbar-form input.apple-round {
   }
 }
 
+.rotate-90 {
+            transform: rotate(-90deg);
+         -o-transform: rotate(-90deg);
+       -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.left-sticker {
+    display: none;
+}
+
+.left-sticker .masque {
+    background: #3DAA98;
+    position: absolute;
+    overflow: hidden;
+    min-height: 42px;
+    right: 0;
+}
+
+.left-sticker .masque span {
+    position: fixed;
+    top: 297px;
+    left: 0;
+    min-width: 350px;
+    min-height: 42px;
+}
+
+@media screen and (min-width: 1200px) {
+  .left-sticker {
+    color: #fff;
+    font-family: 'HSSMinion', serif;
+    display: block;
+    background: #000;
+    font-size: 24px;
+    min-width: 350px;
+    min-height: 36px;
+    position: fixed;
+    top: 297px;
+    overflow: hidden;
+  }
+}
+
 .jumbotron {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -102,13 +147,18 @@ form.navbar-form input.apple-round {
 .profile-header {
   color: #fff;
   background: #000;
-  padding: 15px;
   box-shadow: -2px 2px 7px -1px #1a1a1a;
 }
 
 .profile-header h3 {
     margin: 0;
+    padding: 15px;
+    font-size: 21px;
     text-align: center;
+}
+
+h3.active {
+    background: #3DAA98;
 }
 
 .profile-content > div {
@@ -124,13 +174,14 @@ form.navbar-form input.apple-round {
     background: #000;
     color: #fff;
     font-family: 'HSSMinion', serif;
-    font-size: 16px;
     padding: 15px;
+    font-size: 16.8px;
     text-align: center;
 }
 
 .profile-sidebar h3 {
     margin: 0;
+    font-size: 25.2px;
 }
 
 .profile-sidebar table {
@@ -140,4 +191,14 @@ form.navbar-form input.apple-round {
 .profile-map {
     display: block;
     margin: 0 auto;
+}
+
+.footer {
+    background: #222;
+    border-top: 1px solid #777;
+    box-shadow: inset 0 1px 0 0px #999;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 6em;
 }
