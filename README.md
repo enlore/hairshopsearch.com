@@ -1,4 +1,4 @@
 hairshopsearch.com
 ==================
 
-search for heair shops what do you think?
+Search for hair shops what do you think?
