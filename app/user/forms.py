@@ -3,18 +3,6 @@ from wtforms import (TextField, TextAreaField, FileField, SelectMultipleField,
         DecimalField, SelectField, FormField, SubmitField)
 from wtforms.validators import Required
 
-
-# CONSUMER
-# a Hair Log Form
-# a Bio form (Links, social media, bio)
-# A photo form
-
-# PROVIDER
-# a Menu Form
-# A photo form
-# a Business Info form (NAP, Payments)
-# a Review Form
-
 class ReviewForm(Form):
     body        = TextAreaField('')
     author      = TextField('')
@@ -114,4 +102,13 @@ class RemoveItemForm(Form):
 class MenuItemForm(Form):
     name            = TextField(u'Name')
     price           = DecimalField(u'Price', places=2, rounding=None)
+    submit          = SubmitField(u'Submit')
+
+class NewConsumerForm(Form):
+    first_name      = TextField(u'First Name', [Required()])
+    last_name       = TextField(u'Last Name', [Required()])
+    submit          = SubmitField(u'Submit')
+
+class NewProviderForm(Form):
+    business_name   = TextField(u'Business Name', [Required()])
     submit          = SubmitField(u'Submit')
