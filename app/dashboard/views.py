@@ -2,10 +2,13 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
-from ..user.models import Provider, Consumer, Menu, MenuItem, ConsumerInstance
+from ..user.models import (Provider, Consumer, Menu, MenuItem,
+    ConsumerInstance, ProviderInstance)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
-    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm)
+    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
+    NewProviderForm, NewConsumerForm)
 from ..core import db
+from ..helpers import acceptable_url_string
 
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
@@ -179,36 +182,67 @@ def upload_photo():
 @dashboard.route('/new_provider', methods=['GET', 'POST'])
 @login_required
 def new_provider():
-    provider = Provider(user=current_user)
-    current_user.provider = provider
-    provider.payment_methods = ''
-    provider.hours = {}
-    db.session.add(current_user.provider)
-    db.session.commit()
-    return redirect(url_for('dashboard.profile'))
+    form = NewProviderForm()
+    if form.validate_on_submit():
+        provider = Provider(user=current_user)
+
+        provider.business_name = form.business_name.data
+        provider.payment_methods = ''
+
+        dirty_name = provider.business_name
+        clean_name = acceptable_url_string(dirty_name,
+                current_app.config['ACCEPTABLE_URL_CHARS'])
+
+        pi = ProviderInstance.query.get(clean_name)
+
+        if pi:
+            provider.business_url = '{}.{}'.format(clean_name, pi.count)
+            pi.count += 1
+
+        else:
+            pi = ProviderInstance()
+            pi.name = clean_name
+            pi.count = 1
+            provider.business_url = clean_name
+
+        db.session.add(pi)
+        db.session.add(provider)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+    return render_template('dashboard/new_provider.html', form=form)
 
 @dashboard.route('/new_consumer', methods=['GET', 'POST'])
 @login_required
 def new_consumer():
-    current_user.consumer = Consumer(user=current_user)
-    # if instance keyed by FirstnameLastname in ConsumerInstance
-    # update count by one
+    form = NewConsumerForm()
+    if form.validate_on_submit():
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
 
-    fname = '{}{}'.format(current_user.first_name, current_user.last_name)
+        consumer = Consumer(user=current_user)
+        # if instance keyed by FirstnameLastname in ConsumerInstance
+        # update count by one
+
+        dirty_name = '{}{}'.format(current_user.first_name, current_user.last_name)
+        clean_name = acceptable_url_string(dirty_name,
+                current_app.config['ACCEPTABLE_URL_CHARS'])
 
 
-    ci = ConsumerInstance.query.get(fname)
-    # update the count on a given consumer name
-    if ci:
-        ci.count += 1
+        ci = ConsumerInstance.query.get(clean_name)
 
-    # or create an instance of a consumer name counter
-    else:
-        ci = ConsumerInstance()
-        ci.name = fname
-        ci.count = 1
+        if ci:
+            consumer.consumer_url = '{}.{}'.format(clean_name, ci.count)
+            ci.count += 1
 
-    db.session.add(ci)
-    db.session.add(current_user.consumer)
-    db.session.commit()
-    return redirect(url_for('dashboard.profile'))
+        else:
+            ci = ConsumerInstance()
+            ci.name = clean_name
+            ci.count = 1
+            consumer.consumer_url = clean_name
+
+
+        db.session.add(ci)
+        db.session.add(consumer)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+    return render_template('dashboard/new_consumer.html', form=form)
