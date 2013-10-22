@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ consumer.user.first_name }} {{ consumer.user.last_name }}
+            </h1>
+         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="http://placehold.it/225x300">
+         </div>
+
+         <div class="col-md-8">
+             <div class="col-md-6">
+                 <h3>{{ consumer.hair_type }}</h3>
+             </div>
+             <div class="col-md-6">
+                 <h4>{{ consumer.hair_routine }}</h4>
+             </div>
+         </div>
+     </div><!-- /.row -->
+
+     <div class="row">
+         <div class="col-md-7">
+             <div class="row">
+                {{ consumer.bio }}
+             </div>
+
+             <div class="row">
+                {% for article in consumer.hair_articles %}
+                    <article>
+                        {{ article.title }}
+                        {{ article.body }}
+                    </article>
+                {% endfor %}
+             </div>
+
+         </div>
+         <div class="col-md-5">
+             <div class="row">
+                 <ul>
+                     {% for fav in consumer.favorites %}
+                        <a href="{{ fav.business_url }}">
+                            {{ fav.business_name }}
+                        </a>
+                     {% endfor %}
+            </ul>
+             </div>
+
+         </div>
+     </div>
+</div><!-- /.container -->
+{% endblock %}
