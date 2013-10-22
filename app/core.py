@@ -11,6 +11,10 @@ mail = Mail()
 from pyelasticsearch import ElasticSearch
 es = ElasticSearch('http://localhost:9200')
 
+from flask_security import Security
+sec = Security()
+sec.datastore = ud
+
 class HSSError(Exception):
     def __init__(self, msg):
         self.msg = msg
