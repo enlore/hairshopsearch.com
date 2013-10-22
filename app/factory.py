@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
 from flask_wtf import CsrfProtect
 from .config import Config
-from .core import db, ud, mail, HSSError
+from .core import db, sec, mail, HSSError
 import pkgutil
 import importlib
 import locale
@@ -40,7 +40,7 @@ def _config_app(app, config):
 
 def _register_extensions(app):
     db.init_app(app)
-    Security(app, ud)
+    sec.init_app(app)
     mail.init_app(app)
     toolbar = DebugToolbarExtension(app)
     CsrfProtect(app)
