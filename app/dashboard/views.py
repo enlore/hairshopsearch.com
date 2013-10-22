@@ -2,7 +2,7 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
-from ..user.models import Provider, Consumer, Menu, MenuItem
+from ..user.models import Provider, Consumer, Menu, MenuItem, ConsumerInstance
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm)
 from ..core import db
@@ -191,6 +191,24 @@ def new_provider():
 @login_required
 def new_consumer():
     current_user.consumer = Consumer(user=current_user)
+    # if instance keyed by FirstnameLastname in ConsumerInstance
+    # update count by one
+
+    fname = '{}{}'.format(current_user.first_name, current_user.last_name)
+
+
+    ci = ConsumerInstance.query.get(fname)
+    # update the count on a given consumer name
+    if ci:
+        ci.count += 1
+
+    # or create an instance of a consumer name counter
+    else:
+        ci = ConsumerInstance()
+        ci.name = fname
+        ci.count = 1
+
+    db.session.add(ci)
     db.session.add(current_user.consumer)
     db.session.commit()
     return redirect(url_for('dashboard.profile'))
