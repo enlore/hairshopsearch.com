@@ -1,43 +1,49 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-<h1> Consumer Profile </h1>
-{% if consumer %}
-<h2> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h2>
-<img src="{{ consumer.avatar.url }}">
+<div class="container">
+    <h1> Consumer Profile </h1>
+    {% if consumer %}
+    <h2> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h2>
+    <img src="{{ consumer.avatar.url }}">
 
-<div class="about-me">
-    <h3> About Me </h3>
-    <p>{{ consumer.bio }}</p>
-    <table>
-        <tr><th>My Hair</th></tr>
-        <tr><td>Hair Type:</td><td>{{ consumer.hair_type }}</td></tr>
-        <tr><th>Products</th></tr>
-        {% for product in consumer.hair_products %}
-        <tr><td>{{ product.name }}</td><td>{{ product.description }}</td></tr>
+    <div class="about-me">
+        <h3> About Me </h3>
+        <p>{{ consumer.bio }}</p>
+        <table>
+            <tr><th>My Hair</th></tr>
+            <tr><td>Hair Type:</td><td>{{ consumer.hair_type }}</td></tr>
+            <tr><th>Products</th></tr>
+            {% for product in consumer.hair_products %}
+            <tr><td>{{ product.name }}</td><td>{{ product.description }}</td></tr>
+            {% endfor %}
+        </table>
+
+        <h3> My Favorites </h3>
+        <ul>
+            {% for fav in consumer.favorites %}
+            <li>
+                <a href="{{ url_for('frontend.provider_url', provider_url=fav.business_url) }}">
+                    {{ fav.business_name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="hair routine">
+        <h3> My Routine </h3>
+        <p>{{ consumer.hair_routine }}</p>
+    </div>
+
+    <div class="hair-log">
+        <h3>Hair Log</h3>
+        {% for article in consumer.hair_articles %}
+        <h4>{{ article.title }}</h4>
+        <p>{{ article.body }}</p>
         {% endfor %}
-    </table>
+    </div>
 
-    <h3> My Links </h3>
-    <ul>
-        {% for l in consumer.links.split(',') %}
-        <a href="{{ l }}">{{ l }}</a>
-        {% endfor %}
-    </ul>
 </div>
-
-
-<div class="hair routine">
-    <h3> My Routine </h3>
-    <p>{{ consumer.hair_routine }}</p>
-</div>
-
-<div class="hair-log">
-    <h3>Hair Log</h3>
-    {% for article in consumer.hair_articles %}
-    <h4>{{ article.title }}</h4>
-    <p>{{ article.body }}</p>
-    {% endfor %}
-</div>
-
 {% endif %}
 {% endblock %}
