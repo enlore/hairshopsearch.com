@@ -14,20 +14,16 @@ def acceptable_url_string(string, proto_string):
     for ch in (char for char in string.strip()):
         # replace as single whitespace with a single hyphen
         if ch == ' ':
-            ch = '-'
+            ch = '.'
         if ch in proto_string:
             res.append(ch)
 
     res_string = u''.join(res)
 
-    if res_string[-1] == '-':
+    if res_string[-1] == '.':
         return res_string[0:-1]
 
     return res_string
-
-class HSSError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
 
 def lat_lon(address, sensor='false'):
     """Access the Google Geocoding API to return lat and lon given an address.
@@ -120,3 +116,7 @@ class JSONEncoder(json.JSONEncoder):
 
         return super(JSONEncoder, self).default(value)
 
+
+class HSSError(Exception):
+    def __init__(self, msg):
+        self.msg = msg
