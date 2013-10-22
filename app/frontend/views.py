@@ -13,7 +13,6 @@ def index():
     return render_template('frontend/index.html', search_form=SearchForm())
 
 @login_required
-@roles_required(['consumer'])
 @frontend.route('/<provider_id>/favorite')
 def favorite(provider_id):
     this_provider = Provider.query.get(provider_id)
@@ -41,7 +40,8 @@ def provider_url(provider_url):
 
 @frontend.route('/consumer/<consumer_url>')
 def consumer_url(consumer_url):
-    c = Consumer.query.filter(User.first_name==consumer_url).first()
+    c = Consumer.query.filter(Consumer.consumer_url==consumer_url).first()
+    current_app.logger.info(c)
     if c:
         return render_template('frontend/consumer.html', consumer=c)
     else:
