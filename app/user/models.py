@@ -196,18 +196,7 @@ class Provider(db.Model, ProviderSerializer):
 
     @business_url.setter
     def business_url(self, value):
-        test_string = acceptable_url_string(
-                value,
-                current_app.config['ACCEPTABLE_URL_CHARS'])
-
-        like_string = '{}%'.format(test_string)
-
-        count = Provider.query.filter(
-                Provider._business_url.like(like_string)).count()
-
-        proper_url = '{}-{}'.format(test_string, count)
-
-        self._business_url = proper_url
+        self._business_url = value
 
     phone               = db.Column(db.String)
     email               = db.Column(db.String)
@@ -228,6 +217,13 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
+
+
+class ProviderInstance(db.Model):
+    __table_name__      = 'provider_instance'
+
+    name                = db.Column(db.String, primary_key=True)
+    count               = db.Column(db.Integer)
 
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
