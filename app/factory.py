@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
 from flask_wtf import CsrfProtect
@@ -27,6 +27,10 @@ def _create_app(pkg_name, pkg_path, config):
     @app.errorhandler(HSSError)
     def handle_internal_error(error):
         raise error
+
+    @app.errorhandler(404)
+    def four_oh_four(msg):
+        return render_template('errors/404.html')
 
     _config_app(app, config)
     _register_extensions(app)
