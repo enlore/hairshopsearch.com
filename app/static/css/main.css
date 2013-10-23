@@ -212,3 +212,11 @@ h3.active {
     margin: 0 auto;
     width: 640px;
 }
+
+.user-dashboard-group {
+    border: 1px solid grey;
+    padding: 1em;
+}
+
+.user-dashboard-group [class*='col-'] {
+}
