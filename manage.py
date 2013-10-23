@@ -3,7 +3,7 @@ from flask.ext.script import Manager, Server, Shell
 from app import create_app
 from app.core import db, ud
 from app.user.models import (User, Role, Provider, Address, Photo, Review,
-                                Menu, Gallery)
+                                Consumer, Menu, Gallery)
 from app.helpers import JSONEncoder
 from tests.data import mockup_data
 from pprint import pprint
@@ -30,6 +30,7 @@ def _make_context():
            Photo=Photo,
            Menu=Menu,
            p=Provider.query.get(4),
+           c=Consumer.query.first(),
            jsoner=JSONEncoder(),
            pprint=pprint
             )
