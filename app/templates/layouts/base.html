@@ -51,11 +51,18 @@
                         {% endif %}
                     </ul>
 
-                    <form class="navbar-form navbar-right" role="search" action="" method="">
+                    <form class="navbar-form navbar-right" role="search"
+                        action="{{ url_for('search._search') }}" method="POST">
                         <div class="form-group">
                             <label class="sr-only" for=""></label>
                             <input type="text" class="form-control input-sm
-                                apple-round inset-shadow" name="" id="" placeholder="Service">
+                                apple-round inset-shadow" name="type" id=""
+                                placeholder="Type">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="service"></label>
+                            <input type="text" class="form-control input-sm
+                                apple-round inset-shadow" name="service" id="" placeholder="Service">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for=""></label>
