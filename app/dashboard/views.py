@@ -3,7 +3,7 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 from ..user.models import (Provider, Consumer, Menu, MenuItem,
-    ConsumerInstance, ProviderInstance)
+    ConsumerInstance, ProviderInstance, Address, Hours)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm)
@@ -65,6 +65,9 @@ def add_menu_item(menu_id):
 @login_required
 def edit_nap():
     p = current_user.provider
+    if not p.address:
+        p.address = Address()
+
     form = AddressForm(
             obj=current_user.provider.address,
             business_name=p.business_name,
@@ -112,9 +115,11 @@ def edit_payment():
 @login_required
 def edit_hours():
     form = HoursForm()
+    p = current_user.provider
+    if not p.hours:
+        p.hours = Hours()
 
     if form.validate_on_submit():
-        p = current_user.provider
         p.hours.monday_open     = form.monday_open.data
         p.hours.monday_close    = form.monday_close.data
         p.hours.tuesday_open    = form.tuesday_open.data
