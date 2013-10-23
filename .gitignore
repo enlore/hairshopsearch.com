@@ -3,6 +3,7 @@ files
 tests
 *.swp
 *.swq
+app/static/font/MinionPro-Regular.otf
 
 # C extensions
 *.so
