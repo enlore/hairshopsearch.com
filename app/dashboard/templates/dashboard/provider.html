@@ -4,163 +4,196 @@
 
 {% block body %}
 {% if provider %}
-<section>
-    <h2> {{ provider.business_name }} </h2>
-    <br>
+<div class="container">
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h2> {{ provider.business_name }} </h2>
+            <br>
 
-    {% if provider.avatar.url %}
-    <img src="{{ provider.avatar.url }}">
-    {% else %}
-    <img src="http://placehold.it/225x300">
+            {% if provider.avatar.url %}
+            <img src="{{ provider.avatar.url }}">
+            {% else %}
+            <img src="http://placehold.it/225x300">
+            {% endif %}
+            <br >
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="">Upload Avater</a>
+        </div>
+    </div>
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h3> {{ provider.phone }} </h3>
+            <address>
+                <h3> Address: </h3>
+                <table>
+                    <tr><td>{{ provider.address.street_1 }}</td></tr>
+                    <tr><td>{{ provider.address.street_2 }}</td></tr>
+                    <tr><td>{{ provider.address.city }}</td></tr>
+                    <tr><td>{{ provider.address.state }}</td></tr>
+                    <tr><td>{{ provider.address.zip_code }}</td></tr>
+                    <tr>
+                        <td>
+                            <a href="mailto:{{ provider.email }}">
+                                {{ provider.email }}
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </address>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_nap') }}">Edit Business Info</a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h3> Accepted Forms of Payment </h3>
+            <table>
+                {% for val in provider.payment_methods.split(',') %} 
+                <tr><td>{{ val.capitalize() }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_payment') }}">Edit Payment Methods</a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h3> Hours </h3>
+            <table>
+                <tr>
+                    <td> Monday </td>
+                    <td> from {{ provider.hours.monday_open }} </td>
+                    <td> to {{ provider.hours.monday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Tuesday </td>
+                    <td> from {{ provider.hours.tuesday_open }} </td>
+                    <td> to {{ provider.hours.tuesday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Wednesday </td>
+                    <td> from {{ provider.hours.wednesday_open }} </td>
+                    <td> to {{ provider.hours.wednesday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Thursday </td>
+                    <td> from {{ provider.hours.thursday_open }} </td>
+                    <td> to {{ provider.hours.thursday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Friday </td>
+                    <td> from {{ provider.hours.friday_open }} </td>
+                    <td> to {{ provider.hours.friday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Saturday </td>
+                    <td> from {{ provider.hours.saturday_open }} </td>
+                    <td> to {{ provider.hours.saturday_close }} </td>
+                </tr>
+                <tr>
+                    <td> Sunday </td>
+                    <td> from {{ provider.hours.sunday_open }} </td>
+                    <td> to {{ provider.hours.sunday_close }} </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_hours') }}">Edit Hours</a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <p> {{ provider.bio }} </p>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_bio') }}">Edit Bio</a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h3> Social Media </h3>
+            <table>
+                <tr><td><a href="{{ provider.links }}">
+                            {{ provider.links }}
+                </a></td></tr>
+                <tr><td><a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a></td> </tr>
+                <tr>
+                    <td>
+                        <a href="{{ provider.twitter_url }}">
+                            @{{ provider.business_name }}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_social_media') }}">Edit Social Media Links</a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            {% for menu in provider.menus %}
+                <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
+                <table class="menu {{ menu.menu_type }}">
+                    {% for item in menu.menu_items %}
+                    <tr>
+                        <td>{{ item.name }} </td>
+                        <td>{{ item.price | cash }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ url_for('dashboard.rm_menu_item', menu_id=menu.id,
+                                item_id=item.id) }}"> Remove </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ url_for('dashboard.add_menu_item', menu_id=menu.id) }}">Add Item</a>
+                        </td>
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+    </div><!-- /.row -->
+            <div class="menus">
+            </div>
+
+        <div class="row user-dashboard-group">
+            <div class="col-md-9">
+                <h3> Customer Reviews</h3>
+                <ul>
+                    {% for review in provider.reviews %}
+                    <li>
+                        {{ review.body }}
+                        <br>
+                        <a href="mailto:{{ review.user.email }}">{{ review.user.email }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div><!-- /.row -->
+
+        <div class="row user-dashboard-group">
+            <div class="col-md-9">
+                <h3> Gallery of Our Work </h3>
+                {% for photo in provider.gallery.photos %}
+                <img src="{{ photo.url }}">
+                {% endfor %}
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" href="">Upload Photo to Gallery </a>
+            </div>
+        </div><!-- /.row -->
+    </div>
     {% endif %}
-    <br >
-    <a href="">Upload Avater</a>
-
-    <h3> {{ provider.phone }} </h3>
-    <address>
-        <h3> Address: </h3>
-        <table>
-            <tr><td>{{ provider.address.street_1 }}</td></tr>
-            <tr><td>{{ provider.address.street_2 }}</td></tr>
-            <tr><td>{{ provider.address.city }}</td></tr>
-            <tr><td>{{ provider.address.state }}</td></tr>
-            <tr><td>{{ provider.address.zip_code }}</td></tr>
-            <tr>
-                <td>
-                    <a href="mailto:{{ provider.email }}">
-                        {{ provider.email }}
-                    </a>
-                </td>
-            </tr>
-        </table>
-    </address>
-    <a href="{{ url_for('dashboard.edit_nap') }}">Edit Business Info</a>
-</section>
-
-<section>
-    <div class="payment-methods">
-        <h3> Accepted Forms of Payment </h3>
-        <table>
-            {% for val in provider.payment_methods.split(',') %} 
-            <tr><td>{{ val.capitalize() }}</td></tr>
-            {% endfor %}
-        </table>
-        <a href="{{ url_for('dashboard.edit_payment') }}">Edit Payment Methods</a>
-    </section>
-
-    <section>
-        <h3> Hours </h3>
-        <table>
-            <tr>
-                <td> Monday </td>
-                <td> from {{ provider.hours.monday_open }} </td>
-                <td> to {{ provider.hours.monday_close }} </td>
-            </tr>
-            <tr>
-                <td> Tuesday </td>
-                <td> from {{ provider.hours.tuesday_open }} </td>
-                <td> to {{ provider.hours.tuesday_close }} </td>
-            </tr>
-            <tr>
-                <td> Wednesday </td>
-                <td> from {{ provider.hours.wednesday_open }} </td>
-                <td> to {{ provider.hours.wednesday_close }} </td>
-            </tr>
-            <tr>
-                <td> Thursday </td>
-                <td> from {{ provider.hours.thursday_open }} </td>
-                <td> to {{ provider.hours.thursday_close }} </td>
-            </tr>
-            <tr>
-                <td> Friday </td>
-                <td> from {{ provider.hours.friday_open }} </td>
-                <td> to {{ provider.hours.friday_close }} </td>
-            </tr>
-            <tr>
-                <td> Saturday </td>
-                <td> from {{ provider.hours.saturday_open }} </td>
-                <td> to {{ provider.hours.saturday_close }} </td>
-            </tr>
-            <tr>
-                <td> Sunday </td>
-                <td> from {{ provider.hours.sunday_open }} </td>
-                <td> to {{ provider.hours.sunday_close }} </td>
-            </tr>
-        </table>
-    </div>
-    <a href="{{ url_for('dashboard.edit_hours') }}">Edit Hours</a>
-</section>
-
-<section>
-    <p> {{ provider.bio }} </p>
-    <a href="{{ url_for('dashboard.edit_bio') }}">Edit Bio</a>
-</section>
-
-<section>
-    <h3> Social Media </h3>
-    <table>
-        <tr><td><a href="{{ provider.links }}">
-                    {{ provider.links }}
-        </a></td></tr>
-        <tr><td><a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a></td> </tr>
-        <tr>
-            <td>
-                <a href="{{ provider.twitter_url }}">
-                    @{{ provider.business_name }}
-                </a>
-            </td>
-        </tr>
-    </table>
-    <a href="{{ url_for('dashboard.edit_social_media') }}">Edit Social Media Links</a>
-</section>
-
-<section>
-    <div class="menus">
-        {% for menu in provider.menus %}
-        <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
-        <table class="menu {{ menu.menu_type }}">
-            {% for item in menu.menu_items %}
-            <tr>
-                <td>{{ item.name }} </td>
-                <td>{{ item.price | cash }}</td>
-                <td>
-                    <a href="{{ url_for('dashboard.rm_menu_item', menu_id=menu.id,
-                        item_id=item.id) }}"> Remove </a>
-                </td>
-            </tr>
-            {% endfor %}
-            <tr><td></td><td><a href="{{ url_for('dashboard.add_menu_item',
-                        menu_id=menu.id)   }}">Add Item</a></td></tr>
-        </table>
-        {% endfor %}
-    </div>
-</section>
-
-<section>
-    <div class="reviews">
-        <h3> Customer Reviews</h3>
-        <ul>
-            {% for review in provider.reviews %}
-            <li>
-                {{ review.body }}
-                <br>
-                <a href="mailto:{{ review.user.email }}">{{ review.user.email }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
-
-<section>
-    <div class="gallery">
-        <h3> Gallery of Our Work </h3>
-        <a href="">Upload Photo to Gallery </a>
-        <br>
-        {% for photo in provider.gallery.photos %}
-        <img src="{{ photo.url }}">
-        {% endfor %}
-    </div>
-</section>
-
-{% endif %}
-{% endblock %}
+    {% endblock %}
