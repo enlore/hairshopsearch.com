@@ -3,10 +3,11 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 from ..user.models import (Provider, Consumer, Menu, MenuItem,
-    ConsumerInstance, ProviderInstance, Address, Hours, Photo)
+    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
-    NewProviderForm, NewConsumerForm, HairInfoForm)
+    NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
+    RoutineForm)
 from ..core import db
 from ..helpers import acceptable_url_string
 
@@ -83,6 +84,34 @@ def edit_consumer_hair_type():
     return render_template('dashboard/edit_profile.html', form=form,
             url=url_for('dashboard.edit_consumer_hair_type'))
 
+@dashboard.route('/consumer/products/add', methods=['GET', 'POST'])
+def add_product():
+    c = current_user.consumer
+    form = ProductForm()
+    if form.validate_on_submit():
+        product = Product()
+        product.name = form.name.data
+        product.description = form.description.data
+
+        c.hair_products.append(product)
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+
+    return render_template('dashboard/edit_profile.html', form=form,
+            url=url_for('dashboard.add_product'))
+
+@dashboard.route('/consumer/routine/edit', methods=['GET', 'POST'])
+def edit_routine():
+    c = current_user.consumer
+    form = RoutineForm(obj=c)
+    if form.validate_on_submit():
+        c.hair_routine = form.routine.data
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+    return render_template('dashboard/edit_profile.html', form=form,
+            url=url_for('dashboard.edit_routine'))
 
 @dashboard.route('/menu/<menu_id>/rm/<item_id>', methods=['GET'])
 def rm_menu_item(menu_id, item_id):
