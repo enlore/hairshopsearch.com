@@ -2,6 +2,8 @@
 {% extends "layouts/base.html" %}
 
 {% block body %}
+<div class="container">
     {{ render_form(form, url_for('dashboard.new_consumer')) }}
+</div>
 {% endblock %}
 
