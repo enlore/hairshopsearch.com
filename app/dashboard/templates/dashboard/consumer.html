@@ -42,14 +42,18 @@
 
     <div class="row user-dashboard-group">
         <div class="col-md-9">
-            <tr><th>Products</th></tr>
+            <h2>Products</h2>
             {% for product in consumer.hair_products %}
-            <tr><td>{{ product.name }}</td><td>{{ product.description }}</td></tr>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
             {% endfor %}
         </div>
 
         <div class="col-md-3">
-            <a class="btn btn-primary">Edit This </a>
+            <a class="btn btn-primary"
+                href="{{ url_for('dashboard.add_product') }}">
+                Add Product
+            </a>
         </div>
     </div>
 
@@ -79,7 +83,8 @@
         </div>
 
         <div class="col-md-3">
-            <a class="btn btn-primary">Edit This </a>
+            <a class="btn btn-primary"
+                href="{{ url_for('dashboard.edit_routine') }}">Edit Routine</a>
         </div>
     </div>
     <div class="row user-dashboard-group">
