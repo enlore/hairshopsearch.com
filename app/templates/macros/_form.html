@@ -1,16 +1,20 @@
 {% macro render_form(form, url) %}
-    <form action="{{ url }}" method="POST">
-        {{ form.csrf_token() }}
-        {% for field in form %}
-            <div class="control-group">
-                <div class="control-label">
-                    {% if field.name != 'csrf_token'  and  field.name != 'submit' %}
-                        {{ field.label() }}
-                    {% endif %}
-                </div>
-                <div class="control">
-                    {{ field() }}
-                </div>
-            </div>
-        {% endfor %}
-{% endmacro %}
+<form class="form-horizontal" action="{{ url }}" method="POST">
+    {{ form.csrf_token() }}
+    {% for field in form %}
+    <div class="form-group">
+        {% if field.name != 'csrf_token'  and  field.name != 'submit' %}
+            {{ field.label(class_='control-label col-md-2') }}
+        {% endif %}
+        {% if field.__class__.__name__ == 'SubmitField' %}
+        <div class="col-md-2 col-md-offset-2">
+            {{ field(class_='btn btn-default') }}
+        </div>
+        {% else %}
+        <div class="col-md-10">
+            {{ field(class_='form-control') }}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endmacro %}
