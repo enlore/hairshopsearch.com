@@ -6,7 +6,7 @@ from ..user.models import (Provider, Consumer, Menu, MenuItem,
     ConsumerInstance, ProviderInstance, Address, Hours, Photo)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
-    NewProviderForm, NewConsumerForm)
+    NewProviderForm, NewConsumerForm, HairInfoForm)
 from ..core import db
 from ..helpers import acceptable_url_string
 
@@ -57,6 +57,32 @@ def profile():
                 rm_menu_item_form=rm_menu_item_form)
 
     return redirect(url_for('frontend.welcome'))
+
+@dashboard.route('/consumer/bio/edit', methods=['GET', 'POST'])
+def edit_consumer_bio():
+    c = current_user.consumer
+    form = BioForm(obj=c)
+    if form.validate_on_submit():
+        current_app.logger.info(form.bio.data)
+        c.bio = form.bio.data
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+    return render_template('dashboard/edit_profile.html', form=form,
+            url=url_for('dashboard.edit_consumer_bio'))
+
+@dashboard.route('/consumer/hair_type/edit', methods=['GET', 'POST'])
+def edit_consumer_hair_type():
+    c = current_user.consumer
+    form = HairInfoForm(obj=c)
+    if form.validate_on_submit():
+        c.hair_type = form.hair_type.data
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('dashboard.profile'))
+    return render_template('dashboard/edit_profile.html', form=form,
+            url=url_for('dashboard.edit_consumer_hair_type'))
+
 
 @dashboard.route('/menu/<menu_id>/rm/<item_id>', methods=['GET'])
 def rm_menu_item(menu_id, item_id):
@@ -201,14 +227,6 @@ def edit_social_media():
 
     return render_template('dashboard/edit_profile.html', form=form,
             url=url_for('dashboard.edit_social_media'))
-
-@dashboard.route('/upload_photo', methods=['GET', 'POST'])
-def upload_photo():
-    form = PhotoForm()
-    if form.validate_on_submit():
-        return redirect(url_for('dashboard.profile'))
-    return render_template('dashboard/edit_profile.html', form=form,
-            url=url_for('dashboard.upload_photo'))
 
 @dashboard.route('/new_provider', methods=['GET', 'POST'])
 @login_required
