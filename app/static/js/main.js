@@ -17,8 +17,6 @@ $(document).on('ready', function() {
                         function (InkBlob) {
                             console.log('stored: ' + InkBlob.filename)
                             console.log('s3 key: ' + InkBlob.key)
-                            $('<img>').attr('src', InkBlob.url)
-                                .appendTo('#picked-images')
 
                         },
                         function (FPError) {
@@ -38,16 +36,31 @@ $(document).on('ready', function() {
                     function (InkBlobs) {
                         console.log(JSON.stringify(InkBlobs))
 
+                        var csrf_token = $('meta[name="csrf"]').attr('content')
                         for (var i=0; i < InkBlobs.length; i++) {
-                            InkBlob = InkBlobs[i]
-                            $('<img>').attr('src', InkBlob.url)
-                                .appendTo('#picked-images')
+                            request = $.ajax({
+                                url: '/dashboard/photo/save',
+                                headers: { 'X-CSRFToken': csrf_token },
+                                type: 'post',
+                                data: { photo_key: InkBlobs[i].key }
+                            })
+
+                            request.done(function (response, textStatus, jqXHR) {
+                                console.log(response.status)
+                                console.log(textStatus)
+                            })
+
+                            request.fail(function (response, textStatus, jqXHR) {
+                                console.log(response.status)
+                                console.log(textStatus)
+                            })
                         }
                     }
                     ,function (FPError) {
                         console.log(FPError)
                     })
         })
+
     var $sticker = $("#left-sticker")
         ,x = $sticker.offset().left
 
