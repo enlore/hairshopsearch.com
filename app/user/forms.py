@@ -95,6 +95,11 @@ class SocialMediaForm(Form):
     submit          = SubmitField(u'Submit')
 
 
+class HairInfoForm(Form):
+    hair_type       = TextField(u'Hair Type')
+    submit          = SubmitField(u'Submit')
+
+
 class RemoveItemForm(Form):
     submit          = SubmitField(u'Remove')
 
