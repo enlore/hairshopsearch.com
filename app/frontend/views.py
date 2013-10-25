@@ -21,7 +21,7 @@ def favorite(provider_id):
         this_provider.business_url = this_provider.business_name
     current_app.logger.info(this_provider.business_url)
 
-    if this_provider not in current.user.consumer.favorites:
+    if this_provider not in current_user.consumer.favorites:
         current_user.consumer.favorites.append(this_provider)
 
     db.session.add(current_user)
