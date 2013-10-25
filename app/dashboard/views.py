@@ -21,10 +21,11 @@ def index():
 
 @dashboard.route('/photo/save', methods=['POST'])
 def save_photo():
-    p = current_user.provider
+    entity = current_user.provider or current_user.consumer
+    current_app.logger.info(entity)
 
-    if not p.avatar:
-        p.avatar = Photo()
+    if not entity.avatar:
+        entity.avatar = Photo()
 
     photo_url = '{}/{}'.format(
             current_app.config['S3_URL'],
@@ -32,8 +33,8 @@ def save_photo():
             )
 
     current_app.logger.info(photo_url)
-    p.avatar.url = photo_url
-    db.session.add(p)
+    entity.avatar.url = photo_url
+    db.session.add(entity)
 
     try:
         db.session.commit()
