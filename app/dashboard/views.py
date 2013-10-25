@@ -1,9 +1,9 @@
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
-    flash)
+    flash, request, jsonify)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 from ..user.models import (Provider, Consumer, Menu, MenuItem,
-    ConsumerInstance, ProviderInstance, Address, Hours)
+    ConsumerInstance, ProviderInstance, Address, Hours, Photo)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm)
@@ -16,6 +16,32 @@ dashboard = Blueprint('dashboard', __name__,
 @dashboard.route('/')
 def index():
     return 'd board'
+
+
+@dashboard.route('/photo/save', methods=['POST'])
+def save_photo():
+    p = current_user.provider
+
+    if not p.avatar:
+        p.avatar = Photo()
+
+    photo_url = '{}/{}'.format(
+            current_app.config['S3_URL'],
+            request.form['photo_key']
+            )
+
+    current_app.logger.info(photo_url)
+    p.avatar.url = photo_url
+    db.session.add(p)
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        current_app.logger.error(e.msg)
+        return jsonify(status='Your file wasn\'t saved! Please try again.')
+
+    return redirect(url_for('dashboard.profile'))
+
 
 @dashboard.route('/profile')
 @login_required
