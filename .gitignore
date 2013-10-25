@@ -5,6 +5,7 @@ tests
 *.swq
 app/static/font/MinionPro-Regular.otf
 app/indexer
+*.tar.gz
 
 # C extensions
 *.so
