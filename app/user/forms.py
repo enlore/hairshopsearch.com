@@ -100,6 +100,11 @@ class HairInfoForm(Form):
     submit          = SubmitField(u'Submit')
 
 
+class RoutineForm(Form):
+    routine         = TextAreaField(u'My Routine')
+    submit          = SubmitField(u'Submit')
+
+
 class RemoveItemForm(Form):
     submit          = SubmitField(u'Remove')
 
