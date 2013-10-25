@@ -109,6 +109,12 @@ class MenuItemForm(Form):
     price           = DecimalField(u'Price', places=2, rounding=None)
     submit          = SubmitField(u'Submit')
 
+
+class ProductForm(Form):
+    name            = TextField(u'Name')
+    description     = TextField(u'Description')
+    submit          = SubmitField(u'Submit')
+
 class NewConsumerForm(Form):
     first_name      = TextField(u'First Name', [Required()])
     last_name       = TextField(u'Last Name', [Required()])
