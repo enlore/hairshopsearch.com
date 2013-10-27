@@ -52,7 +52,12 @@
                         {% endif %}
                     </ul>
 
-                    <form class="navbar-form navbar-right" role="search"
+                    {% if request.path == url_for('frontend.index') %}
+                        {% set visible = 'hidden' %}
+                    {% else %}
+                        {% set visible = None %}
+                    {% endif %}
+                    <form class="navbar-form navbar-right {{ visible }}" role="search"
                         action="{{ url_for('search._search') }}" method="POST">
                         <div class="form-group">
                             <label class="sr-only" for=""></label>
