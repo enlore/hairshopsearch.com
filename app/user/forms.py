@@ -2,6 +2,7 @@ from flask_wtf import Form
 from wtforms import (TextField, TextAreaField, FileField, SelectMultipleField,
         DecimalField, SelectField, FormField, SubmitField)
 from wtforms.validators import Required
+from markupsafe import Markup
 
 class ReviewForm(Form):
     body        = TextAreaField('')
@@ -77,8 +78,38 @@ payment_methods = [
         ('amex', 'Amex')
         ]
 
+
+def multi_checkboxes(field, ul_class=u'', **kwargs):
+    html = []
+    html.append(Markup('<ul>'))
+    for value, label, checked in field.iter_choices():
+        html.append(Markup('<li>'))
+
+        if checked:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}" checked="checked">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+        else:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+
+
+        html.append(Markup('</li>'))
+    html.append(Markup('</ul>'))
+    return Markup('\n').join(html)
+
 class PaymentsForm(Form):
     payment_methods     = SelectMultipleField(u'Payment Methods',
+                            widget=multi_checkboxes,
                             choices=payment_methods)
     submit              = SubmitField(u'Submit')
 
