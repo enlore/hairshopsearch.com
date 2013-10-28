@@ -3,7 +3,8 @@
 <h1> SERP <h6> yo </h6></h5>
     {% if providers %}
         {% for provider in providers %}
-            <h2> {{ provider.business_name }} </h2>
+        <a href="{{ provider.business_url }}"> <h2> {{ provider.business_name }} </h2> </a>
+        <p> {{ provider.bio | ellipsize(limit=125) }} </p>
         {% endfor %}
     {% endif %}
 {% endblock %}
