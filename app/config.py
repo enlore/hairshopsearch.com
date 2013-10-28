@@ -26,7 +26,7 @@ class DevConfig(Default):
 
     SECURITY_REGISTERABLE = True
     SECURITY_SEND_REGISTER_EMAIL = True
-    SECURITY_EMAIL_SENDER = 'services@hairshopsearch.com'
+    SECURITY_EMAIL_SENDER = 'hairshopsearch-services@hairshopsearch.com'
     SECURITY_CONFIRMABLE = True
     SECURITY_TRACKABLE = True
     SECURITY_PASSWORD_HASH = 'bcrypt'
