@@ -3,8 +3,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <img src="http://placehold.it/225x300">
+        <div class="col-md-4 profile-sidebar">
+            <img class="center img-responsive" src="http://placehold.it/225x300">
             <h1>
                 {{ consumer.user.first_name }} {{ consumer.user.last_name }}
             </h1>
@@ -13,9 +13,14 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <h3>{{ consumer.hair_type }}</h3>
-                    <!-- hair state -->
-                    <!-- hair texture -->
+                    <div class="profile-header">
+                        <h3> Hair Profile </h3>
+                    </div>
+                    <div class="profile-content">
+                        <h3> {{ consumer.hair_type }} </h3>
+                        <h3> {{ consumer.hair_state }} </h3>
+                        <h3> {{ consumer.hair_texture }} </h3>
+                    </div>
                 </div>
             </div><!-- /.row -->
 
