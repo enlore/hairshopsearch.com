@@ -1,10 +1,16 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-<h1> SERP <h6> yo </h6></h5>
+<div class="container">
+    <h1> Search Results </h1>
     {% if providers %}
-        {% for provider in providers %}
-        <a href="{{ provider.business_url }}"> <h2> {{ provider.business_name }} </h2> </a>
-        <p> {{ provider.bio | ellipsize(limit=125) }} </p>
-        {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for provider in providers %}
+                <a href="{{ provider.business_url }}"> <h2>{{ provider.business_name }}</h2> </a>
+                <p> {{ provider.bio | ellipsize(limit=125) }} </p>
+            {% endfor %}
+        </div>
+    </div><!-- /.row -->
     {% endif %}
+</div>
 {% endblock %}
