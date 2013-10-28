@@ -4,6 +4,7 @@ from flask.ext.security import Security
 from flask_wtf import CsrfProtect
 from .config import Config
 from .core import db, sec, mail, HSSError
+from .helpers import ellipsize
 import pkgutil
 import importlib
 import locale
@@ -23,6 +24,7 @@ def _create_app(pkg_name, pkg_path, config):
     app.jinja_env.trim_blocks = True
 
     app.jinja_env.filters['cash'] = pretty_cash
+    app.jinja_env.filters['ellipsize'] = ellipsize
 
     @app.errorhandler(HSSError)
     def handle_internal_error(error):

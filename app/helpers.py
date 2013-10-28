@@ -3,6 +3,12 @@ import simplejson as json
 from pyelasticsearch.client import _iso_datetime
 from six import PY3
 
+def ellipsize(string, limit=50):
+    """Jinja template filter
+    Ellipsize that text! Craps out up to limit characters
+    """
+    return '{}{}'.format(string[0, limit], '...')
+
 def acceptable_url_string(string, proto_string):
     """Clean a string of all it's unnacceptable chars.
 
