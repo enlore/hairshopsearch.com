@@ -135,16 +135,26 @@
         <div class="col-md-9">
             <h3> Social Media </h3>
             <table>
-                <tr><td><a href="{{ provider.links }}">
-                            {{ provider.links }}
-                </a></td></tr>
-                <tr><td><a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a></td> </tr>
                 <tr>
                     <td>
-                        <a href="{{ provider.twitter_url }}">
-                            @{{ provider.business_name }}
-                        </a>
+                        {% if not provider.fb_url %}
+                            <p>Add your FaceBook page to your profile!</p>
+                        {% else %}
+                            <a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a>
+                        {% endif %}
                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% if not provider.twitter_url %}
+                            <p>Add your account url to your profile!</p>
+                        {% else %}
+                            <a href="{{ provider.twitter_url }}">
+                                @{{ provider.business_name }}
+                            </a>
+                        {% endif %}
+                    </td>
+
                 </tr>
             </table>
         </div>
