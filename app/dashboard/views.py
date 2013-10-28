@@ -269,7 +269,8 @@ def new_provider():
         provider.payment_methods = ''
 
         dirty_name = provider.business_name
-        clean_name = acceptable_url_string(dirty_name,
+        # lower dirty name
+        clean_name = acceptable_url_string(dirty_name.lower(),
                 current_app.config['ACCEPTABLE_URL_CHARS'])
 
         pi = ProviderInstance.query.get(clean_name)
@@ -303,7 +304,7 @@ def new_consumer():
         # update count by one
 
         dirty_name = '{}{}'.format(current_user.first_name, current_user.last_name)
-        clean_name = acceptable_url_string(dirty_name,
+        clean_name = acceptable_url_string(dirty_name.lower(),
                 current_app.config['ACCEPTABLE_URL_CHARS'])
 
 
