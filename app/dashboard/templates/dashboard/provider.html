@@ -6,10 +6,16 @@
 {% if provider %}
 <div class="container">
     <div class="row">
-        <div class="col-md-3 col-md-offset-9">
+        <div class="col-md-3">
             <a class="btn btn-info" href="{{ url_for('frontend.provider_url',
                 provider_url=provider.business_url) }}">
                 View Profile
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-info" href="{{ url_for('security.change_password') }}">
+                Change Password
             </a>
         </div>
     </div>
