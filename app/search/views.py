@@ -16,6 +16,11 @@ def searched_out_objects(ids):
 
     return objects
 
+@search.route('/test')
+def _search_test():
+    p = Provider.query.first()
+    return render_template('search/serp.html', providers=[p])
+
 @search.route('/', methods=['POST'])
 def _search():
     form = SearchForm()
