@@ -11,8 +11,7 @@ class DevConfig(Default):
     DEBUG_TB_PROFILER_ENABLED = True
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-    ACCEPTABLE_URL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop\
-qrstuvwxyz0123456789_"
+    ACCEPTABLE_URL_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/hairshopsearch.db'
     SQLALCHEMY_ECHO = False
