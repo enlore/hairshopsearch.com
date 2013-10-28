@@ -32,7 +32,7 @@ def favorite(provider_id):
 
 @frontend.route('/<provider_url>')
 def provider_url(provider_url):
-    p = Provider.query.filter(Provider._business_url==provider_url).first()
+    p = Provider.query.filter(Provider._business_url==provider_url.lower()).first()
     if p:
         return render_template('frontend/provider.html', provider=p)
     else:
@@ -40,7 +40,7 @@ def provider_url(provider_url):
 
 @frontend.route('/consumer/<consumer_url>')
 def consumer_url(consumer_url):
-    c = Consumer.query.filter(Consumer.consumer_url==consumer_url).first()
+    c = Consumer.query.filter(Consumer.consumer_url==consumer_url.lower()).first()
     current_app.logger.info(c)
     if c:
         return render_template('frontend/consumer.html', consumer=c)
