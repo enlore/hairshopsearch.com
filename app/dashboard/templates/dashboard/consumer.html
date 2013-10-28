@@ -2,13 +2,19 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="cold-md-3 col-md-offset-9">
+        <div class="col-md-3">
+            <a class="btn btn-info" href="{{ url_for('security.change_password') }}">
+                Change Password
+            </a>
+        </div>
+        <div class="cold-md-3">
             <a class="btn btn-info" href="{{ url_for('frontend.consumer_url',
                 consumer_url=consumer.consumer_url) }}">
                 View Profile
             </a>
         </div>
-    </div>
+    </div><!-- /.row -->
+
     <div class="row user-dashboard-group">
         <div class="col-md-9">
             <h1> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h1>
