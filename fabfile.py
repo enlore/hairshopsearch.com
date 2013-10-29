@@ -14,7 +14,7 @@ def t():
 def reset():
     """Reset local dev environment"""
 
-    local('python manage.py init_db')
+    local('python manage.py reset_db')
 
 def d():
     """Run app in dev"""
@@ -26,6 +26,7 @@ def r():
     """Run app as is"""
 
     local('python manage.py -c dev.cfg run')
+
 def sh():
     """Gimme that fancy script Shell
     """
