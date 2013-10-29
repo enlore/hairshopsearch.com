@@ -13,8 +13,7 @@
         <div class="col-md-12">
             {% if search_form %}
             <form class="form-inline index-form" role="form"
-                action="{{ url_for('search._search') }}"
-                method="POST">
+                action="{{ url_for('search._search') }}" method="POST">
                 {{ search_form.csrf_token() }}
                 {% for field in search_form %}
                     {% if field.__class__.__name__ == 'SubmitField' %}
