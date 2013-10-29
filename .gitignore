@@ -7,6 +7,7 @@ app/static/font/MinionPro-Regular.otf
 app/indexer
 *.tar.gz
 app/static/js/vendor
+bin
 
 # C extensions
 *.so
