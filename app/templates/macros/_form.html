@@ -1,20 +1,35 @@
-{% macro render_form(form, url) %}
-<form class="form-horizontal" action="{{ url }}" method="POST">
+{% macro render_form(form, url, class="form-horizontal") %}
+<form class="{{ class }}" action="{{ url }}" method="POST">
     {{ form.csrf_token() }}
     {% for field in form %}
-    <div class="form-group">
-        {% if field.name != 'csrf_token'  and  field.name != 'submit' %}
-            {{ field.label(class_='control-label col-md-2') }}
-        {% endif %}
-        {% if field.__class__.__name__ == 'SubmitField' %}
-        <div class="col-md-2 col-md-offset-2">
-            {{ field(class_='btn btn-default') }}
-        </div>
+        {% if class == 'form-inline' %}
+            <div class="form-group">
+                {% if field.name != 'crsf_token' and field.name != 'submit' %}
+                    {{ field.label(class_="sr-only") }}
+                    {{ field(class_="form-control input-sm") }}
+                {% elif field.name == 'submit'  %}
+                    {{ field(class_="btn btn-default") }}
+                {% endif %}
+            </div>
+
         {% else %}
-        <div class="col-md-10">
-            {{ field(class_='form-control') }}
+        <div class="form-group">
+            {% if field.name != 'csrf_token'  and  field.name != 'submit' %}
+                {{ field.label(class_='control-label col-md-2') }}
+            {% endif %}
+
+            {% if field.__class__.__name__ == 'SubmitField' %}
+            <div class="col-md-2 col-md-offset-2">
+                {{ field(class_='btn btn-default') }}
+            </div>
+
+            {% else %}
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+            {% endif %}
         </div>
         {% endif %}
-    </div>
+
     {% endfor %}
     {% endmacro %}
