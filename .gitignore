@@ -6,6 +6,7 @@ tests
 app/static/font/MinionPro-Regular.otf
 app/indexer
 *.tar.gz
+app/static/js/vendor
 
 # C extensions
 *.so
