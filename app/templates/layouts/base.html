@@ -57,13 +57,16 @@
                     {% else %}
                         {% set visible = None %}
                     {% endif %}
+
+                    <!-- Navbar form -->
+                    {{ render_form(search_form(), url_for('search._search'), class="form-inline") }}
+                    <!--
                     <form class="navbar-form navbar-right {{ visible }}" role="search"
                         action="{{ url_for('search._search') }}" method="POST">
                         <div class="form-group">
                             <label class="sr-only" for=""></label>
-                            <input type="text" class="form-control input-sm
-                                apple-round inset-shadow" name="type" id=""
-                                placeholder="Type">
+                            <input type="text" class="form-control input-sm apple-round inset-shadow" 
+                            name="type" id="" placeholder="Type">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="service"></label>
@@ -77,6 +80,7 @@
                         </div>
                         <button type="submit" class="btn btn-sm">Submit</button>
                     </form>
+                    -->
                 </div>
             </div>
         </div><!-- / nav stuff -->
