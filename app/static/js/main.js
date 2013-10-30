@@ -81,24 +81,4 @@ $(document).on('ready', function() {
         console.log(e.target)
         $(this).toggleClass('active')
     })
-
-    var $ph_masque = $('#sticker-masque')
-        ,$jumbotron = $('#profile-jumbotron')
-        ,jumbotron_bottom = $jumbotron.height() + $jumbotron.offset().top
-
-        $(window).scroll(function(e) {
-            var sticker_bottom_edge = $sticker.offset().top + $sticker.width()
-                ,masque_width = $sticker.width() - (sticker_bottom_edge - jumbotron_bottom - 30)
-
-            if ( sticker_bottom_edge >= (jumbotron_bottom + 30)) {
-                $ph_masque.css({
-                    'width': masque_width
-                })
-                console.log(masque_width)
-            }
-
-            if ( sticker_bottom_edge < (jumbotron_bottom + 30 )) {
-                $ph_masque.css({'width': $sticker.width() + 20})
-            }
-        })
 })
