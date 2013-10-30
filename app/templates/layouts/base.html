@@ -59,7 +59,10 @@
                     {% endif %}
 
                     <!-- Navbar form -->
-                    {{ render_form(search_form, url_for('search._search'), class="form-inline") }}
+                    {% if search_form %}
+                    {{ render_form(search_form(), url_for('search._search'),
+                        class="form-inline", input_class="input-sm") }}
+                    {% endif %}
                 </div>
             </div>
         </div><!-- / nav stuff -->
