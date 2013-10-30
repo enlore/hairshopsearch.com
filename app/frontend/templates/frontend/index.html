@@ -11,22 +11,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            {% if search_form %}
-            <form class="form-inline index-form" role="form"
-                action="{{ url_for('search._search') }}" method="POST">
-                {{ search_form.csrf_token() }}
-                {% for field in search_form %}
-                    {% if field.__class__.__name__ == 'SubmitField' %}
-                        {{ field(class_="btn btn-default") }}
-                    {% endif %}
-
-                    {% if field.name != 'csrf_token' and field.name != 'submit' %}
-                    <div class="form-group">
-                        {{ field.label(class_="sr-only") }}
-                        {{ field(class_="form-control", placeholder=field.label.text) }}
-                    </div>
-                    {% endif %}
-                {% endfor %}
+            {% if index_search_form %}
+            {{ render_form(index_search_form, url_for('search._search'), class="form-inline") }}
             {% endif %}
             </div>
         </div>

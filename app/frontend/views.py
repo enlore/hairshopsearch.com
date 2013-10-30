@@ -10,7 +10,8 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 
 @frontend.route('/')
 def index():
-    return render_template('frontend/index.html', search_form=SearchForm())
+    return render_template('frontend/index.html',
+            index_search_form=SearchForm())
 
 @login_required
 @frontend.route('/<provider_id>/favorite')
