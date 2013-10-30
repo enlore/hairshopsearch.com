@@ -9,6 +9,7 @@ app/indexer
 app/static/js/vendor
 bin
 node_modules
+recess
 
 # C extensions
 *.so
