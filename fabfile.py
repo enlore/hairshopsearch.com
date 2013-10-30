@@ -33,6 +33,20 @@ def sh():
 
     local('python manage.py --config dev.cfg shell')
 
+def css():
+    """Compile less to css
+    """
+
+    local('node_modules/recess/bin/recess app/static/css/main.less --compile\
+        > app/static/css/main.css')
+
+def tiny_css():
+    """Compile and compress less
+    """
+
+    local('node_modules/recess/bin/recess app/static/css/main.less --compile\
+        --compress > app/static/css/main.css')
+
 def pack():
     local('python setup.py sdist --formats=gztar')
 
