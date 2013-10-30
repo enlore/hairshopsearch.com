@@ -10,9 +10,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 search-form-container">
             {% if index_search_form %}
-            {{ render_form(index_search_form, url_for('search._search'), class="form-inline") }}
+            {{ render_form(index_search_form, url_for('search._search'),
+                class="form-inline") }}
             {% endif %}
             </div>
         </div>
