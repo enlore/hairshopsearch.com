@@ -8,6 +8,7 @@ app/indexer
 *.tar.gz
 app/static/js/vendor
 bin
+node_modules
 
 # C extensions
 *.so
