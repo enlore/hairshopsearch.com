@@ -4,18 +4,19 @@
 @off-white: #e2f0f0;
 @swanky-blue: #68aecd;
 
-
-@black: #000;
-@grey: #333;
 @seventy-percent-grey: #898989;
 @light-orange: #ffcb63;
 @teal-as-crap: #3daa98;
 @chilax-grey: #79818a;
+
 @white: #fff;
+@black: #000;
+@grey: #333;
 
 @header-bg: @vivid-orange;
 @navbar-shadow: @chilax-grey;
 @navbar-border: @slightly-darker-vivid-orange;
+@navbar-fg: @white;
 
 @body-bg: @off-white;
 
@@ -24,9 +25,11 @@
 
 @jumbotron-color: @grey;
 @profile-header-color: @black;
+@profile-header-fg: @white;
 @profile-header-active: @teal-as-crap;
 @profile-content-color: @light-orange;
 @profile-sidebar-bg: @black;
+@profile-sidebar-fg: @white;
 
 @user-dashboard-group-bg: @warm-white;
 @user-dashboard-group-border: @seventy-percent-grey;
@@ -98,29 +101,34 @@ img {
     padding-top: 11px;
 }
 
+.navbar form {
+    text-align: center;
+    padding-top: 10px;
+}
 @media screen and (min-width: 960px) {
-    form.navbar-form {
-        padding-right: 5em;
+    .navbar form {
     }
 }
 
-form.navbar-form div.form-group {
+/*
+.navbar-form div.form-group {
     padding-right: 10px;
 }
 
-form.navbar-form input.input-sm {
+.navbar-form input.input-sm {
     height: 26px;
 }
 
-form.navbar-form input.inset-shadow {
+.navbar-form input.inset-shadow {
     box-shadow: inset 1px 1px 2px 1px #888;
     border: none;
 }
 
-form.navbar-form input.apple-round {
+.navbar-form input.apple-round {
     border-radius: 16px;
     -moz-border-radius: 16px;
 }
+*/
 
 
 @media screen and (min-width: 768px) {
@@ -162,23 +170,23 @@ form.navbar-form input.apple-round {
 
 
 .profile-header {
-  color: #fff;
+  color: @profile-header-fg;
   background: @profile-header-color;
   box-shadow: -2px 2px 7px -1px #1a1a1a;
-}
-
-.profile-header h3 {
-    margin: 0;
-    padding: 15px;
-    font-size: 21px;
-    text-align: center;
+    h3 {
+        margin: 0;
+        padding: 15px;
+        font-size: 21px;
+        text-align: center;
+    }
 }
 
 .profile-header > h3.active {
     background: @profile-header-active;
 }
 
-.profile-content > div,
+
+.profile-content > div, /* Boo... */
 .profile-content {
     background: @profile-content-color;
     font-size: 16px;
@@ -190,20 +198,18 @@ form.navbar-form input.apple-round {
 
 .profile-sidebar {
     background: @profile-sidebar-bg;
-    color: #fff;
+    color: @profile-sidebar-fg;
     font-family: 'HSSMinion', serif;
     padding: 15px;
     font-size: 16.8px;
     text-align: center;
-}
-
-.profile-sidebar h3 {
-    margin: 0;
-    font-size: 25.2px;
-}
-
-.profile-sidebar table {
-    margin: 0 auto;
+    h3 {
+        margin: 0;
+        font-size: 25.2px;
+    }
+    table {
+        margin: 0 auto;
+    }
 }
 
 .profile-map {
@@ -238,12 +244,6 @@ form.navbar-form input.apple-round {
     padding: 1em;
 }
 
-.user-dashboard-group [class*='col-'] {
-}
-
-.nav.nav-tabs > li > a {
-    background: #000;
-}
 
 .tab-content > .tab-pane {
     border: 3px solid black;
