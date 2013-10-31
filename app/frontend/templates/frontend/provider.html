@@ -40,44 +40,33 @@
 
 <div class="container">
     <h1> {{ provider.business_name }} </h1>
-    <a href="{{ url_for('frontend.favorite',
-        provider_id=provider.id) }}">
+    <a href="{{ url_for('frontend.favorite', provider_id=provider.id) }}">
         Favorite
     </a>
     <div class="row">
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="profile-header"
-                        data-toggle="collapse"
+                    <div class="profile-header" data-toggle="collapse" 
                         data-target="#menus">
                         <h3> Menus </h3>
                     </div>
 
                     <div class="profile-content collapse" id="menus">
                         <div>
-                            <table cellspacing="0">
-                                <tr>
-                                    <th>
-                                        Item
-                                    </th>
-                                    <th>
-                                        Price
-                                    </th>
-                                </tr>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            Item
-                                        </td>
-                                        <td>
-                                            $15.00
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                             {% for menu in provider.menus %}
+                                <table cellspacing="0" class="profile-menu">
+                                    <caption class="bold">{{ menu.menu_type }}</caption>
+                                    <thead><tr><th>Item:</th><th>Price:</th></tr></thead>
+                                    <tbody>
+                                        {% for item in menu.menu_items %}
+                                        <tr><td> {{ item.name }} </td><td> {{
+                                                item.price | cash }} </td></tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    </table>
+                             {% endfor %}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -91,37 +80,7 @@
                     <div class="profile-content collapse" id="bio">
                         <div>
                             <p>
-                                Cupidatat beard wayfarers, post-ironic roof
-                                party selvage Etsy Neutra chia plaid trust
-                                fund Wes Anderson viral. Truffaut ethnic
-                                narwhal, gastropub Pinterest ennui deserunt
-                                letterpress do irony selvage direct trade.
-                                Craft beer next level bespoke single-origin
-                                coffee Tonx. Banjo actually blog, aute Vice
-                                nostrud non Williamsburg aesthetic polaroid
-                                beard. Consequat viral cardigan meggings,
-                                tofu Tumblr kogi. Banh mi narwhal
-                                gastropub, nostrud iPhone paleo accusamus
-                                mumblecore Neutra Portland elit. Irony
-                                velit Portland literally, put a bird on it
-                                Intelligentsia fanny pack commodo kogi
-                                wayfarers roof party 8-bit lo-fi culpa.
-
-                                Anim officia shabby chic Cosby sweater
-                                chia, aliqua sunt tempor tofu whatever aute
-                                authentic irure mlkshk four loko. Neutra
-                                pariatur plaid viral tofu, Vice whatever.
-                                Pour-over Blue Bottle Neutra ad officia
-                                cray, lomo Helvetica Echo Park eu
-                                Williamsburg ethnic biodiesel quinoa.
-                                Master cleanse mlkshk dolore, skateboard
-                                meggings hoodie XOXO banjo occaecat eu.
-                                Pitchfork vero ennui, sriracha tempor et
-                                ethical banh mi cliche farm-to-table PBR&B.
-                                Gluten-free roof party asymmetrical,
-                                skateboard hella aesthetic art party elit
-                                magna High Life et pug. Readymade viral
-                                sint flexitarian vinyl quinoa.
+                                {{ provider.bio }}
                             </p>
                         </div>
                     </div>
@@ -247,9 +206,32 @@
                             <div class="profile-sidebar">
                                 <h3> Contact </h3>
                                 <hr>
-                                <p> (921) 139-1299 </p>
-                                <a href="mailto:bleepbloop@gmail.com">
-                                    bleepbloop@gmail.com </a>
+                                {% if not provider.phone %}
+                                    <p> Coming soon! </p>
+                                {% else %}
+                                    <p> {{ provider.phone }} </p>
+                                {% endif %}
+
+                                {% if not provider.email %}
+                                    <p> Coming soon! </p>
+                                {% else %}
+                                <a href="mailto:{{ provider.email }}">
+                                    {{ provider.email }} </a>
+                                {% endif %}
+
+                                {% if not provider.address %}
+                                        <p> Coming soon! </p>
+                                {% else %}
+                                    <address>
+                                        <p>{{ provider.address.street_1 }}</p>
+                                        <p>{{ provider.address.street_2 }}</p>
+                                        <p>
+                                            {{ provider.address.city }},
+                                            {{ provider.address.state }}
+                                            {{ provider.address.zip_code }}
+                                        </p>
+                                    </address>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -260,27 +242,41 @@
                             <div class="profile-sidebar">
                                 <table cellspacing="0">
                                     <h3> Hours </h3>
-                                    <hr >
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m. </td>
+                                    <hr>
+                                    <tr>
+                                        <td> Monday </td>
+                                        <td> {{ provider.hours.monday_open }} - </td>
+                                        <td> {{ provider.hours.monday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Tuesday </td>
+                                        <td> {{ provider.hours.tuesday_open }} - </td>
+                                        <td> {{ provider.hours.tuesday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Wednesday </td>
+                                        <td> {{ provider.hours.wednesday_open }} - </td>
+                                        <td> {{ provider.hours.wednesday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Thursday </td>
+                                        <td> {{ provider.hours.thursday_open }} - </td>
+                                        <td> {{ provider.hours.thursday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Friday </td>
+                                        <td> {{ provider.hours.friday_open }} - </td>
+                                        <td> {{ provider.hours.friday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Saturday </td>
+                                        <td> {{ provider.hours.saturday_open }} - </td>
+                                        <td> {{ provider.hours.saturday_close }} </td>
                                     </tr>
-                                    <tr> <td> Monday </td> <td> 9:00 a.m. - </td>
-                                        <td> 9:00 p.m.  </td>
+                                    <tr>
+                                        <td> Sunday </td>
+                                        <td> {{ provider.hours.sunday_open }} - </td>
+                                        <td> {{ provider.hours.sunday_close }} </td>
                                     </tr>
                                 </table>
                             </div>
