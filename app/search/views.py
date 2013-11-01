@@ -55,7 +55,6 @@ def _search():
                         "geo_distance": {
                             "distance": "50mi",
                             "location": {
-                                # HAHA THIS IS FAKE
                                 "lat": lat,
                                 "lon": lon
                             }
