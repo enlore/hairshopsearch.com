@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template, current_app, flash
 from ..core import es
 from ..helpers import lat_lon
 from ..user.models import Provider, Address
@@ -7,12 +7,12 @@ from .forms import SearchForm
 search = Blueprint('search', __name__, template_folder='templates',
     url_prefix='/search')
 
-
 def searched_out_objects(ids):
     objects = []
     for _id in ids:
         p = Provider.query.get(_id)
-        objects.append(p)
+        if p:
+            objects.append(p)
 
     return objects
 
@@ -27,6 +27,7 @@ def _search():
     if form.validate_on_submit():
         a = Address()
         a.zip_code = form.zip_code.data
+        # TODO lat_lon expects an address object. this is perhaps silly
         lat, lon = lat_lon(a)[0]
         query = {
             "query": {
@@ -66,12 +67,17 @@ def _search():
         }
         results = es.search(query, index='providers', doc_type='provider')
         ids = []
-        for result in results['hits']['hits']:
-            ids.append(result['_source']['id'])
+        if results['hits']['total'] > 0:
+            for result in results['hits']['hits']:
+                ids.append(result['_id'])
 
-        current_app.logger.info('hits: %s' % results['hits']['total'])
+            current_app.logger.info('hits: %s' % results['hits']['total'])
+            current_app.logger.info(ids)
 
-        providers = searched_out_objects(ids)
-        current_app.logger.info(providers[0].business_name)
-        return render_template('search/serp.html', providers=providers)
-    return 'Butts', 404
+            providers = searched_out_objects(ids)
+
+            return render_template('search/serp.html', providers=providers)
+
+        else:
+            flash('No results found!', 'error')
+            return render_template('search/serp.html')
