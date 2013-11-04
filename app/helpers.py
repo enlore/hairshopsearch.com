@@ -42,7 +42,18 @@ def lat_lon(address, sensor='false'):
     """
 
     params = {}
-    params['address'] = str(address)
+    # address builder: take address object, for each attr if not none,
+    # insert into address string
+    address_string = ' '.join([
+                address.street_1 or '',
+                address.street_2 or '',
+                address.city or '',
+                address.state or '',
+                address.zip_code or '',
+                ])
+
+    params['address'] = address_string.strip()
+
     params['sensor'] = sensor
 
     geo_uri = 'http://maps.googleapis.com/maps/api/geocode/json'
@@ -65,13 +76,13 @@ def lat_lon(address, sensor='false'):
         else:
             raise HSSError("GEOLOC req denied")
 
-    elif decoded_resp['status'] == u'ZERO_RESULTS':
+    elif decoded_resp['status'] == 'ZERO_RESULTS':
         raise HSSError("We couldn't find your address.  Please try again.")
 
     elif decoded_resp['status'] == 'UNKOWN_ERROR':
         raise HSSError('Service error.  Try again later.')
 
-    elif decoded_resp['stats'] == 'OVER_QUERY_LIMIT':
+    elif decoded_resp['status'] == 'OVER_QUERY_LIMIT':
         raise HSSError('Over query limit.')
 
     else:
