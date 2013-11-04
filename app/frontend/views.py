@@ -2,8 +2,8 @@
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, abort)
 from flask.ext.security import login_required, roles_required, current_user
-from ..user.models import Provider, Consumer, User
 from ..search.forms import SearchForm
+from ..models import Provider, Consumer, User
 from ..core import db
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')

@@ -2,12 +2,12 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, request, jsonify)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
-from ..user.models import (Provider, Consumer, Menu, MenuItem,
-    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product)
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
+from ..models import (Provider, Consumer, Menu, MenuItem,
+    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product)
 from ..core import db
 from ..helpers import acceptable_url_string
 

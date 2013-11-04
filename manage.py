@@ -2,7 +2,7 @@
 from flask.ext.script import Manager, Server, Shell
 from app import create_app
 from app.core import db, ud
-from app.user.models import (User, Role, Provider, Address, Photo, Review,
+from app.models import (User, Role, Provider, Address, Photo, Review,
                                 Consumer, Menu, Gallery)
 from app.helpers import JSONEncoder
 from tests.data import mockup_data
