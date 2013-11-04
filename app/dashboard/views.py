@@ -268,6 +268,10 @@ def new_provider():
         provider.business_name = form.business_name.data
         provider.payment_methods = ''
 
+        for _type in ['barbershop', 'salon', 'product']:
+            menu = Menu(menu_type=_type)
+            provider.menus.append(menu)
+
         dirty_name = provider.business_name
         # lower dirty name
         clean_name = acceptable_url_string(dirty_name.lower(),
