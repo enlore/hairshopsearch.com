@@ -1,8 +1,8 @@
 from flask import current_app
 from flask.ext.security import UserMixin, RoleMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from ..core import db
-from ..helpers import JSONSerializer, acceptable_url_string
+from .core import db
+from .helpers import JSONSerializer, acceptable_url_string
 
 # association object
 roles_users = db.Table('roles_users',

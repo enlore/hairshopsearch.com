@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, current_app, flash
 from ..core import es
 from ..helpers import lat_lon
-from ..user.models import Provider, Address
+from ..models import Provider, Address
 from .forms import SearchForm
 
 search = Blueprint('search', __name__, template_folder='templates',
