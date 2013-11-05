@@ -6,6 +6,8 @@
 //@sherbet-orange: #FFC063;
 @sherbet-orange: #FFB651;
 
+@bg-url: url('/static/img/bg-noise.png');
+
 @seventy-percent-grey: #898989;
 @light-orange: #ffcb63;
 @teal-as-crap: #3daa98;
@@ -61,10 +63,15 @@ p,span {
     font-family: 'HSSMyriad', sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     height: 100%;
     padding-top: 4em;
     background-color: @body-bg;
+    background: @bg-url;
 }
 
 img {
@@ -239,7 +246,9 @@ img {
 .footer {
     background: @footer-bg;
     color: @footer-fg;
+    position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     overflow: hidden;
     margin-top: 5em;
