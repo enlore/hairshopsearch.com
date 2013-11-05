@@ -5,7 +5,6 @@ from app.core import db, ud
 from app.models import (User, Role, Provider, Address, Photo, Review,
                                 Consumer, Menu, Gallery)
 from app.helpers import JSONEncoder
-from tests.data import mockup_data
 from pprint import pprint
 
 m = Manager(create_app)
