@@ -6,8 +6,10 @@
     <div class="row">
         <div class="col-md-12">
             {% for provider in providers %}
-                <a href="{{ provider.business_url }}"> <h2>{{ provider.business_name }}</h2> </a>
-                <p> {{ provider.bio | ellipsize(limit=125) }} </p>
+                <a href="/{{ provider.business_url }}"> <h2>{{ provider.business_name }}</h2> </a>
+                {% if provider.bio %}
+                    <p> {{ provider.bio | ellipsize(limit=125) }} </p>
+                {% endif %}
             {% endfor %}
         </div>
     </div><!-- /.row -->
