@@ -81,8 +81,9 @@ def _leverage_logging(app):
     rfh = RotatingFileHandler(app.config['FILE_LOG'])
     rfh.setLevel(INFO)
     rfh.setFormatter(Formatter("""
-%(asctime)s >> %(levelname)s: in (%(module)s)%(pathname)s %(lineno)d in %(funcName)s:
-    %(message)s
-    """))
+[%(pathname)s]
+%(asctime)s
+%(levelname)s in %(module)s.%(funcName)s, line %(lineno)d:
+    %(message)s"""))
     app.logger.addHandler(rfh)
 
