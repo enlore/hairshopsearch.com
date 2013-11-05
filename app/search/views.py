@@ -27,8 +27,12 @@ def _search():
     if form.validate_on_submit():
         a = Address()
         a.zip_code = form.zip_code.data
+        current_app.logger.info(a.zip_code)
+
         # TODO lat_lon expects an address object. this is perhaps silly
         lat, lon = lat_lon(a)[0]
+
+        current_app.logger.info(str(lat) + ' ' + str(lon))
         query = {
             "query": {
                 "filtered": {
@@ -51,7 +55,7 @@ def _search():
                                 }
                             }
                         }
-                    },
+                    }, # /query
                     "filter": {
                         "geo_distance": {
                             "distance": "50mi",
@@ -60,12 +64,13 @@ def _search():
                                 "lon": lon
                             }
                         }
-                    }
+                    } # /filter
                 }
             },
             "size": 20
         }
         results = es.search(query, index='providers', doc_type='provider')
+        current_app.logger.info(results)
         ids = []
         if results['hits']['total'] > 0:
             for result in results['hits']['hits']:
@@ -79,5 +84,6 @@ def _search():
             return render_template('search/serp.html', providers=providers)
 
         else:
+            current_app.logger.info('No results found!')
             flash('No results found!', 'error')
             return render_template('search/serp.html')
