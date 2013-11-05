@@ -17,8 +17,9 @@ def acceptable_url_string(string, proto_string):
     """
 
     res = []
-    for ch in (char for char in string.strip()):
-        # replace as single whitespace with a single hyphen
+    test_string = string.strip().lower()
+    for ch in (char for char in test_string):
+        # replace as single whitespace with a single period
         if ch == ' ':
             ch = '.'
         if ch in proto_string:
@@ -49,7 +50,7 @@ def lat_lon(address, sensor='false'):
                 address.street_2 or '',
                 address.city or '',
                 address.state or '',
-                address.zip_code or '',
+                str(address.zip_code or ''),
                 ])
 
     params['address'] = address_string.strip()
