@@ -87,3 +87,24 @@ def _leverage_logging(app):
     %(message)s"""))
     app.logger.addHandler(rfh)
 
+    smtph = SMTPHandler(
+            (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+            app.config['MAIL_LOG_FROM'],
+            app.config['MAIL_LOG_ADMINS'],
+            '[[ Houston, we have a problem ]]',
+            (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']),
+            () # lol empty tuple for secure kwarg
+            )
+    smtph.setLevel(ERROR)
+    smtph.setFormatter(Formatter("""
+IT BARFED (the app, I mean)
+    Level: %(levelname)s
+    Path: %(pathname)s
+    Function: %(module)s.(%funcName)s at %(lineno)d
+    Time: %(asctime)s
+    Message:
+        %(message)s
+
+    """))
+    app.logger.addHandler(smtph)
+
