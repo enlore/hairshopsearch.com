@@ -37,5 +37,6 @@ class DevConfig(Default):
     SECURITY_POST_REGISTER_VIEW = '/welcome'
 
 class Config(DevConfig):
+    MAIL_LOGGING = True
     MAIL_LOG_FROM = ['HSS_APP_ERROR@hairshopsearch.com']
     MAIL_LOG_ADMINS = ['oneofy@gmail.com']
