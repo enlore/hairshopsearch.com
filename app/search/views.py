@@ -87,3 +87,5 @@ def _search():
             current_app.logger.info('No results found!')
             flash('No results found!', 'error')
             return render_template('search/serp.html')
+    # TODO flash errors and get them rendered
+    return render_template('search/serp.html')
