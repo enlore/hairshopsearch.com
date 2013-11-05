@@ -9,6 +9,8 @@ from .search.forms import SearchForm
 import pkgutil
 import importlib
 import locale
+from logging import Formatter, ERROR, INFO
+from logging.handlers import RotatingFileHandler, SMTPHandler
 
 locale.setlocale(locale.LC_ALL, '')
 
@@ -40,6 +42,7 @@ def _create_app(pkg_name, pkg_path, config):
     _config_app(app, config)
     _register_extensions(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
+    _leverage_logging(app)
     return app
 
 def _config_app(app, config):
@@ -73,3 +76,13 @@ def _bootstrap_blueprints(app, pkg_name, pkg_path):
                 app.register_blueprint(item)
             blueprints.append(item)
     return blueprints
+
+def _leverage_logging(app):
+    rfh = RotatingFileHandler(app.config['FILE_LOG'])
+    rfh.setLevel(INFO)
+    rfh.setFormatter(Formatter("""
+%(asctime)s >> %(levelname)s: in (%(module)s)%(pathname)s %(lineno)d in %(funcName)s:
+    %(message)s
+    """))
+    app.logger.addHandler(rfh)
+
