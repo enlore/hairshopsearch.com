@@ -14,10 +14,6 @@ from ..helpers import acceptable_url_string
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-@dashboard.route('/')
-def index():
-    return 'd board'
-
 
 @dashboard.route('/photo/save', methods=['POST'])
 def save_photo():
