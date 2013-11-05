@@ -69,10 +69,33 @@ html {
 
 body {
     height: 100%;
-    padding-top: 4em;
     background-color: @body-bg;
     background: @bg-url;
+    padding-top: 3em;
 }
+
+.page-wrap {
+    min-height: 100%;
+    margin-bottom: -10em;
+}
+
+.page-wrap:after {
+    content: "";
+    display: block;
+    height: 10em;
+}
+
+.footer {
+    background: @footer-bg;
+    color: @footer-fg;
+    height: 10em;
+    width: 100%;
+    margin-top: 5em;
+    a {
+        color: @footer-fg;
+    }
+}
+
 
 img {
     display: block;
@@ -245,20 +268,6 @@ img {
 
     td {
         padding: 10px;
-    }
-}
-
-.footer {
-    background: @footer-bg;
-    color: @footer-fg;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    margin-top: 5em;
-    a {
-        color: @footer-fg;
     }
 }
 
