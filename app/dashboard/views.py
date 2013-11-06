@@ -192,8 +192,8 @@ def edit_payment():
 @dashboard.route('/edit_hours', methods=['GET', 'POST'])
 @login_required
 def edit_hours():
-    form = HoursForm()
     p = current_user.provider
+    form = HoursForm()
     if not p.hours:
         p.hours = Hours()
 
@@ -216,6 +216,21 @@ def edit_hours():
         db.session.add(current_user.provider)
         db.session.commit()
         return redirect(url_for('dashboard.profile'))
+
+    form.monday_open.data       = p.hours.monday_open
+    form.monday_close.data      = p.hours.monday_open
+    form.tuesday_open.data      = p.hours.monday_close
+    form.tuesday_close.data     = p.hours.tuesday_open
+    form.wednesday_open.data    = p.hours.tuesday_close
+    form.wednesday_close.data   = p.hours.wednesday_open
+    form.thursday_open.data     = p.hours.wednesday_close
+    form.thursday_close.data    = p.hours.thursday_open
+    form.friday_open.data       = p.hours.thursday_close
+    form.friday_close.data      = p.hours.friday_open
+    form.saturday_open.data     = p.hours.friday_close
+    form.saturday_close.data    = p.hours.saturday_open
+    form.sunday_open.data       = p.hours.saturday_close
+    form.sunday_close.data      = p.hours.sunday_open
 
     return render_template('dashboard/edit_profile.html', form=form,
             url=url_for('dashboard.edit_hours'))
