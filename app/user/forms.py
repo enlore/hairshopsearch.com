@@ -14,7 +14,8 @@ class PhotoForm(Form):
     image       = FileField(u'Upload Image')
     submit      = SubmitField(u'Submit')
 
-times = [('5:00am', '5:00am'), ('5:15am', '5:15am'), ('5:30am', '5:30am'),
+times = [('closed', 'Closed'),
+        ('5:00am', '5:00am'), ('5:15am', '5:15am'), ('5:30am', '5:30am'),
         ('5:45am', '5:45am'), ('6:00am', '6:00am'), ('6:15am', '6:15am'),
         ('6:30am', '6:30am'), ('6:45am', '6:45am'), ('7:00am', '7:00am'),
         ('7:15am', '7:15am'), ('7:30am', '7:30am'), ('7:45am', '7:45am'),
