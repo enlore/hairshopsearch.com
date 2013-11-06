@@ -38,20 +38,93 @@
 
     <div class="row user-dashboard-group">
         <div class="col-md-9">
-            <h3> {{ provider.phone }} </h3>
             <address>
-                <h3> Address: </h3>
+                <h3> Contact Info: </h3>
                 <table>
-                    <tr><td>{{ provider.address.street_1 }}</td></tr>
-                    <tr><td>{{ provider.address.street_2 }}</td></tr>
-                    <tr><td>{{ provider.address.city }}</td></tr>
-                    <tr><td>{{ provider.address.state }}</td></tr>
-                    <tr><td>{{ provider.address.zip_code }}</td></tr>
                     <tr>
                         <td>
+                            Phone:
+                        </td>
+                        <td>
+                            {% if provider.phone %}
+                                {{ provider.phone }}
+                            {% else %}
+                                Enter your phone number
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Street 1:
+                        </td>
+                        <td>
+                            {% if provider.address.street_1 %}
+                            {{ provider.address.street_1 }}
+                            {% else %}
+                            Enter your street address
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Street 2:
+                        </td>
+                        <td>
+                            {% if provider.address.street_2 %}
+                                {{ provider.address.street_2 }}
+                            {% else %}
+                                Enter your street address
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            City:
+                        </td>
+                        <td>
+                            {% if provider.address.city %}
+                                {{ provider.address.city }}
+                            {% else %}
+                                Enter your city
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            State:
+                        </td>
+                        <td>
+                            {% if provider.address.state %}
+                                {{ provider.address.state }}
+                            {% else %}
+                                Enter you state
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Zip Code:
+                        </td>
+                        <td>
+                            {% if provider.address.zip_code %}
+                                {{ provider.address.zip_code }}
+                            {% else %}
+                                Enter your zip
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email:
+                        </td>
+                        <td>
+                            {% if provider.email %}
                             <a href="mailto:{{ provider.email }}">
                                 {{ provider.email }}
                             </a>
+                            {% else %}
+                                Enter your email
+                            {% endif %}
                         </td>
                     </tr>
                 </table>
@@ -124,7 +197,11 @@
 
     <div class="row user-dashboard-group">
         <div class="col-md-9">
-            <p> {{ provider.bio }} </p>
+            {% if provider.bio %}
+                <p> {{ provider.bio }} </p>
+            {% else %}
+                <p> Tell us about your business </p>
+            {% endif %}
         </div>
         <div class="col-md-3">
             <a class="btn btn-primary" href="{{ url_for('dashboard.edit_bio') }}">Edit Bio</a>
