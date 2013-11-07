@@ -88,6 +88,15 @@ def _leverage_logging(app):
         %(message)s"""))
         app.logger.addHandler(rfh)
 
+        rfhe = RotatingFileHandler(app.config['FILE_ERROR_LOG'])
+        rfhe.setLevel(ERROR)
+        rfhe.setFormatter(Formatter("""
+    [%(pathname)s]
+    %(asctime)s
+    %(levelname)s in %(module)s.%(funcName)s, line %(lineno)d:
+        %(message)s"""))
+        app.logger.addHandler(rfhe)
+
     if app.config['MAIL_LOGGING']:
         smtph = SMTPHandler(
                 (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),

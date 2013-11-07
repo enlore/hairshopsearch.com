@@ -4,7 +4,8 @@ class Default():
 
 
 class DevConfig(Default):
-    FILE_LOG = '/tmp/hairshopsearch.info.log'
+    FILE_LOG = '/tmp/info.hairshopsearch.log'
+    FILE_ERROR_LOG = '/tmp/error.hairshopsearch.log'
     SECRET_KEY = 'dev key'
     DEBUG = True
     DEBUG_TB_ENABLED = DEBUG
