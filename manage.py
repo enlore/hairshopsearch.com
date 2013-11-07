@@ -5,6 +5,7 @@ from app.core import db, ud
 from app.models import (User, Role, Provider, Address, Photo, Review,
                                 Consumer, Menu, Gallery)
 from app.helpers import JSONEncoder
+from app.indexer import indexer
 from pprint import pprint
 
 m = Manager(create_app)
@@ -14,6 +15,12 @@ def reset_db():
     db.drop_all()
     db.create_all()
     mockup_data()
+
+@m.command
+def re_index(url='http://localhost:9200'):
+    es = indexer.config_es(url)
+    indexer.rebuild_index(es)
+    indexer.index_all(es)
 
 def _make_context():
     return dict(
