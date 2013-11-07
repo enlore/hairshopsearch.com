@@ -39,6 +39,11 @@ def _create_app(pkg_name, pkg_path, config):
     def four_oh_four(msg):
         return render_template('errors/404.html')
 
+    @app.errorhandler(500)
+    def five_hundo(msg):
+        return render_template('errors/500.html', msg=msg)
+
+
     _config_app(app, config)
     _register_extensions(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
