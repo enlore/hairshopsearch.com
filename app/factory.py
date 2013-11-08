@@ -35,13 +35,13 @@ def _create_app(pkg_name, pkg_path, config):
     def handle_internal_error(error):
         raise error
 
+    @app.errorhandler(403)
+    def four_oh_three(msg):
+        return render_template('errors/403.html')
+
     @app.errorhandler(404)
     def four_oh_four(msg):
         return render_template('errors/404.html')
-
-    @app.errorhandler(500)
-    def five_hundo(msg):
-        return render_template('errors/500.html', msg=msg)
 
 
     _config_app(app, config)
