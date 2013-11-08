@@ -11,6 +11,8 @@ bin
 node_modules
 recess
 runserver.py
+Vagrantfile
+.vagrant
 
 # C extensions
 *.so
