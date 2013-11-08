@@ -18,6 +18,7 @@
 @black: #000;
 @grey: #333;
 @pretty-grey: #5A6060;
+@light-grey: #A2AAAA;
 
 @header-bg: @vivid-orange;
 @navbar-shadow: @chilax-grey;
@@ -26,7 +27,8 @@
 
 @body-bg: @off-white;
 
-@footer-bg: @pretty-grey;
+@footer-bg-end: @pretty-grey;
+@footer-bg-start: @light-grey;
 @footer-fg: @white;
 
 @jumbotron-color: @grey;
@@ -88,14 +90,14 @@ body {
 }
 
 .footer {
-    background: @footer-bg;
+    background: @footer-bg-end;
     color: @footer-fg;
     height: 14em;
     width: 100%;
     a {
         color: @footer-fg;
     }
-    #gradient > .vertical(#C0D1D1; @footer-bg;);
+    #gradient > .vertical(@footer-bg-start; @footer-bg-end;);
 }
 
 
