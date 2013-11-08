@@ -1,3 +1,4 @@
+@import url('mixins.less');
 @vivid-orange: #f90;
 @slightly-darker-vivid-orange: #EF8F00;
 @warm-white: #F7F7F7;
@@ -94,6 +95,7 @@ body {
     a {
         color: @footer-fg;
     }
+    #gradient > .vertical(#C0D1D1; @footer-bg;);
 }
 
 
@@ -256,6 +258,7 @@ img {
 .profile-map {
     display: block;
     margin: 0 auto;
+    max-width: 100%;
 }
 
 .profile-menu {
