@@ -12,7 +12,7 @@ import locale
 from logging import Formatter, ERROR, INFO
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, 'en_CA.UTF-8')
 
 def pretty_cash(amount):
     return locale.currency(amount)
