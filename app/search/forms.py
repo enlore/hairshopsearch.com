@@ -3,12 +3,13 @@ from wtforms import TextField, SubmitField, SelectField
 from wtforms.validators import Required
 
 menu_types = [
-        ('barber', 'Barbershop'),
-        ('salon', 'Salon'),
-        ('product', 'Product')]
+        ('none', 'I\'m looking for:'),
+        ('barber', 'Barbershops'),
+        ('salon', 'Salons'),
+        ('product', 'Products')]
 
 class SearchForm(Form):
     menu_type       = SelectField('Type', choices=menu_types)
-    service         = TextField('Service')
-    zip_code        = TextField('Zip', [Required()])
+    service         = TextField('Service', default="services")
+    zip_code        = TextField('Zip', [Required()], default='zip code')
     submit          = SubmitField('Search')
