@@ -20,7 +20,10 @@ def favorite(provider_id):
 
     if not this_provider.business_url:
         this_provider.business_url = this_provider.business_name
-    current_app.logger.info(this_provider.business_url)
+
+    if current_user.is_anonymous():
+        current_app.logger.info('anon anon')
+        abort(403)
 
     if this_provider not in current_user.consumer.favorites:
         current_user.consumer.favorites.append(this_provider)
