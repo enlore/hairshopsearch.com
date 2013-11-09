@@ -3,16 +3,37 @@
 <div class="container">
     <h1> Search Results </h1>
     {% if providers %}
-    <div class="row">
-        <div class="col-md-12">
-            {% for provider in providers %}
-                <a href="/{{ provider.business_url }}"> <h2>{{ provider.business_name }}</h2> </a>
-                {% if provider.bio %}
-                    <p> {{ provider.bio | ellipsize(limit=125) }} </p>
-                {% endif %}
-            {% endfor %}
+{% for provider in providers %}
+<div class="row">
+    <div class="search-result col-md-12">
+
+        <img class="img-responsive serp-img" src="http://placehold.it/75x75" />
+
+        <div class="favs">
+            <img src="http://placehold.it/15x15"/>
+            <span> 15 </span>
         </div>
-    </div><!-- /.row -->
+
+        <div class="serp-name row">
+            <a href="#"><h2>{{ provider.business_name }}</h2></a>
+
+            <div class="address">
+                <div class="col-md-6 col-md-12">
+                    <p>{{ provider.address.street_1 }}</p>
+                </div>
+
+                <div class="col-md-6 col-md-12">
+                    <p>
+                        {{ provider.address.city }},
+                        {{provider.address.state }}
+                        {{ provider.address.zip_code }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
     {% endif %}
 </div>
 {% endblock %}
