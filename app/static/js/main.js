@@ -33,6 +33,7 @@ $(document).on('ready', function() {
         /* pick and store a one */
         $('#pick-one').click(function () {
             filepicker.pickAndStore(picker_options, store_options,
+                    // fp pickAndStore callback
                     function (InkBlobs) {
                         console.log(JSON.stringify(InkBlobs))
 
@@ -56,26 +57,21 @@ $(document).on('ready', function() {
                             })
                         }
                     }
-                    ,function (FPError) {
+                    // fp on error callback
+                    , function (FPError) {
                         console.log(FPError)
                     })
         })
 
-    var $sticker = $("#left-sticker")
-        ,x = $sticker.offset().left
+    // turn the profile section headers blue
+    var $profile_header = $('.profile-header h3')
+        , mover_color = '#3DAA98'
 
-        $sticker.css({'left': -x - 1 })
-
-    var $profile_header = $('.profile-header h3'),
-        mover_color = '#3DAA98'
-
-        $profile_header.mouseenter( function(e) {
-            $(this).css({'background-color': mover_color})
-        }).mouseleave(function(e) {
-            $(this).css({'background-color': ''})
-        })
-
-    var $profile_content = $('.profile-content')
+    $profile_header.mouseenter( function(e) {
+        $(this).css({'background-color': mover_color})
+    }).mouseleave(function(e) {
+        $(this).css({'background-color': ''})
+    })
 
     $profile_header.click(function(e) {
         console.log(e.target)
