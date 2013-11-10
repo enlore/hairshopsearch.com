@@ -4,17 +4,17 @@
 
 {% block body %}
 {% if provider %}
-<div class="container">
-    <div class="row">
+<div class="container dashboard">
+    <div class="row dashboard-buttons">
         <div class="col-md-3">
-            <a class="btn btn-info" href="{{ url_for('frontend.provider_url',
+            <a class="btn btn-info dashboard" href="{{ url_for('frontend.provider_url',
                 provider_url=provider.business_url) }}">
                 View Profile
             </a>
         </div>
 
         <div class="col-md-3">
-            <a class="btn btn-info" href="{{ url_for('security.change_password') }}">
+            <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
                 Change Password
             </a>
         </div>
