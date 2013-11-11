@@ -89,4 +89,20 @@ $(document).on('ready', function() {
         console.log(e.target)
         $(this).toggleClass('active')
     })
+
+    // placeholder text on index search form
+    var selectors = [$('#service'), $('#zip_code')]
+
+    // on focus, set value to ''
+    for (var i = 0; i < selectors.length; i++) {
+        selectors[i].val(selectors[i].data('placeholder'))
+
+        selectors[i].focusin(function () {
+            $(this).val('')
+            console.log('focus in')
+        }).focusout(function () {
+            $(this).val($(this).data('placeholder'))
+            console.log('focus out')
+        })
+    }
 })
