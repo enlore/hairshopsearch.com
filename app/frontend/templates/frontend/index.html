@@ -12,8 +12,34 @@
     <div class="row">
         <div class="col-md-12 search-form-container">
             {% if index_search_form %}
-            {{ render_form(index_search_form, url_for('search._search'),
-                class="form-inline") }}
+            <form class="form-inline" action="/search/" method="POST" role="form">
+                {{ index_search_form.csrf_token }}
+                <div class="form-group">
+                    <label class="sr-only" for="menu_type">Type</label>
+                    <select class="form-control" id="menu_type" name="menu_type">
+                        <option value="none">I'm looking for:</option>
+                        <option value="salon">Salons</option>
+                        <option value="barber">Barbershops</option>
+                        <option value="product">Products</option>
+                    </select>
+                </div>
+                <span> for </span>
+                <div class="form-group">
+                    <label class="sr-only" for="service">Service</label>
+                    <input class="form-control" id="service" name="service"
+                        type="text" data-placeholder="services">
+                </div>
+                <span> in </span>
+                <div class="form-group">
+                    <label class="sr-only" for="zip_code">Zip</label>
+                    <input class="form-control" id="zip_code" name="zip_code"
+                        type="text" data-placeholder="zip code">
+                </div>
+
+                <div class="form-group">
+                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Search">
+                </div>
+            </form>
             {% endif %}
             </div>
         </div>
