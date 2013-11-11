@@ -6,7 +6,7 @@ from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
-from ..models import (Provider, Consumer, Menu, MenuItem,
+from ..models import (Provider, Consumer, Menu, MenuItem, Gallery,
     ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product)
 from ..core import db
 from ..helpers import acceptable_url_string
@@ -36,6 +36,26 @@ def save_photo():
         db.session.commit()
     except Exception as e:
         current_app.logger.error(e.msg)
+        return jsonify(status='Your file wasn\'t saved! Please try again.')
+
+    return redirect(url_for('dashboard.profile'))
+
+@dashboard.route('/gallery/photo/save', methods=['POST'])
+def save_gallery_photo():
+    entity = current_user.provider
+    if not entity.gallery:
+        entity.gallery = Gallery()
+
+    photo_url = '{}/{}'.format(
+            current_app.config['S3_URL'],
+            request.form['photo_key']
+            )
+    entity.gallery.photos.append(Photo(url=photo_url))
+    db.session.add(entity)
+    try:
+        db.session.commit()
+    except Exception as e:
+        current_app.logger.info(e.msg)
         return jsonify(status='Your file wasn\'t saved! Please try again.')
 
     return redirect(url_for('dashboard.profile'))

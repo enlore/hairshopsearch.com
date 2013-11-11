@@ -3,7 +3,7 @@ $(document).on('ready', function() {
         filepicker.setKey('ATqxZ7zONQgaSqWFtAAFOz')
 
         var store_options = {}
-            ,picker_options = {}
+            , picker_options = {}
 
         store_options.location = "S3"
 
@@ -15,8 +15,20 @@ $(document).on('ready', function() {
 
                     filepicker.store(InkBlobs[j],
                         function (InkBlob) {
-                            console.log('stored: ' + InkBlob.filename)
                             console.log('s3 key: ' + InkBlob.key)
+
+                            var csrf_token = $('meta[name="csrf"]').attr('content')
+                            $.ajax({
+                                url     : '/dashboard/gallery/photo/save',
+                                headers : {'X-CSRFToken': csrf_token},
+                                type: 'post',
+                                data: { photo_key: InkBlob.key }
+                            }).done(function (response, textStatus, jqXHR) {
+                                console.log(response)
+
+                            }).fail(function (response, textStatus, jqXHR) {
+                                console.log(response)
+                            })
 
                         },
                         function (FPError) {
@@ -63,7 +75,7 @@ $(document).on('ready', function() {
                     })
         })
 
-    // turn the profile section headers blue
+    // turn the profile section headers blue on hover and click
     var $profile_header = $('.profile-header h3')
         , mover_color = '#3DAA98'
 
