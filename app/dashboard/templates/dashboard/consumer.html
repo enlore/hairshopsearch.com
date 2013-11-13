@@ -3,14 +3,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
-                Change Password
+            <a class="btn btn-info dashboard" href="{{ url_for('frontend.consumer_url', consumer_url=consumer.consumer_url) }}">
+                View Profile
             </a>
         </div>
-        <div class="cold-md-3">
-            <a class="btn btn-info dashboard" href="{{ url_for('frontend.consumer_url',
-                consumer_url=consumer.consumer_url) }}">
-                View Profile
+
+        <div class="col-md-3">
+            <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
+                Change Password
             </a>
         </div>
     </div><!-- /.row -->
