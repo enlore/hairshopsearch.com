@@ -54,6 +54,10 @@
     src: url('/static/font/MinionPro-Regular.otf');
 }
 
+* {
+    box-sizing: border-box;
+}
+
 h1,h2,h3,h4,h5,h6 {
     font-family: 'HSSMinion', serif;
 }
@@ -66,12 +70,14 @@ p,span {
     font-family: 'HSSMyriad', sans-serif;
 }
 
-html {
+html,
+body {
     height: 100%;
 }
 
 body {
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .page-wrap {
@@ -165,6 +171,17 @@ img {
 
 .search-form-container form {
     .align-center;
+}
+
+.index.deck {
+    text-align: center;
+    margin: 1em auto 0;
+}
+
+@media screen and (min-width: 768px) {
+    .index.deck {
+        width: 65%;
+    }
 }
 
 @media screen and (min-width: 768px) {
