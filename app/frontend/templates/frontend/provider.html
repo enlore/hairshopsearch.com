@@ -6,34 +6,21 @@
         <div class="row">
             <div class="col-md-5">
                 <img class="img-responsive"
-                src="http://placehold.it/425x370&text=Hero">
+                src="{{ provider.avatar.url }}">
             </div>
 
             <div class="col-md-7 hidden-sm hidden-xs">
                 <div class="row">
+                    {% for image in provider.gallery.photos %}
                     <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                        <div class="thumbnail-container">
+                            <img class="" src="{{ image.url }}">
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -124,39 +111,13 @@
                             </div>
                             <div class="profile-content collapse" id="gallery">
                                 <div class="row">
-                                    <div class="col-xs-6 col-sm-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
+                                    {% for image in provider.gallery.photos %}
+                                    <div class="col-md-4">
+                                        <div class="thumbnail-container">
+                                            <img class="" src="{{ image.url }}">
+                                        </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        <img class="img-thumbnail img-responsive" src="http://placehold.it/250x250">
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -187,13 +148,13 @@
                                         <p> Coming soon! </p>
                                 {% else %}
                                     <address>
-                                        <p>{{ provider.address.street_1 }}</p>
-                                        <p>{{ provider.address.street_2 }}</p>
-                                        <p>
-                                            {{ provider.address.city }},
-                                            {{ provider.address.state }}
-                                            {{ provider.address.zip_code }}
-                                        </p>
+                                        {{ provider.address.street_1 }} <br />
+                                        {{ provider.address.street_2 }} <br />
+
+                                        {{ provider.address.city }}, <br />
+                                        {{ provider.address.state }} <br />
+                                        {{ provider.address.zip_code }} <br />
+
                                     </address>
                                 {% endif %}
                             </div>
