@@ -61,8 +61,8 @@
                     {% if search_form %}
                         <!-- Navbar form -->
                         <form class="form-inline" action="{{ url_for('search._search') }}" method="POST" role="form">
-                            <!-- woo -->
                             <div class="form-group">
+                                {{ search_form().csrf_token }}
                                 <label class="sr-only" for="menu_type">Service Type</label>
                                 <select class="form-control" id="menu_type" name="menu_type">
                                     <option value="none">I'm looking for:</option>
