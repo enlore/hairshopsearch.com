@@ -217,6 +217,7 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
+    endorses            = db.relationship('Provider', backref='endorsed_by')
 
 
 class ProviderInstance(db.Model):
