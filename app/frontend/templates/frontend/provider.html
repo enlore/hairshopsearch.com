@@ -27,38 +27,80 @@
 
 <div class="container">
     <h1> {{ provider.business_name }} </h1>
+
     <a href="{{ url_for('frontend.favorite', provider_id=provider.id) }}">
         <button type="button" class="btn btn-default btn-lg">
             <span class="glyphicon glyphicon-star-empty"> Favorite</span>
-    </button>
+        </button>
     </a>
+
+    {% if current_user.provider %}
+    <a href="{{ url_for('frontend.endorse', provider_id=provider.id) }}">
+        <button type="button" class="btn btn-default btn-lg">
+            Endorse
+        </button>
+    </a>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="profile-header" data-toggle="collapse" 
+                    <div class="profile-header" data-toggle="collapse"
                         data-target="#menus">
                         <h3> Menus </h3>
                     </div>
 
                     <div class="profile-content collapse" id="menus">
                         <div>
-                             {% for menu in provider.menus %}
-                                <table cellspacing="0" class="profile-menu">
-                                    <caption class="bold">{{ menu.menu_type }}</caption>
-                                    <thead><tr><th>Item:</th><th>Price:</th></tr></thead>
-                                    <tbody>
-                                        {% for item in menu.menu_items %}
-                                        <tr><td> {{ item.name }} </td><td> {{
-                                                item.price | cash }} </td></tr>
-                                        {% endfor %}
-                                    </tbody>
-                                    </table>
-                             {% endfor %}
+                            {% for menu in provider.menus %}
+                            <table cellspacing="0" class="profile-menu">
+                                <caption class="bold">{{ menu.menu_type }}</caption>
+                                <thead><tr><th>Item:</th><th>Price:</th></tr></thead>
+                                <tbody>
+                                    {% for item in menu.menu_items %}
+                                    <tr><td> {{ item.name }} </td><td> {{
+                                            item.price | cash }} </td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-header" data-toggle="collapse"
+                        data-target="#endorsements">
+                        <h3> Endorsements </h3>
+                    </div>
+
+                    <div class="profile-content collapse" id="endorsements">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4> We're Endorsed By: </h4>
+                                <ul>
+                                    {% for endorser in provider.endorsed_by %}
+                                    <li><a href="{{ endorser.business_url }}"> {{ endorser.business_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4> We Endorse: </h4>
+                                <ul>
+                                    {% for endorsee in provider.endorses %}
+                                    <li><a href="{{ endorsee.business_url }}"> {{ endorsee.business_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div><!-- /.row -->
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="profile-header"
@@ -69,12 +111,12 @@
                     <div class="profile-content collapse" id="bio">
                         <div>
                             <p>
-                                {{ provider.bio }}
+                            {{ provider.bio }}
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!-- /.row -->
 
             <div class="row">
                 <div class="col-md-12">
@@ -85,141 +127,141 @@
                     </div>
                     <div class="profile-content collapse" id="reviews">
                         <div id="disqus_thread"></div>
-                            <script type="text/javascript">
-                                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                                var disqus_shortname = 'hss-admin'; // required: replace example with your forum shortname
+                        <script type="text/javascript">
+                            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                        var disqus_shortname = 'hss-admin'; // required: replace example with your forum shortname
 
-                                /* * * DON'T EDIT BELOW THIS LINE * * */
-                                (function() {
-                                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                                })();
-                            </script>
-                            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        /* * * DON'T EDIT BELOW THIS LINE * * */
+                        (function() {
+                         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                         })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
                     </div>
                 </div>
-            </div>
+            </div><!-- /.row -->
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="profile-header"
-                                data-toggle="collapse"
-                                data-target="#gallery">
-                                <h3> Gallery </h3>
-                            </div>
-                            <div class="profile-content collapse" id="gallery">
-                                <div class="row">
-                                    {% for image in provider.gallery.photos %}
-                                    <div class="col-md-4">
-                                        <div class="thumbnail-container">
-                                            <img class="" src="{{ image.url }}">
-                                        </div>
-                                    </div>
-                                    {% endfor %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-header"
+                        data-toggle="collapse"
+                        data-target="#gallery">
+                        <h3> Gallery </h3>
+                    </div>
+                    <div class="profile-content collapse" id="gallery">
+                        <div class="row">
+                            {% for image in provider.gallery.photos %}
+                            <div class="col-md-4">
+                                <div class="thumbnail-container">
+                                    <img class="" src="{{ image.url }}">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div><!-- ./ 2/3 left col -->
-
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Contact -->
-                            <div class="profile-sidebar">
-                                <h3> Contact </h3>
-                                <hr>
-                                {% if not provider.phone %}
-                                    <p> Coming soon! </p>
-                                {% else %}
-                                    <p> {{ provider.phone }} </p>
-                                {% endif %}
-
-                                {% if not provider.email %}
-                                    <p> Coming soon! </p>
-                                {% else %}
-                                <a href="mailto:{{ provider.email }}">
-                                    {{ provider.email }} </a>
-                                {% endif %}
-
-                                {% if not provider.address %}
-                                        <p> Coming soon! </p>
-                                {% else %}
-                                    <address>
-                                        {{ provider.address.street_1 }} <br />
-                                        {{ provider.address.street_2 }} <br />
-
-                                        {{ provider.address.city }}, <br />
-                                        {{ provider.address.state }} <br />
-                                        {{ provider.address.zip_code }} <br />
-
-                                    </address>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Hours -->
-                        <div class="col-md-12">
-                            <div class="profile-sidebar">
-                                <table cellspacing="0">
-                                    <h3> Hours </h3>
-                                    <hr>
-                                    <tr>
-                                        <td> Monday </td>
-                                        <td> {{ provider.hours.monday_open }} - </td>
-                                        <td> {{ provider.hours.monday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Tuesday </td>
-                                        <td> {{ provider.hours.tuesday_open }} - </td>
-                                        <td> {{ provider.hours.tuesday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Wednesday </td>
-                                        <td> {{ provider.hours.wednesday_open }} - </td>
-                                        <td> {{ provider.hours.wednesday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Thursday </td>
-                                        <td> {{ provider.hours.thursday_open }} - </td>
-                                        <td> {{ provider.hours.thursday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Friday </td>
-                                        <td> {{ provider.hours.friday_open }} - </td>
-                                        <td> {{ provider.hours.friday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Saturday </td>
-                                        <td> {{ provider.hours.saturday_open }} - </td>
-                                        <td> {{ provider.hours.saturday_close }} </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Sunday </td>
-                                        <td> {{ provider.hours.sunday_open }} - </td>
-                                        <td> {{ provider.hours.sunday_close }} </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Location -->
-                        <div class="col-md-12">
-                            <div class="profile-sidebar">
-                                <h3> Location </h3>
-                                <hr>
-                                <img class="profile-map"
-                                src="http://placehold.it/267x267&text=Map">
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-            </div><!-- /.container -->
-        </div>
+            </div><!-- /.row -->
+        </div><!-- 2/3 left col -->
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Contact -->
+                    <div class="profile-sidebar">
+                        <h3> Contact </h3>
+                        <hr>
+                        {% if not provider.phone %}
+                        <p> Coming soon! </p>
+                        {% else %}
+                        <p> {{ provider.phone }} </p>
+                        {% endif %}
+
+                        {% if not provider.email %}
+                        <p> Coming soon! </p>
+                        {% else %}
+                        <a href="mailto:{{ provider.email }}">
+                            {{ provider.email }} </a>
+                        {% endif %}
+
+                        {% if not provider.address %}
+                        <p> Coming soon! </p>
+                        {% else %}
+                        <address>
+                            {{ provider.address.street_1 }} <br />
+                            {{ provider.address.street_2 }} <br />
+
+                            {{ provider.address.city }}, <br />
+                            {{ provider.address.state }} <br />
+                            {{ provider.address.zip_code }} <br />
+
+                        </address>
+                        {% endif %}
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <!-- Hours -->
+                <div class="col-md-12">
+                    <div class="profile-sidebar">
+                        <table cellspacing="0">
+                            <h3> Hours </h3>
+                            <hr>
+                            <tr>
+                                <td> Monday </td>
+                                <td> {{ provider.hours.monday_open }} - </td>
+                                <td> {{ provider.hours.monday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Tuesday </td>
+                                <td> {{ provider.hours.tuesday_open }} - </td>
+                                <td> {{ provider.hours.tuesday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Wednesday </td>
+                                <td> {{ provider.hours.wednesday_open }} - </td>
+                                <td> {{ provider.hours.wednesday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Thursday </td>
+                                <td> {{ provider.hours.thursday_open }} - </td>
+                                <td> {{ provider.hours.thursday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Friday </td>
+                                <td> {{ provider.hours.friday_open }} - </td>
+                                <td> {{ provider.hours.friday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Saturday </td>
+                                <td> {{ provider.hours.saturday_open }} - </td>
+                                <td> {{ provider.hours.saturday_close }} </td>
+                            </tr>
+                            <tr>
+                                <td> Sunday </td>
+                                <td> {{ provider.hours.sunday_open }} - </td>
+                                <td> {{ provider.hours.sunday_close }} </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="row">
+                <!-- Location -->
+                <div class="col-md-12">
+                    <div class="profile-sidebar">
+                        <h3> Location </h3>
+                        <hr>
+                        <img class="profile-map"
+                        src="http://placehold.it/267x267&text=Map">
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- 1/3 right col -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
 {% endblock %}
