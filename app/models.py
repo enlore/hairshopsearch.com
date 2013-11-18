@@ -180,6 +180,12 @@ class ProviderSerializer(JSONSerializer):
             '_business_url', 'email', 'bio', 'address', 'payment_methods',
             'business_name']
 
+endorsers_endorsees = db.Table('endorsers_endorsees',
+            db.Column('endorser', db.Integer, db.ForeignKey('provider.id'), primary_key=True),
+            db.Column('endorsee', db.Integer, db.ForeignKey('provider.id'), primary_key=True)
+        )
+
+
 class Provider(db.Model, ProviderSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
@@ -217,7 +223,11 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
-    endorses            = db.relationship('Provider', backref='endorsed_by')
+    endorses            = db.relationship('Provider',
+                            secondary=endorsers_endorsees,
+                            primaryjoin=id==endorsers_endorsees.c.endorser,
+                            secondaryjoin=id==endorsers_endorsees.c.endorsee,
+                            backref="endorsed_by")
 
 
 class ProviderInstance(db.Model):
