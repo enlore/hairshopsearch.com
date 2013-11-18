@@ -58,6 +58,8 @@ def endorse(provider_id):
         return abort()
     endorsee = Provider.query.filter(Provider.id == provider_id).first()
     current_user.provider.endorses.append(endorsee)
+    db.session.add(current_user.provider)
+    db.session.commit()
     return redirect(url_for('frontend.provider_url',
         provider_url=endorsee.business_url))
 
