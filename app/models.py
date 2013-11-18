@@ -86,7 +86,7 @@ class Menu(db.Model, MenuSerializer):
 
 
 class MenuItemSerializer(JSONSerializer):
-    __json_hidden__ = ['menu']
+    __json_hidden__ = ['menu', 'menu_id', 'id']
 
 
 class MenuItem(db.Model, MenuItemSerializer):
@@ -178,7 +178,7 @@ class ProviderSerializer(JSONSerializer):
             'hours', 'user', 'favorited_by',
             'reviews', 'fb_url', 'links', 'twitter_url', 'phone',
             '_business_url', 'email', 'bio', 'address', 'payment_methods',
-            'business_name']
+            'business_name', 'endorses', 'endorsed_by']
 
 endorsers_endorsees = db.Table('endorsers_endorsees',
             db.Column('endorser', db.Integer, db.ForeignKey('provider.id'), primary_key=True),
