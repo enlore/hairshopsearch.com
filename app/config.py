@@ -1,9 +1,12 @@
 class Default():
     FILE_LOGGING = True
-    S3_URL = 'https://s3-us-west-2.amazonaws.com/hairshopsearch-dev'
 
 
 class DevConfig(Default):
+    S3_URL = 'https://s3-us-west-2.amazonaws.com/hairshopsearch-dev'
+
+    ELASTIC_SEARCH_SERVER = 'http://localhost:9200'
+
     FILE_LOG = '/tmp/info.hairshopsearch.log'
     FILE_ERROR_LOG = '/tmp/error.hairshopsearch.log'
     SECRET_KEY = 'dev key'
