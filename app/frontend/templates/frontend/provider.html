@@ -32,6 +32,11 @@
             <span class="glyphicon glyphicon-star-empty"> Favorite</span>
         </button>
     </a>
+    <a href="{{ url_for('frontend.endorse', provider_id=provider.id) }}">
+        <button type="button" class="btn btn-default btn-lg">
+            Endorse
+        </button>
+    </a>
     <div class="row">
         <div class="col-md-8">
             <div class="row">
