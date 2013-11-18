@@ -51,6 +51,15 @@ def consumer_url(consumer_url):
     else:
         abort(404)
 
+@login_required
+@frontend.route('/<int:provider_id>/endorse')
+def endorse(provider_id):
+    if not current_user.provider:
+        return abort()
+    endorsee = Provider.query.filter_by(Provider.id == provider.id).first()
+    current_user.provider.endorses.append(endorsee)
+    return redirect(url_for('frontend.provider_url', endorsee.business_url))
+
 @frontend.route('/test_provider')
 def test_provider():
     provider = Provider.query.first()
