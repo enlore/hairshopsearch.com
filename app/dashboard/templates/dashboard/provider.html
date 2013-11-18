@@ -38,6 +38,38 @@
 
     <div class="row user-dashboard-group">
         <div class="col-md-9">
+            <h3> Endorsed By: </h3>
+            <ul>
+                {% for endorser in provider.endorsed_by %}
+                <li>
+                    <a href="{{ endorser.business_url }}"> {{ endorser.business_name }} </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
+            <h3> We Endorse: </h3>
+            <ul>
+                {% for endorsee in provider.endorses %}
+                <li>
+                    <a href="{{ endorsee.business_url }}"> {{ endorsee.business_name }} </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
             <address>
                 <h3> Contact Info: </h3>
                 <table>
