@@ -3,13 +3,14 @@ from flask.ext.script import Manager, Server, Shell
 from app import create_app
 from app.core import db, ud
 from app.models import (User, Role, Provider, Address, Photo, Review,
-                                Consumer, Menu, Gallery, Location)
+                                Consumer, Menu, Gallery, Location, MenuItem)
 from app.helpers import JSONEncoder, acceptable_url_string
 from app.indexer import indexer
 from app.config import Config
 from pprint import pprint
 
 import csv
+import random
 
 m = Manager(create_app)
 
@@ -21,6 +22,41 @@ def reset_db():
 @m.command
 def create_index():
     indexer.create_index('provider')
+
+def _build_menus():
+    """Return a list of two menus, on barber and on salon
+    composed of a random set of menu items
+    """
+    menus = []
+    menus.append(Menu(menu_type="barber"))
+    menus.append(Menu(menu_type="salon"))
+    services = [
+        'hair cut',
+        'perm',
+        'hair trim',
+        'texturizer',
+        'relaxer',
+        'color',
+        'color correction',
+        'extensions',
+        'weave',
+        'wax',
+        'blowout'
+        ]
+    prices = ['4', '15', '25', '17.99', '50.89', '55', '22']
+    for i in range(5, random.randint(6, 15)):
+        menus[0].menu_items.append(MenuItem(
+                name=random.choice(services),
+                price=random.choice(prices)
+                    )
+                )
+        menus[0].menu_items.append(MenuItem(
+                name=random.choice(services),
+                price=random.choice(prices)
+                    )
+                )
+    return menus
+
 
 def _consume_csv(filename):
     entities = []
@@ -58,6 +94,7 @@ def mock_from_csv(filename):
          p.address = Address(**entity)
          p.business_url = acceptable_url_string(p.business_name,
                  Config.ACCEPTABLE_URL_CHARS)
+         p.menus = _build_menus()
          db.session.add(p)
          db.session.commit()
 
