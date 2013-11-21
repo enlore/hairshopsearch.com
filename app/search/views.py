@@ -69,7 +69,8 @@ def _search():
             },
             "size": 20
         }
-        results = es.search(query, index='providers', doc_type='provider')
+        # TODO hard coded index name
+        results = es.search(query, index='hairshopsearch', doc_type='provider')
         current_app.logger.info(results)
         ids = []
         if results['hits']['total'] > 0:
