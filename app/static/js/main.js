@@ -101,8 +101,11 @@ $(document).on('ready', function() {
             $(this).val('')
             console.log('focus in')
         }).focusout(function () {
-            $(this).val($(this).data('placeholder'))
-            console.log('focus out')
+            console.log($(this).val())
+            if ($(this).val() === '') {
+                $(this).val($(this).data('placeholder'))
+                console.log('focus out')
+            }
         })
     }
 })
