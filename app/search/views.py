@@ -27,12 +27,16 @@ def _search():
     if form.validate_on_submit():
         a = Address()
         a.zip_code = form.zip_code.data
-        current_app.logger.info('** Searching in zip: {}'.format(a.zip_code))
 
         # TODO lat_lon expects an address object. this is perhaps silly
         lat, lon = lat_lon(a)[0]
 
-        current_app.logger.info('** Lat/lon: {} {}'.format(str(lat), str(lon)))
+        current_app.logger.info('** Searching for {} serving {} in {} @ {} by {}'.format(
+                form.menu_type.data,
+                form.service.data,
+                form.zip_code.data,
+                str(lat), str(lon)
+            ))
         query = {
             "query": {
                 "filtered": {
