@@ -27,12 +27,12 @@ def _search():
     if form.validate_on_submit():
         a = Address()
         a.zip_code = form.zip_code.data
-        current_app.logger.info(a.zip_code)
+        current_app.logger.info('** Searching in zip: {}'.format(a.zip_code))
 
         # TODO lat_lon expects an address object. this is perhaps silly
         lat, lon = lat_lon(a)[0]
 
-        current_app.logger.info(str(lat) + ' ' + str(lon))
+        current_app.logger.info('** Lat/lon: {} {}'.format(str(lat), str(lon)))
         query = {
             "query": {
                 "filtered": {
@@ -58,7 +58,7 @@ def _search():
                     }, # /query
                     "filter": {
                         "geo_distance": {
-                            "distance": "50mi",
+                            "distance": "100mi",
                             "location": {
                                 "lat": lat,
                                 "lon": lon
