@@ -3,28 +3,28 @@
 <div class="container">
     <h1> Search Results </h1>
     {% if providers %}
-{% for provider in providers %}
-<div class="row search-result">
-        <div class="col-md-2">
-            <img class="img-responsive serp-img" src="http://placehold.it/125x125" />
-        </div>
+        {% for provider in providers %}
+        <div class="row search-result">
+            <div class="col-md-2">
+                <img class="img-responsive serp-img" src="http://placehold.it/125x125" />
+            </div>
 
-        <div class="col-md-10">
-            <a href="#"><h2>{{ provider.business_name }}</h2></a>
-                <p>{{ provider.address.street_1 }}
+            <div class="col-md-10">
+                <a href="{{ provider.business_url }}"><h2>{{ provider.business_name }}</h2></a>
+                    <p>{{ provider.address.street_1 }}
 
-                {{ provider.address.city }},
-                {{provider.address.state }}
-                {{ provider.address.zip_code }}
-                </p>
+                    {{ provider.address.city }},
+                    {{provider.address.state }}
+                    {{ provider.address.zip_code }}
+                    </p>
 
-            <div class="favs">
-                <span class="glyphicon glyphicon-star"></span>
-                <span> 15 </span>
+                <div class="favs">
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span> 15 </span>
+                </div>
             </div>
         </div>
-</div>
-{% endfor %}
+        {% endfor %}
     {% endif %}
 </div>
 {% endblock %}
