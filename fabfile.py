@@ -16,6 +16,11 @@ def reset():
 
     local('python manage.py reset_db')
 
+def rebuild_index():
+    local('python manage.py reset_index provider')
+    local('python manage.py reset_db')
+    local('python manage.py mock_from_csv ../files/entities.csv')
+
 def d():
     """Run app in dev"""
 
