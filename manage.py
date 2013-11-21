@@ -36,7 +36,7 @@ def _build_menus():
     composed of a random set of menu items
     """
     menus = []
-    menus.append(Menu(menu_type="barber"))
+    menus.append(Menu(menu_type="barbershop"))
     menus.append(Menu(menu_type="salon"))
     services = [
             'hair cut',
