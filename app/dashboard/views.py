@@ -7,9 +7,11 @@ from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
 from ..models import (Provider, Consumer, Menu, MenuItem, Gallery,
-    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product)
+    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product,
+    Location)
 from ..core import db
-from ..helpers import acceptable_url_string
+from ..helpers import acceptable_url_string, lat_lon
+from ..indexer import indexer
 
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
@@ -167,7 +169,7 @@ def edit_nap():
         p.address = Address()
 
     form = AddressForm(
-            obj=current_user.provider.address,
+            obj=p.address,
             business_name=p.business_name,
             phone=p.phone)
 
@@ -181,8 +183,17 @@ def edit_nap():
         p.business_name     = form.business_name.data
         p.phone             = form.phone.data
 
-        db.session.add(current_user.provider.address)
+        if not p.location:
+            p.location = Location()
+
+        lat, lon = lat_lon(p.address)[0]
+        p.location.lat = lat
+        p.location.lon = lon
+
+        db.session.add(p)
         db.session.commit()
+        resp = indexer.index_one(p, p.id)
+        current_app.logger.info('**Re indexed: {}'.format(resp))
         flash('Update successful!', 'success')
         return redirect(url_for('dashboard.profile'))
 
@@ -323,6 +334,10 @@ def new_provider():
         db.session.add(pi)
         db.session.add(provider)
         db.session.commit()
+
+        resp = indexer.index_one(provider, provider.id)
+        current_app.logger.info('indexed: {}'.format(resp))
+
         return redirect(url_for('dashboard.profile'))
     return render_template('dashboard/new_provider.html', form=form)
 
