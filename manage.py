@@ -3,7 +3,7 @@ from flask.ext.script import Manager, Server, Shell
 from app import create_app
 from app.core import db, ud
 from app.models import (User, Role, Provider, Address, Photo, Review,
-                                Consumer, Menu, Gallery, Location, MenuItem)
+        Consumer, Menu, Gallery, Location, MenuItem)
 from app.helpers import JSONEncoder, acceptable_url_string
 from app.indexer import indexer
 from app.config import Config
@@ -20,8 +20,16 @@ def reset_db():
     db.create_all()
 
 @m.command
-def create_index():
-    indexer.create_index('provider')
+def create_index(doc_type):
+    """Create new index and mapped doc_type
+    """
+    indexer.create_index(doc_type)
+
+@m.command
+def reset_index(doc_type):
+    """Delete and recreate the index with doc_type
+    """
+    indexer.reset_index(doc_type)
 
 def _build_menus():
     """Return a list of two menus, on barber and on salon
@@ -31,31 +39,31 @@ def _build_menus():
     menus.append(Menu(menu_type="barber"))
     menus.append(Menu(menu_type="salon"))
     services = [
-        'hair cut',
-        'perm',
-        'hair trim',
-        'texturizer',
-        'relaxer',
-        'color',
-        'color correction',
-        'extensions',
-        'weave',
-        'wax',
-        'blowout'
-        ]
+            'hair cut',
+            'perm',
+            'hair trim',
+            'texturizer',
+            'relaxer',
+            'color',
+            'color correction',
+            'extensions',
+            'weave',
+            'wax',
+            'blowout'
+            ]
     prices = ['4', '15', '25', '17.99', '50.89', '55', '22']
     for i in range(5, random.randint(6, 15)):
         menus[0].menu_items.append(MenuItem(
-                name=random.choice(services),
-                price=random.choice(prices)
-                    )
-                )
+            name=random.choice(services),
+            price=random.choice(prices)
+            )
+            )
         menus[0].menu_items.append(MenuItem(
-                name=random.choice(services),
-                price=random.choice(prices)
-                    )
-                )
-    return menus
+            name=random.choice(services),
+            price=random.choice(prices)
+            )
+            )
+        return menus
 
 
 def _consume_csv(filename):
@@ -72,6 +80,7 @@ def _consume_csv(filename):
                     entity[key] = col
                 entities.append(entity)
         for entity in entities:
+            # clean and convert lat lon to decimal if DMS
             lat_string = entity['lat'].strip()
             lon_string = entity['lon'].strip()
             if '\xc2\xb0' in lat_string:
@@ -87,35 +96,42 @@ def _consume_csv(filename):
 
 @m.command
 def mock_from_csv(filename):
-     entities = _consume_csv(filename)
-     for entity in entities:
-         p = Provider(business_name=entity.pop('business_name'))
-         p.location = Location(lat=entity.pop('lat'), lon=entity.pop('lon'))
-         p.address = Address(**entity)
-         p.business_url = acceptable_url_string(p.business_name,
-                 Config.ACCEPTABLE_URL_CHARS)
-         p.menus = _build_menus()
-         db.session.add(p)
-         db.session.commit()
+    """Pass a csv file
+    Helps if the csv exhibits a schema like the Provider model
+    """
+    entities = _consume_csv(filename)
+    for entity in entities:
+        p = Provider(business_name=entity.pop('business_name'))
+        p.location = Location(lat=entity.pop('lat'), lon=entity.pop('lon'))
+        p.address = Address(**entity)
+        p.business_url = acceptable_url_string(p.business_name,
+                Config.ACCEPTABLE_URL_CHARS)
+        p.menus = _build_menus()
+        db.session.add(p)
+        db.session.commit()
+        # TODO indexing it here
+        resp = indexer.index_one(p, id=p.id)
+        print resp
 
 
 def _make_context():
     return dict(
-           app=create_app(),
-           db=db,
-           ud=ud,
-           User=User,
-           Role=Role,
-           Provider=Provider,
-           Review=Review,
-           Address=Address,
-           Gallery=Gallery,
-           Photo=Photo,
-           Menu=Menu,
-           p=Provider.query.get(4),
-           c=Consumer.query.first(),
-           jsoner=JSONEncoder(),
-           pprint=pprint
+            app=create_app(),
+            db=db,
+            ud=ud,
+            User=User,
+            Role=Role,
+            Provider=Provider,
+            Review=Review,
+            Address=Address,
+            Gallery=Gallery,
+            Photo=Photo,
+            Menu=Menu,
+            p=Provider.query.get(4),
+            c=Consumer.query.first(),
+            jsoner=JSONEncoder(),
+            pprint=pprint,
+            es=indexer.es
             )
 
 m.add_option('-c', '--config', dest='config', required=False)
