@@ -5,7 +5,7 @@ from wtforms.validators import Required
 menu_types = [
         ('none', 'I\'m looking for:'),
         ('salon', 'Salons'),
-        ('barber', 'Barbershops'),
+        ('barbershop', 'Barbershops'),
         ('product', 'Products')]
 
 class SearchForm(Form):
