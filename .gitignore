@@ -13,6 +13,7 @@ recess
 runserver.py
 Vagrantfile
 .vagrant
+*.css
 
 # C extensions
 *.so
