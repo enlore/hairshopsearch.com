@@ -3,9 +3,39 @@
 @slightly-darker-vivid-orange: #EF8F00;
 @warm-white: #F7F7F7;
 @off-white: #e2f0f0;
-//@swanky-blue: #68aecd;
-//@sherbet-orange: #FFC063;
 @sherbet-orange: #FFB651;
+
+/* flashes */
+@error: #FF7A83;
+@error-border: darken(@error, 15%);
+
+@info: #77EFFF;
+@info-border: darken(@info, 15%);
+
+@success: #89FFA3;
+@success-border: darken(@success, 15%);
+
+.flashes {
+    li {
+        font-size: 1.2em;
+        border-radius: 2px;
+        padding: 0.5em;
+        margin-bottom: 6px;
+    }
+    .info {
+        background-color: @info;
+        border: 2px solid @info-border;
+    }
+    .error {
+        background-color: @error;
+        border: 2px solid @error-border;
+    }
+    .success {
+        background-color: @success;
+        border: 2px solid @success-border;
+    }
+}
+
 
 @bg-url: url('/static/img/bg-noise.png');
 
