@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app, flash
+from flask import Blueprint, render_template, current_app, flash, redirect, url_for
 from ..core import es
 from ..helpers import lat_lon
 from ..models import Provider, Address
@@ -24,7 +24,14 @@ def _search_test():
 @search.route('/', methods=['POST'])
 def _search():
     form = SearchForm()
-    if form.validate_on_submit():
+
+    if not form.validate_on_submit():
+        for error in form.errors.values():
+            for msg in error:
+                flash(msg, 'error')
+        return redirect(url_for('frontend.index'))
+
+    else:
         a = Address()
         a.zip_code = form.zip_code.data
 
