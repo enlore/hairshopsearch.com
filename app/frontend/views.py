@@ -8,6 +8,13 @@ from ..core import db
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
+@frontend.route('/test_flash')
+def test_flash():
+    flash('An error, oh noes!', 'error')
+    flash('Some helpful info.', 'info')
+    flash('To drive your enemies before you', 'success')
+    return redirect(url_for('frontend.index'))
+
 @frontend.route('/')
 def index():
     return render_template('frontend/index.html',
