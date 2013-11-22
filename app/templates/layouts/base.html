@@ -14,8 +14,7 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/normalize.css">
-    <link rel="stylesheet/less" href="{{ url_for('static', filename='css/main.less') }}">
-    <script src="/static/js/vendor/less-1.5.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="/static/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body {% if request.path == url_for('frontend.index') %} class="index" {% endif %}>
@@ -101,8 +100,8 @@
     </div> <!-- /.page-wrap -->
 
     <div class="footer">
-        <div class="row">
-            <div class="container">
+         <div class="container">
+            <div class="row">
                 <div class="col-md-4">
                     <ul>
                         <li> <a href="/">Home</a> </li>
