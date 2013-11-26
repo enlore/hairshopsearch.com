@@ -136,14 +136,9 @@ def edit_routine():
 @dashboard.route('/consumer/following/<int:consumer_id>/remove')
 def remove_followed(consumer_id):
     to_be_unfollowed = Consumer.query.get(consumer_id)
-    current_app.logger.info(to_be_unfollowed)
 
     for followed in current_user.consumer.follows:
-        current_app.logger.info(followed)
-
         if to_be_unfollowed is followed:
-            current_app.logger.info('match')
-
             # pop that followed entity out of this list
             current_user.consumer.follows.pop(
                     current_user.consumer.follows.index(followed)
