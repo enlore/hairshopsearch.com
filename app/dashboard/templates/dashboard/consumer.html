@@ -56,6 +56,18 @@
 
     <div class="row user-dashboard-group">
         <div class="col-md-9">
+            <h3> Who I'm Following </h3>
+            <ul>
+                {% for followed in consumer.follows %}
+                <li> <a href="/consumer/{{ followed.consumer_url }}">
+                    {{ followed.user.first_name }} {{ followed.user.last_name }}
+                </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row user-dashboard-group">
+        <div class="col-md-9">
             <h3> My Favorites </h3>
             <ul>
                 {% for fav in consumer.favorites %}
