@@ -236,6 +236,12 @@ class ProviderInstance(db.Model):
     name                = db.Column(db.String, primary_key=True)
     count               = db.Column(db.Integer)
 
+
+followers_followed = db.Table('followers_followed',
+            db.Column('follower', db.Integer, db.ForeignKey('consumer.id'), primary_key=True),
+            db.Column('followed', db.Integer, db.ForeignKey('consumer.id'), primary_key=True)
+        )
+
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
@@ -251,6 +257,11 @@ class Consumer(db.Model, JSONSerializer):
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
     hair_articles       = db.relationship('Article')
+    follows             = db.relationship('Consumer',
+                            secondary=followers_followed,
+                            primaryjoin=id==followers_followed.c.follower,
+                            secondaryjoin=id==followers_followed.c.followed,
+                            backref='followers')
 
     @hybrid_property
     def consumer_url(self):
