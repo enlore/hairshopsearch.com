@@ -3,14 +3,23 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+            <h1> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h1>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4 profile-sidebar">
             <img class="center img-responsive" src="http://placehold.it/225x300">
-            <h1>
-                {{ consumer.user.first_name }} {{ consumer.user.last_name }}
-            </h1>
         </div>
 
+
         <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-default" type="button">Follow</button>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="profile-header">
@@ -31,6 +40,8 @@
                         <li><a href="#bio" data-toggle="tab" class="active">Bio</a></li>
                         <li><a href="#routine" data-toggle="tab">Routine</a></li>
                         <li><a href="#favorites" data-toggle="tab">Favorites</a></li>
+                        <li><a href="#following" data-toggle="tab">Following</a></li>
+                        <li><a href="#followers" data-toggle="tab">Followers</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -48,6 +59,22 @@
                                     {{ fav.business_name }}
                                 </a>
                             {% endfor %}
+                        </div>
+
+                        <div id="following" class="tab-pane">
+                            <ul>
+                            {% for followed in consumer.follows %}
+                                <li> {{ followed.user.first_name }} </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div id="followers" class="tab-pane">
+                            <ul>
+                                {% for follower in consumer.followers %}
+                                    <li> {{ follower.user.first_name }} </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div><!-- /.tab-content -->
                 </div>
