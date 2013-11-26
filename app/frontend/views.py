@@ -88,3 +88,17 @@ def test_consumer():
 def welcome():
     return render_template('frontend/welcome.html')
 
+
+@login_required
+@roles_required(['consumer'])
+@frontend.route('/<int:consumer_id>/follow')
+def follow(consumer_id):
+    first_person = current_user.consumer
+    consumer = Consumer.query.get(consumer_id)
+
+    first_person.follows.append(consumer)
+    db.session.add(first_person)
+    db.session.commit()
+
+    return redirect(url_for('frontend.consumer_url',
+        consumer_url=consumer.consumer_url))
