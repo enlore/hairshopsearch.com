@@ -193,11 +193,6 @@ img {
     color: @navbar-fg;
 }
 
-@media screen and (min-width: 960px) {
-    .navbar form {
-    }
-}
-
 .search-form-container form {
     .align-center;
 }
@@ -366,4 +361,20 @@ img {
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 1em;
+}
+
+/* Consumer Profile
+********************/
+.consumer-profile .nav.nav-tabs {
+    li a {
+        background: #000;
+        color: #eee;
+        &:hover,
+        &:active {
+            background: #3daa98;
+            color: #000;
+            border: 1px solid #3daa98;
+        }
+    }
+
 }
