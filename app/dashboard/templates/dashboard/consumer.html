@@ -59,9 +59,12 @@
             <h3> Who I'm Following </h3>
             <ul>
                 {% for followed in consumer.follows %}
-                <li> <a href="/consumer/{{ followed.consumer_url }}">
-                    {{ followed.user.first_name }} {{ followed.user.last_name }}
-                </a></li>
+                <li>
+                    <a href="/consumer/{{ followed.consumer_url }}">
+                        {{ followed.user.first_name }} {{ followed.user.last_name }}
+                    </a>
+                    <a href="{{ url_for('dashboard.remove_followed', consumer_id=followed.id) }}" class="btn btn-sm btn-warning">Unfollow</a>
+                </li>
                 {% endfor %}
             </ul>
         </div>
