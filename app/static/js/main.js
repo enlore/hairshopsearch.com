@@ -108,4 +108,18 @@ $(document).on('ready', function() {
             }
         })
     }
+
+    // register form confirm password validation
+    var $pwd_confirm    = $('#password_confirm')
+        , $pwd          = $('#password')
+        , $reg_form     = $('#register_form')
+
+    $reg_form.on('submit', function (e) {
+        if ($pwd.val() !== $pwd_confirm.val()) {
+            console.log('not the same')
+            return false
+        }
+    })
+
 })
+
