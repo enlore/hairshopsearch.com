@@ -10,7 +10,8 @@
                 <img class="img-responsive lg-logo" src="{{ url_for('static', filename='img/logo-lg.png') }}">
             </a>
         </div>
-    </div>
+    </div><!-- /.row -->
+
     <div class="row">
         <div class="col-md-12 search-form-container">
             {% if index_search_form %}
@@ -28,12 +29,12 @@
                 <div class="form-group">
                     <label class="sr-only" for="service">Service</label>
                     <input class="form-control" id="service" name="service"
-                        type="text" data-placeholder="service type">
+                    type="text" data-placeholder="service type">
                 </div>
                 <div class="form-group">
                     <label class="sr-only" for="zip_code">Zip</label>
                     <input class="form-control" id="zip_code" name="zip_code"
-                        type="text" data-placeholder="in ZIP code">
+                    type="text" data-placeholder="in ZIP code">
                 </div>
 
                 <div class="form-group">
@@ -41,10 +42,43 @@
                 </div>
             </form>
             {% endif %}
+
             <h2 class="index deck"> We're Making it Easier to find Black and
                 Brown Hair Care and Beauty Solutions in Your Current Area!
             </h2>
-            </div>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <p> As a HairShop provider, HairShopSearch can help you attract new clients and earn more. </p>
+            <p> As a HairShop consumer, HairShopSearch can help you find Black and Brown hair care and beauty
+            solutions offered by providers.
+            </p>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <p> What's in the name, HairShop what? HAIRSHOP - salons, barbershops, and product locations that specifically
+                offer Black and Brown hair care and beauty solutions.
+            </p>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-responsive center" src="http://placehold.it/300x300">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive center" src="http://placehold.it/300x300">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive center" src="http://placehold.it/300x300">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive center" src="http://placehold.it/300x300">
         </div>
     </div>
+</div><!-- /.container -->
     {% endblock %}
