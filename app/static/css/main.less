@@ -406,3 +406,21 @@ img {
     background: darken(@welcome-button-bg, 25%);
     box-shadow: inset 0 0 1px 2px darken(@welcome-button-bg, 30%);
 }
+
+/* Provider Welcome
+********************/
+@media screen and (min-width: 768px) {
+    .provider-welcome {
+        .lead {
+            background: url('http://placehold.it/960x300') 0 0 no-repeat;
+            height: 300px;
+            position: relative;
+            .deck {
+                position: absolute;
+                bottom: 20px;
+                left: 10px;
+                width: 45%;
+            }
+        }
+    }
+}
