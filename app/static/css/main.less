@@ -114,6 +114,10 @@ body {
     padding: 0;
 }
 
+.float-right {
+    float: right;
+}
+
 .page-wrap {
     min-height: 100%;
     width: 100%;
@@ -181,7 +185,7 @@ img {
     max-width: 1360px;
     margin: 0 auto;
 }
-.index .navbar.navbar-inverse .navbar-header .navbar-brand {
+.navbar.navbar-inverse .navbar-header .navbar-brand {
     padding: 6px 0 0 15px;
 }
 
@@ -192,6 +196,11 @@ img {
 
 .navbar-inverse .navbar-nav li > a {
     color: @navbar-fg;
+}
+
+.navbar-inverse .navbar-nav li > a.nav-login {
+    background: #000;
+    border-radius: 4px;
 }
 
 .search-form-container form {
@@ -410,7 +419,12 @@ img {
 /* Provider Welcome
 ********************/
 @media screen and (min-width: 768px) {
-    .provider-welcome {
+    .marketing-welcome.container {
+        background: #DEF9F9;
+        padding: 0;
+        .content {
+            padding: 0 2em 2em 2em;
+        }
         .lead {
             background: url('http://placehold.it/960x300') 0 0 no-repeat;
             height: 300px;

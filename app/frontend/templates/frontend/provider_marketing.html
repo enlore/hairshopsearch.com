@@ -1,37 +1,69 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-    <div class="container provider-welcome">
-        <div class="lead">
-            <span class="deck"> Connect to motivated consumers who are actively looking
-                for the solutions you provide.
-            </span>
-        </div>
+<div class="container marketing-welcome">
+    <div class="lead">
+        <span class="deck"> Connect to motivated consumers who are actively looking
+            for the solutions you provide.
+        </span>
+    </div>
 
+    <div class="content">
         <div class="row">
             <div class="col-md-5">
-                <img class="img-responsive center" src="http://placehold.it/250x250">
+                <img class="img-responsive" src="http://placehold.it/250x250">
             </div>
 
-            <div class="col-md-7">
-                <h2> Current Challenge </h2>
-                <p> Connecting with potential customers online can be a difficult process</p>
+            <div class="col-md-7"> <h2> Current Challenge </h2> <p> Connecting
+                with potential customers online can be a difficult process
+                Going offline while using Google Docs in a browser other than
+                Chrome can be quite frustrating: you can’t edit your document.
+                And while reading is still possible, copying parts of it
+                isn’t. You can’t do anything with your text or spreadsheet—not
+                even copy it to another program to continue working there. And
+                yet, this is actually an improvement over past versions, where
+                a large overlay would notify you of the offline state and
+                prevent you from even seeing your work.
+
+                This is a common occurrence in both native and web apps: data
+                you’ve only just accessed suddenly becomes unavailable when
+                you lose your connection. If possible, apps should retain
+                their last state and make their data available, even if it
+                can’t be modified. This requires keeping local data to fall
+                back to if the server can’t be reached, so your users are
+                never stranded with an empty app.
+
+                TREATING OFFLINE LIKE AN ERROR</p>
             </div>
         </div><!-- /.row -->
 
         <div class="row">
             <div class="col-md-7">
                 <h2> HairShopSearch Solution </h2>
-                <p> We believe we can fly</p>
+                <p> We believe we can fly If your app offers collaborative
+                editing or some other form of simultaneous use on multiple
+                devices, you will likely create conflicting versions of
+                objects at some point. We can’t prevent this, but we can
+                provide easily usable conflict-resolution UIs for people who
+                might not even understand what a sync conflict is.
+
+                Take Evernote, whose business is heavily based on syncing
+                notes: conflicts are resolved by simply concatenating both
+                versions of the note. On anything longer than a couple of
+                lines, this requires an inordinate amount of cognitive effort
+                and subsequent editing.
+
+                Draft, on the other hand, has managed to make conflict
+                resolution betw</p>
             </div>
 
             <div class="col-md-5">
-                <img class="img-responsive center" src="http://placehold.it/250x250">
+                <img class="img-responsive float-right" src="http://placehold.it/250x250">
             </div>
         </div><!-- /.row -->
 
         <div class="row">
             <div class="col-md-5">
-                <img class="img-responsive center" src="http://placehold.it/250x250">
+                <img class="img-responsive" src="http://placehold.it/250x250">
             </div>
 
             <div class="col-md-7">
@@ -51,5 +83,6 @@
                 <span> Seems like you're ready </span>
             </button>
         </div><!-- /.row -->
+    </div>
     </div><!-- /.container -->
 {% endblock %}

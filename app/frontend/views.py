@@ -84,7 +84,7 @@ def test_consumer():
     return render_template('frontend/consumer.html', consumer=consumer)
 
 @frontend.route('/welcome')
-@login_required
+#@login_required
 def welcome():
     return render_template('frontend/welcome.html')
 
@@ -102,3 +102,11 @@ def follow(consumer_id):
 
     return redirect(url_for('frontend.consumer_url',
         consumer_url=consumer.consumer_url))
+
+@frontend.route('/provider_welcome')
+def provider_welcome():
+    return render_template('frontend/provider_marketing.html')
+
+@frontend.route('/consumer_welcome')
+def consumer_welcome():
+    return render_template('frontend/consumer_marketing.html')

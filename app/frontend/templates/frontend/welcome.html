@@ -1,20 +1,24 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-<div class="container">
+<div class="container welcome">
     <div class="row">
         <div class="col-md-12">
-            <h1> Welcome to HairShopSearch! </h1>
-            <h4> Please take a moment to introduce yourself. </h4>
+            <h1 class="align-center"> Welcome to HairShopSearch! </h1>
+            <h4 class="align-center"> Please take a moment to introduce yourself. </h4>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-6 panel">
             <p> Do you own a barbershop, salon, or small business selling your hair care
                 products?</p>
-            <a href="{{ url_for('dashboard.new_provider') }}">Click Here</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+            <a class="btn btn-hss" href="{{ url_for('dashboard.new_provider') }}">Click Here</a>
+        </div><!-- /.row -->
+
+        <div class="col-md-6 panel right">
             <p> Are you looking for black hair care services and products?</p>
-            <a href="{{ url_for('dashboard.new_consumer') }}">Click Here</a>
-        </div>
+            <a class="btn btn-hss" href="{{ url_for('dashboard.new_consumer') }}">Click Here</a>
+        </div><!-- /.row -->
     </div>
 </div>
 
