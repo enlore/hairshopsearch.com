@@ -13,9 +13,41 @@ from ..core import db
 from ..helpers import acceptable_url_string, lat_lon
 from ..indexer import indexer
 
+from datetime import datetime, timedelta
+import base64
+import hmac
+import hashlib
+
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
+
+
+@dashboard.route('/photo/upload', methods=['GET'])
+def upload_photo():
+    fmat = '%Y-%m-%dT%H:%M:%SZ'
+    expiration_date = datetime.today() + timedelta(0, 3600)
+    iso_datetime = expiration_date.strftime(fmat)
+
+    policy = current_app.config['AWS_POLICY']
+
+    # set our one hour expiration time limit
+    policy['expiration'] = iso_datetime
+
+    policy_64 = base64.b64encode(str(policy))
+
+    signature = base64.b64encode(
+            hmac.new(
+                current_app.config['AWS_SECRET'],
+                str(policy),
+                hashlib.sha1).digest()
+            )
+
+    return render_template('dashboard/photo_upload.html',
+            s3_url=current_app.config['S3_URL'],
+            aws_key=current_app.config['AWS_KEY'],
+            policy_64=policy_64,
+            signature=signature)
 
 @dashboard.route('/photo/save', methods=['POST'])
 def save_photo():
