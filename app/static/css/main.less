@@ -1,8 +1,7 @@
 @import url('mixins.less');
 @vivid-orange: #f90;
 @slightly-darker-vivid-orange: #EF8F00;
-@warm-white: #F7F7F7;
-@off-white: #e2f0f0;
+@warm-white: #F7F7F7; @off-white: #e2f0f0;
 @sherbet-orange: #FFB651;
 @nice-blue: #4777EF;
 
@@ -418,14 +417,34 @@ img {
     box-shadow: inset 0 0 1px 2px darken(@welcome-button-bg, 30%);
 }
 
-/* Provider Welcome
-********************/
+/* Welcome Marketing
+*********************/
+.marketing-welcome.container {
+    background: #DEF9F9;
+    .answer, .question {
+        text-align: center;
+    }
+    .deck {
+        position: relative;
+        width: auto;
+        text-align: center;
+        font-size: 22px;
+        display: block;
+    }
+    .closer {
+        font-size: 22px;
+        button {
+            font-size: 32px; 
+        }
+    }
+}
 @media screen and (min-width: 768px) {
     .marketing-welcome.container {
-        background: #DEF9F9;
         padding: 0;
         .content {
             padding: 0 2em 2em 2em;
+            .question { font-size: 28px;; text-align: left; }
+            .answer {   font-size: 22px;; text-align: left; }
         }
         .lead {
             background: url('http://placehold.it/960x300') 0 0 no-repeat;
@@ -436,6 +455,8 @@ img {
                 bottom: 20px;
                 left: 10px;
                 width: 45%;
+                text-align: left;
+                display: inline;
             }
         }
     }
