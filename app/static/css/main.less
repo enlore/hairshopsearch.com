@@ -1,44 +1,15 @@
-@import url('mixins.less');
 @vivid-orange: #f90;
 @slightly-darker-vivid-orange: #EF8F00;
-@warm-white: #F7F7F7; @off-white: #e2f0f0;
+@warm-white: #F7F7F7;
+@off-white: #e2f0f0;
 @sherbet-orange: #FFB651;
 @nice-blue: #4777EF;
 
+@light-blue: #E8FFFF;
+@cool-grey: #E0F1F1;
+@grey: #EEE;
+
 @welcome-button-bg: @nice-blue;
-
-/* flashes */
-@error: #FF7A83;
-@error-border: darken(@error, 15%);
-
-@info: #77EFFF;
-@info-border: darken(@info, 15%);
-
-@success: #89FFA3;
-@success-border: darken(@success, 15%);
-
-.flashes {
-    padding: 0;
-    li {
-        font-size: 1.2em;
-        border-radius: 2px;
-        padding: 0.5em;
-        margin-bottom: 6px;
-    }
-    .info {
-        background-color: @info;
-        border: 2px solid @info-border;
-    }
-    .error {
-        background-color: @error;
-        border: 2px solid @error-border;
-    }
-    .success {
-        background-color: @success;
-        border: 2px solid @success-border;
-    }
-}
-
 
 @bg-url: url('/static/img/bg-noise.png');
 
@@ -74,136 +45,21 @@
 
 @user-dashboard-group-bg: @warm-white;
 @user-dashboard-group-border: @seventy-percent-grey;
-
 @text-color: @black;
 
-@font-face {
-    font-family: 'HSSMyriad';
-    src: url('/static/font/MyriadPro-Regular.otf');
-}
-
-@font-face {
-    font-family: 'HSSMinion';
-    src: url('/static/font/MinionPro-Regular.otf');
-}
-
-* {
-    box-sizing: border-box;
-}
-
-h1,h2,h3,h4,h5,h6 {
-    font-family: 'HSSMinion', serif;
-}
-
-ul, ol {
-    list-style: none;
-}
-
-p,span {
-    font-family: 'HSSMyriad', sans-serif;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.float-right {
-    float: right;
-}
-
-.page-wrap {
-    min-height: 100%;
-    width: 100%;
-    margin-bottom: -14em;
-    background-color: @body-bg;
-    background: @bg-url;
-    padding-top: 4em;
-    padding-bottom: 2em;
-}
-
-.page-wrap:after {
-    content: "";
-    display: block;
-    height: 14em;
-}
-
-.footer {
-    height: 14em;
-    width: 100%;
-    text-align: center;
-    ul li {
-        display: inline-block;
-    }
-    a {
-        display: block;
-    }
-}
-
-
-img {
-    display: block;
-}
-
-.center {
-    margin: 0 auto;
-}
-.align-center {
-    text-align: center;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.inset-shadow-top-bottom {
-            box-shadow: inset 0  10px 10px -3px #1a1a1a,
-                        inset 0 -10px 10px -3px #1a1a1a;
-       -moz-box-shadow: inset 0  10px 10px -3px #1a1a1a,
-                        inset 0 -10px 10px -3px #1a1a1a;
-    -webkit-box-shadow: inset 0  10px 10px -3px #1a1a1a,
-                        inset 0 -10px 10px -3px #1a1a1a;
-}
+@import 'typography.less';
+@import 'mixins.less';
+@import 'util.less';
+@import 'components.less';
+@import 'resets.less';
+@import 'scaffolding.less';
 
 .row {
   margin-top: 1em;
 }
 
-.navbar {
-    background: @header-bg;
-    border-bottom: 1px solid @navbar-border;
-    box-shadow: 0 1px 2px 0px @navbar-shadow;
-}
-
-.nav-container {
-    max-width: 1360px;
-    margin: 0 auto;
-}
-.navbar.navbar-inverse .navbar-header .navbar-brand {
-    padding: 6px 0 0 15px;
-}
-
-.navbar form {
-    text-align: center;
-    padding-top: 10px;
-}
-
-.navbar-inverse .navbar-nav li > a {
-    color: @navbar-fg;
-    padding: 10px;
-    margin-top: 5px;
-}
-
-.navbar-inverse .navbar-nav li > a.nav-login {
-    background: #000;
-    border-radius: 4px;
-}
-
+/* Index
+ ********/
 .search-form-container form {
     .align-center;
 }
@@ -219,30 +75,16 @@ img {
     }
 }
 
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 960px;
-  }
 
-  .jumbotron > .container {
-    max-width: 1060px;
-  }
-}
-
-.rotate-90 {
-            transform: rotate(-90deg);
-         -o-transform: rotate(-90deg);
-       -moz-transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-}
-
+/* Provider Profile
+ *******************/
 .jumbotron {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background: @jumbotron-color;
-
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: @jumbotron-color;
+    min-height: 300px;
 }
 
 .thumbnail-container {
@@ -260,6 +102,12 @@ img {
 
 .jumbotron .row {
     margin-top: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron > .container {
+    max-width: 1060px;
+  }
 }
 
 .profile-header {
@@ -328,6 +176,9 @@ img {
     margin: 0 auto;
 }
 
+
+/* Dashboard
+ ***********/
 .btn.dashboard {
     margin: 0.5em;
 }
@@ -358,13 +209,6 @@ img {
     }
 }
 
-
-.tab-content > .tab-pane {
-    border: 3px solid black;
-    border-radius: 0 4px 4px 4px;
-    padding: 2em;
-}
-
 /* SERP
 *****************/
 .search-result {
@@ -376,6 +220,12 @@ img {
 
 /* Consumer Profile
 ********************/
+.tab-content > .tab-pane {
+    border: 3px solid black;
+    border-radius: 0 4px 4px 4px;
+    padding: 2em;
+}
+
 .consumer-profile .nav.nav-tabs {
     li a {
         background: #000;
@@ -387,12 +237,10 @@ img {
             border: 1px solid #3daa98;
         }
     }
-
 }
 
 /* Welcome Page
 ****************/
-
 .welcome .panel {
     padding-bottom: 1em;
     min-height: 9em;
@@ -403,18 +251,10 @@ img {
 }
 
 .welcome .btn.btn-hss {
-    color: #E1E5EF;
-    padding: 0.7em;
-    background: @welcome-button-bg;
-    border: 0;
-    border-radius: 4px;
-    box-shadow: inset 0 -3px 0 0 darken(@welcome-button-bg, 20%);
-
-}
-
-.welcome .btn.btn-hss:active {
-    background: darken(@welcome-button-bg, 25%);
-    box-shadow: inset 0 0 1px 2px darken(@welcome-button-bg, 30%);
+    width: 33%;
+    left: 33%;
+    bottom: 10px;
+    position: absolute;
 }
 
 /* Welcome Marketing
@@ -459,5 +299,23 @@ img {
                 display: inline;
             }
         }
+    }
+}
+
+/* Login
+ ********/
+.login {
+    .register-cta {
+        text-align: center;
+        .btn.btn-hss {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .login .register-cta .btn.btn-hss {
+        width: 40%;
     }
 }
