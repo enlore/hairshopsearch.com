@@ -41,8 +41,8 @@
 
             <div class="collapse navbar-collapse" id="primary-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('dashboard.profile') }}">for HairShop Providers</a></li>
-                    <li><a href="{{ url_for('dashboard.profile') }}">for HairShop Consumers</a></li>
+                    <li><a href="{{ url_for('frontend.provider_welcome') }}">for HairShop Providers</a></li>
+                    <li><a href="{{ url_for('frontend.consumer_welcome') }}">for HairShop Consumers</a></li>
                     {% if current_user.is_authenticated() %}
                     <li><a href="{{ url_for('dashboard.profile') }}">My Account</a></li>
                     <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
@@ -56,6 +56,7 @@
         </div>
     </nav><!-- / navbar navbar-inverse navbar-fixed-top -->
 
+    {% if request.path != url_for('frontend.index') %}
     <nav class="navbar navbar-inverse navbar-fixed-top secondary">
         <div class="container">
             <div class="navbar-header">
@@ -66,39 +67,38 @@
             </div><!-- /.navbar-header -->
 
             <div id="secondary-collapse" class="collapse navbar-collapse">
-                {% if request.path != url_for('frontend.index') %}
-                    {% if search_form %}
-                        <form class="navbar-form" action="{{ url_for('search._search') }}" method="POST" role="form">
-                            <div class="form-group">
-                                {{ search_form().csrf_token }}
-                                <label class="sr-only" for="menu_type">Service Type</label>
-                                <select class="form-control" id="menu_type" name="menu_type">
-                                    <option value="none">I'm looking for:</option>
-                                    <option value="salon">Salons</option>
-                                    <option value="barbershop">Barbershops</option>
-                                    <option value="product">Products</option>
-                                </select>
-                            </div>
+                {% if search_form %}
+                    <form class="navbar-form" action="{{ url_for('search._search') }}" method="POST" role="form">
+                        <div class="form-group">
+                            {{ search_form().csrf_token }}
+                            <label class="sr-only" for="menu_type">Service Type</label>
+                            <select class="form-control input-sm" id="menu_type" name="menu_type">
+                                <option value="none">I'm looking for:</option>
+                                <option value="salon">Salons</option>
+                                <option value="barbershop">Barbershops</option>
+                                <option value="product">Products</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="sr-only" for="service">Service</label>
-                                <input class="form-control" id="service" name="service" type="text" data-placeholder="service type">
-                            </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="service">Service</label>
+                            <input class="form-control input-sm" id="service" name="service" type="text" data-placeholder="service type">
+                        </div>
 
-                            <div class="form-group">
-                                <label class="sr-only" for="zip_code">Zip</label>
-                                <input class="form-control" id="zip_code" name="zip_code" type="text" data-placeholder="in ZIP code">
-                            </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="zip_code">Zip</label>
+                            <input class="form-control input-sm" id="zip_code" name="zip_code" type="text" data-placeholder="in ZIP code">
+                        </div>
 
-                            <div class="form-group">
-                                <input class="btn btn-default" id="submit" name="submit" type="submit" value="Search">
-                            </div>
-                        </form>
-                    {% endif %}
+                        <div class="form-group">
+                            <input class="btn btn-default input-sm" id="submit" name="submit" type="submit" value="Search">
+                        </div>
+                    </form>
                 {% endif %}
             </div><!-- /.secondary-collapse -->
         </div><!-- /.container -->
     </nav>
+    {% endif %}
     {% endblock %}
 
     <div class="page-wrap">
@@ -123,9 +123,9 @@
                         <li><a href=""> Privacy Policy </a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.footer -->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
