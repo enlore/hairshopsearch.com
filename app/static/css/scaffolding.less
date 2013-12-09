@@ -1,10 +1,14 @@
+.index .page-wrap {
+    padding-top: 4em;
+}
+
 .page-wrap {
     min-height: 100%;
     width: 100%;
     margin-bottom: -14em;
     background-color: @body-bg;
     background: @bg-url;
-    padding-top: 4em;
+    padding-top: 8em;
     padding-bottom: 2em;
 }
 
@@ -29,9 +33,23 @@
 /* Nav
  ******/
 .navbar {
-    background: @header-bg;
+    background: @navbar-bg;
     border-bottom: 1px solid @navbar-border;
-    box-shadow: 0 1px 2px 0px @navbar-shadow;
+    z-index: 100;
+}
+
+.index .navbar {
+}
+
+.navbar.secondary {
+    background: @secondary-navbar-bg;
+    border-bottom: 1px solid @secondary-navbar-border;
+    top: 50px;
+    z-index: 10;
+}
+
+.navbar-collapse {
+    border-top: none;
 }
 
 .nav-container {
@@ -42,9 +60,15 @@
     padding: 6px 0 0 15px;
 }
 
-.navbar form {
-    text-align: center;
-    padding-top: 10px;
+.navbar-inverse .navbar-form {
+    border: none;
+}
+
+.navbar-inverse .navbar-collapse {
+    border-color: darken(@navbar-bg, 25%);
+}
+.navbar-inverse.secondary .navbar-form {
+    border-color: none;
 }
 
 .navbar-inverse .navbar-nav li > a {
