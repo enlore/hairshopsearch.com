@@ -34,9 +34,7 @@
 
 @body-bg: @off-white;
 
-@footer-bg-end: @pretty-grey;
-@footer-bg-start: @light-grey;
-@footer-fg: @white;
+@foot-banner-bg: @nice-blue;
 
 @jumbotron-color: @grey;
 @profile-header-color: @black;
@@ -80,6 +78,14 @@
 @media screen and (min-width: 768px) {
     .index.deck {
         width: 65%;
+    }
+
+    .index .foot-banner {
+        background: @foot-banner-bg;
+        padding: 1em 0 1em;
+        .row {
+            margin-top: 0;
+        }
     }
 }
 
