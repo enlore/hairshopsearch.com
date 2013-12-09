@@ -25,11 +25,11 @@
     <!-- Add your site or application content here -->
     {% from "macros/_form.html" import render_form %}
     {% block nav %}
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="nav-container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle"
-                    data-toggle="collapse" data-target=".navbar-collapse">
+                    data-toggle="collapse" data-target="#primary-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -39,7 +39,7 @@
                 </a>
             </div>
 
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="primary-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ url_for('dashboard.profile') }}">for HairShop Providers</a></li>
                     <li><a href="{{ url_for('dashboard.profile') }}">for HairShop Consumers</a></li>
@@ -51,10 +51,24 @@
                     {% endif %}
                 </ul>
 
+
+            </div>
+        </div>
+    </nav><!-- / navbar navbar-inverse navbar-fixed-top -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top secondary">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#secondary-collapse">
+                    <span class="sr-only">Toggle Search Bar</span>
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div><!-- /.navbar-header -->
+
+            <div id="secondary-collapse" class="collapse navbar-collapse">
                 {% if request.path != url_for('frontend.index') %}
                     {% if search_form %}
-                        <!-- Navbar form -->
-                        <form class="form-inline" action="{{ url_for('search._search') }}" method="POST" role="form">
+                        <form class="navbar-form" action="{{ url_for('search._search') }}" method="POST" role="form">
                             <div class="form-group">
                                 {{ search_form().csrf_token }}
                                 <label class="sr-only" for="menu_type">Service Type</label>
@@ -82,10 +96,9 @@
                         </form>
                     {% endif %}
                 {% endif %}
-
-            </div>
-        </div>
-    </div><!-- / nav stuff -->
+            </div><!-- /.secondary-collapse -->
+        </div><!-- /.container -->
+    </nav>
     {% endblock %}
 
     <div class="page-wrap">
