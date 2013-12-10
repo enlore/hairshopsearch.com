@@ -110,3 +110,11 @@ def provider_welcome():
 @frontend.route('/consumer_welcome')
 def consumer_welcome():
     return render_template('frontend/consumer_marketing.html')
+
+@frontend.route('/tos')
+def tos():
+    return render_template('frontend/tos.html')
+
+@frontend.route('/privacy_policy')
+def privacy_policy():
+    return render_template('frontend/privacy_policy.html')
