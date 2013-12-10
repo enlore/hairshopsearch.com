@@ -110,12 +110,12 @@
          <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <ul>
-                        <li> <a href="/">Home |</a> </li>
-                        <li> <a href="/">for HairShop providers |</a> </li>
-                        <li> <a href="/">for HairShop consumers |</a> </li>
-                        <li> <a href="mailto:info@hairshopsearch.com">contact us</a> </li>
-                    </ul>
+                    <p>
+                    <a href="/">Home</a> |
+                    <a href="{{ url_for('frontend.provider_welcome') }}"> For HairShop Providers</a> |
+                    <a href="{{ url_for('frontend.consumer_welcome') }}"> For HairShop Consumers</a> |
+                    <a href="mailto:info@hairshopsearch.com"> Contact Us</a>
+                    </p>
                     <p class=""> This is provided by &copy;2013 HairShopSearch, Inc. All rights reserved. </p>
                     <ul>
                         <li><a href="{{ url_for('frontend.tos') }}"> Terms of Service |</a></li>
