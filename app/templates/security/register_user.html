@@ -3,32 +3,48 @@
 {% block body %}
 
 {% from "security/_macros.html" import render_field_with_errors, render_field %}
-<div class="container">
-    <h1>Register</h1>
-    <form id="register_form" class="form-horizontal" action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
-        {{ register_user_form.hidden_tag() }}
-
-        {{ render_field_with_errors(register_user_form.email) }}
-
-        {{ render_field_with_errors(register_user_form.password) }}
-
-        {% if register_user_form.password_confirm %}
-            {{ render_field_with_errors(register_user_form.password_confirm) }}
-        {% endif %}
-
-        <div class="form-group">
-            <div class="col-md-2">
-                <label class="control-label" for="password_confirm">
-                    Confirm Password
-                </label>
-            </div>
-            <div class="col-md-10">
-                <input type="password" id="password_confirm"
-                class="form-control"></input>
-            </div>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Register</h1>
         </div>
-        {{ render_field(register_user_form.submit) }}
-    </form>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <form id="register_form" class="form-horizontal" action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+            {{ register_user_form.hidden_tag() }}
+
+            {{ render_field_with_errors(register_user_form.email) }}
+
+            {{ render_field_with_errors(register_user_form.password) }}
+
+            {% if register_user_form.password_confirm %}
+            {{ render_field_with_errors(register_user_form.password_confirm) }}
+            {% endif %}
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label class="control-label" for="password_confirm">
+                        Confirm Password
+                    </label>
+                </div>
+                <div class="col-md-10">
+                    <input type="password" id="password_confirm"
+                    class="form-control"></input>
+                </div>
+            </div>
+            {{ render_field(register_user_form.submit) }}
+        </form>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <p> Clicking 'Register' means that you agree that you are at
+            least 13 years old or older, and that you agree to our
+            <a href="{{ url_for('frontend.tos') }}">Terms of Service</a> and
+            <a href="{{ url_for('frontend.privacy_policy') }}">Privacy Policy</a>.
+        </div>
+    </div>
 </div>
 
 {% endblock %}

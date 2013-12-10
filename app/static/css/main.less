@@ -1,11 +1,9 @@
 @vivid-orange: #f90;
-@slightly-darker-vivid-orange: #EF8F00;
 @warm-white: #F7F7F7;
 @off-white: #e2f0f0;
-@sherbet-orange: #FFB651;
 @nice-blue: #4777EF;
+@cool-white: lighten(@nice-blue, 38%);
 
-@light-blue: #E8FFFF;
 @cool-grey: #E0F1F1;
 @grey: #EEE;
 
@@ -36,6 +34,12 @@
 
 @foot-banner-bg: @nice-blue;
 
+/* Login & Registration
+ ***********************/
+@login-bg: @cool-white;
+
+/* Profile
+ **********/
 @jumbotron-color: @grey;
 @profile-header-color: @black;
 @profile-header-fg: @white;
@@ -44,13 +48,18 @@
 @profile-sidebar-bg: @black;
 @profile-sidebar-fg: @white;
 
+/* Dashboard
+ ************/
 @user-dashboard-group-bg: @warm-white;
 @user-dashboard-group-border: @seventy-percent-grey;
 @text-color: @black;
 
+/* TOS & Privacy Policy
+ ***********************/
 @tos-nav-bg: @nice-blue;
 
-/* flashes */
+/* Flashes
+ **********/
 @error: #FF7A83;
 @error-border: darken(@error, 15%);
 
@@ -67,7 +76,6 @@
 @import 'resets.less';
 @import 'scaffolding.less';
 
-.row { margin-top: 1em; }
 
 /* Index
  ********/
@@ -330,21 +338,41 @@
     }
 }
 
-/* Login
- ********/
-.login {
+/* Login & Register
+ *******************/
+.login.container,
+.register.container {
+    max-width: 600px;
+    background: @login-bg;
+    padding: 2em;
+}
+
+.login,
+.register {
+    h1 { margin: 0; }
+    .row {
+        border-bottom: 1px solid @chilax-grey;
+        padding-bottom: 2em;
+        padding-top: 2em;
+        &:last-child { border-bottom: none; }
+    }
     .register-cta {
-        text-align: center;
         .btn.btn-hss {
-            width: 80%;
-            margin: 0 auto;
+            display: inline;
+        }
+        span { line-height: 36px; }
+    }
+    .login-alternatives {
+        a {
+            display: block;
+            text-align: center;
         }
     }
 }
 
 @media screen and (min-width: 768px) {
     .login .register-cta .btn.btn-hss {
-        width: 40%;
+        width: 10em;
     }
 }
 
