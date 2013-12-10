@@ -48,6 +48,8 @@
 @user-dashboard-group-border: @seventy-percent-grey;
 @text-color: @black;
 
+@tos-nav-bg: @nice-blue;
+
 @import 'typography.less';
 @import 'mixins.less';
 @import 'util.less';
@@ -368,5 +370,25 @@
 @media screen and (min-width: 768px) {
     .login .register-cta .btn.btn-hss {
         width: 40%;
+    }
+}
+
+/* TOS & Privacy
+ ***************/
+.tos-nav {
+    font-size: 16px;
+    > li.active > a,
+    > li.active > a:hover {
+        background: lighten(@tos-nav-bg, 5%);
+    }
+    > li > a,
+    > li > a:hover {
+        background: transparent;
+    }
+}
+
+@media screen and (min-width: 786px) {
+    .tos-nav {
+        font-size: 20px;
     }
 }
