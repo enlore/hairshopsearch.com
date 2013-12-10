@@ -1,8 +1,27 @@
 {% extends "layouts/base.html" %}
-{% block body %} 
+{% block body %}
+<div class="tos-header-banner">
+    <div class="container">
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            <ul class="tos-nav nav nav-pills nav-stacked">
+                <li>
+                    <a class="active" href="{{ url_for('frontend.tos') }}">
+                        Terms of Service
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('frontend.privacy_policy') }}">
+                        Privacy Policy
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
             <h1>HairShopSearch Terms of Service ("Agreement")</h1>
             <p>This Agreement was last modified on December 07, 2013.</p>
 
@@ -16,22 +35,19 @@
             content or other materials to the Site, you agree to be bound by these Terms of
             Service. Capitalized terms are defined in this Agreement.</p>
 
-            <h1>Intellectual Property</h1>
-            <p>The Site and its original
+            <p><span class="h3">Intellectual Property</span> The Site and its original
             content, features and functionality are owned by HairShopSearch, Inc. and are
             protected by international copyright, trademark, patent, trade secret and other
             intellectual property or proprietary rights laws.</p>
 
-            <h1>Termination</h1>
-            <p>We may terminate your access to the Site,
+            <p><span class="h3">Termination</span>We may terminate your access to the Site,
             without cause or notice, which may result in the forfeiture and destruction of
             all information associated with you. All provisions of this Agreement that by
             their nature should survive termination shall survive termination, including,
             without limitation, ownership provisions, warranty disclaimers, indemnity, and
             limitations of liability.</p>
 
-            <h1>Third-Party Site Links, Products, or Services</h1>
-            <p> Our
+            <p><span class="h3">Third-Party Site Links, Products, or Services</span> Our
             Site may contain links to or reference third-party sites, products, or services
             that are not owned or controlled by HairShopSearch, Inc..</p>
 
@@ -41,14 +57,12 @@
             terms and conditions and privacy policy of any third-party site that you
             visit.</p>
 
-            <h1>Governing Law</h1>
-            <p>This Agreement (and any further rules,
+            <p><span class="h3">Governing Law</span> This Agreement (and any further rules,
             polices, or guidelines incorporated by reference) shall be governed and
             construed in accordance with the laws of United States, without giving effect
             to any principles of conflicts of law.</p>
 
-            <h1>Changes To This Agreement</h1>
-            <p>We reserve the right, at our
+            <p><span class="h3">Changes To This Agreement</span> We reserve the right, at our
             sole discretion, to modify or replace these Terms of Service by posting the
             updated terms on the Site. Your continued use of the Site after any such
             changes constitutes your acceptance of the new Terms of Service.</p>
@@ -57,8 +71,7 @@
             this Agreement or any changes to this Agreement, do not use, access or continue
             to access the Site or discontinue any use of the Site immediately.</p>
 
-            <h1>Contact Us</h1>
-            <p>If you have any questions about this
+            <p><span class="h3">Contact Us</span> If you have any questions about this
             Agreement, please contact us at info@hairshopsearch.com.</p>
         </div>
     </div>

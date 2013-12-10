@@ -2,7 +2,22 @@
 {% block body %} 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            <ul class="tos-nav nav nav-pills nav-stacked">
+                <li>
+                    <a class="active" href="{{ url_for('frontend.tos') }}">
+                        Terms of Service
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('frontend.privacy_policy') }}">
+                        Privacy Policy
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
             <h1>HairShopSearch Privacy Policy</h1>
 
             <p>This Privacy Policy was last modified on December 07, 2013.</p>
