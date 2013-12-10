@@ -50,17 +50,6 @@
 
 @tos-nav-bg: @nice-blue;
 
-@import 'typography.less';
-@import 'mixins.less';
-@import 'util.less';
-@import 'components.less';
-@import 'resets.less';
-@import 'scaffolding.less';
-
-
-.row { margin-top: 1em; }
-
-
 /* flashes */
 @error: #FF7A83;
 @error-border: darken(@error, 15%);
@@ -71,28 +60,14 @@
 @success: #89FFA3;
 @success-border: darken(@success, 15%);
 
-.flashes {
-    padding: 0;
-    li {
-        font-size: 1.2em;
-        border-radius: 2px;
-        padding: 0.5em;
-        margin-bottom: 6px;
-    }
-    .info {
-        background-color: @info;
-        border: 2px solid @info-border;
-    }
-    .error {
-        background-color: @error;
-        border: 2px solid @error-border;
-    }
-    .success {
-        background-color: @success;
-        border: 2px solid @success-border;
-    }
-}
+@import 'typography.less';
+@import 'mixins.less';
+@import 'util.less';
+@import 'components.less';
+@import 'resets.less';
+@import 'scaffolding.less';
 
+.row { margin-top: 1em; }
 
 /* Index
  ********/
