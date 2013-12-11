@@ -69,6 +69,14 @@
 @success: #89FFA3;
 @success-border: darken(@success, 15%);
 
+/* SERP
+ *******/
+@serp-bg: @cool-white;
+
+/* Advert
+ *********/
+@advert-bg: @cool-white;
+
 @import 'typography.less';
 @import 'mixins.less';
 @import 'util.less';
@@ -246,10 +254,16 @@
 /* SERP
 *****************/
 .search-result {
-    background: #FAFAFA;
+    background: @serp-bg;
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 1em;
+}
+
+.serp.advert {
+    margin-bottom: 1em;
+    background: @advert-bg;
+    padding: 1em 0 1em;
 }
 
 /* Consumer Profile
