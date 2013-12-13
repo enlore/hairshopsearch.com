@@ -1,0 +1,18 @@
+{% from "macros/_form.html" import render_field %}
+
+{% extends "layouts/base.html" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-push-2">
+            {% if form %}
+            <form class="form-inline" role="form">
+                {{ render_field(form.name, false) }}
+                {{ render_field(form.last, false) }}
+                {{ render_field(form.submit, false, classes="btn btn-success") }}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
