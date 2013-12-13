@@ -2,9 +2,13 @@
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, abort)
 from flask.ext.security import login_required, roles_required, current_user
+from ..config import Config
 from ..search.forms import SearchForm
 from ..models import Provider, Consumer, User
 from ..core import db
+
+if Config.DEV:
+    from ..forms import TestForm
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -118,3 +122,9 @@ def tos():
 @frontend.route('/privacy_policy')
 def privacy_policy():
     return render_template('frontend/privacy_policy.html')
+
+if Config.DEV == True:
+    @frontend.route('/sandbox')
+    def sandbox():
+        form = TestForm()
+        return render_template('frontend/sandbox.html', form=form)
