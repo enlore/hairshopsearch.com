@@ -247,13 +247,13 @@ class Consumer(db.Model, JSONSerializer):
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
     _consumer_url       = db.Column(db.String)
-    hair_type           = db.Column(db.String)
-    hair_products       = db.relationship('Product', backref='consumer')
-    hair_routine        = db.Column(db.Text)
     favorites           = db.relationship('Provider',
                             backref=db.backref('favorited_by', lazy='dynamic'),
                             secondary=consumers_providers)
-    links               = db.Column(db.String)
+    blog_url            = db.Column(db.String)
+    youtube_url         = db.Column(db.String)
+    vimeo_url           = db.Column(db.String)
+    other_url           = db.Column(db.String)
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
     hair_articles       = db.relationship('Article')
@@ -270,6 +270,21 @@ class Consumer(db.Model, JSONSerializer):
     @consumer_url.setter
     def consumer_url(self, value):
         self._consumer_url = value
+
+
+class HairRoutine(db.Model, JSONSerializer):
+    id                  = db.Column(db.Integer, primary_key=True)
+    hair_condition      = None # select -> string
+    chemical_treat      = db.Column(db.Boolean()) # bool
+    last_treatment      = None # select -> string?
+    fav_style           = db.Column(db.String()) # text
+    shampoo_type        = db.Column(db.String()) # text
+    shampoo_frequency   = db.Column(db.String()) # string
+    conditioner_type    = db.Column(db.String()) # string
+    condition_frequency = db.Column(db.String()) # string
+    fav_products        = db.relationship('Product')
+    scalp_condition     = None # checkboxes
+    last_trim           = None # select
 
 
 class ConsumerInstance(db.Model):
