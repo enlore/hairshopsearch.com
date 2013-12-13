@@ -38,3 +38,15 @@
     {% endfor %}
 </form>
 {% endmacro %}
+
+{% macro render_field(field, label=True) %}
+<div class="form-group">
+    {% if label %}
+        {{ field.label(class_="control-label") }}
+    {% else %}
+        {{ field.label(class_="sr-only") }}
+    {% endif %}
+
+    {{ field(class_="form-control {0}".format(kwargs.get('classes', ''))) }}
+</div>
+{% endmacro %}
