@@ -24,7 +24,7 @@ def rebuild_index():
 def d():
     """Run app in dev"""
 
-    reset()
+    rebuild_index()
     local('python manage.py -c dev.cfg run')
 
 def r():

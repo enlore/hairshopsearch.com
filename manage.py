@@ -1,5 +1,6 @@
 #!/home/no/.venvs/hairshopsearch/bin/python
 from flask.ext.script import Manager, Server, Shell
+from flask_security.utils import encrypt_password
 from app import create_app
 from app.core import db, ud
 from app.models import (User, Role, Provider, Address, Photo, Review,
@@ -11,6 +12,7 @@ from pprint import pprint
 
 import csv
 import random
+import datetime
 
 m = Manager(create_app)
 
@@ -18,6 +20,21 @@ m = Manager(create_app)
 def reset_db():
     db.drop_all()
     db.create_all()
+
+    password = encrypt_password('password')
+    p = Provider(user=ud.create_user(email="n.e.lorenson@gmail.com", password=password),
+            business_name = 'Sparky\'s',
+            business_url = 'sparkys'
+            )
+    p.user.confirmed_at = datetime.date.today()
+    db.session.add(p)
+
+    c = Consumer(user=ud.create_user(email='oneofy@gmail.com', password=password,
+            first_name='Bob', last_name='Johnson'))
+    c.user.confirmed_at = datetime.date.today()
+    c.consumer_url = 'bob.johnson'
+    db.session.add(c)
+    db.session.commit()
 
 @m.command
 def create_index(doc_type):
