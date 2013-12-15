@@ -1,7 +1,13 @@
+{% from "macros/_form.html" import render_field %}
+
 {% extends "layouts/base.html" %}
 {% block body %}
 <div class="container">
     <div class="row">
+        <div class="col-md-6">
+            <p class="h1"> Your Profile </p>
+            <p> All entries made on this page can be seen by the public. </p>
+        </div>
         <div class="col-md-3">
             <a class="btn btn-info dashboard" href="{{ url_for('frontend.consumer_url', consumer_url=consumer.consumer_url) }}">
                 View Profile
@@ -15,103 +21,52 @@
         </div>
     </div><!-- /.row -->
 
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h1> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h1>
-            <img src="{{ consumer.avatar.url }}">
+    <form class="form-horizontal dash-form" action="/profile" method="post">
+    {% if form %}
+        <h2> General Information </h2>
+        {{ render_field(form.first_name) }}
+        {{ render_field(form.last_name) }}
+        {{ render_field(form.gender) }}
+        {{ render_field(form.birth_day) }}
+        <div class="row">
+            <div class="col-sm-10 col-sm-push-2">
+                <p class="hint"> YYYY/MM/DD please </p>
+            </div>
         </div>
+        {{ render_field(form.location) }}
 
-        <div class="col-md-3">
-            <button id="pick-one" class="btn btn-primary">Upload Avatar</button>
-        </div>
+        <h2> Your Hair Routine </h2>
+        {{ render_field(form.hair_condition) }}
+        {{ render_field(form.scalp_condition) }}
+        {{ render_field(form.treat) }}
+        {{ render_field(form.treat_last) }}
+        {{ render_field(form.fav_cut) }}
+        {{ render_field(form.shampoo) }}
+        {{ render_field(form.shampoo_freq) }}
+        {{ render_field(form.conditioner) }}
+        {{ render_field(form.condition_freq) }}
+        {{ render_field(form.trim_last) }}
+
+        <h2> Social Media </h2>
+        {{ render_field(form.facebook_url) }}
+        {{ render_field(form.google_plus_url) }}
+        {{ render_field(form.blog_url) }}
+        {{ render_field(form.youtube_url) }}
+        <hr>
+        <div class="col-sm-2 col-sm-offset-10">
+        {{ form.submit(class_='btn btn-success') }}
     </div>
 
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> About Me </h3>
-            <p>{{ consumer.bio }}</p>
+    </form>
+    {% endif %}
+
+    <div class="row dashboard-form">
+        <div class="col-md-2">
         </div>
 
-        <div class="col-md-3">
-            <a class="btn btn-primary"
-                href="{{ url_for('dashboard.edit_consumer_bio') }}">
-                Edit My Bio
-            </a>
-        </div>
-    </div>
+        <div class="col-md-12">
 
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h2>Hair Type:</h2>
-            {{ consumer.hair_type }}
         </div>
-
-        <div class="col-md-3">
-            <a class="btn btn-primary"
-                href="{{ url_for('dashboard.edit_consumer_hair_type' ) }}">
-                Change My Hair Type
-            </a>
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Who I'm Following </h3>
-            <ul>
-                {% for followed in consumer.follows %}
-                <li>
-                    <a href="/consumer/{{ followed.consumer_url }}">
-                        {{ followed.user.first_name }} {{ followed.user.last_name }}
-                    </a>
-                    <a href="{{ url_for('dashboard.remove_followed', consumer_id=followed.id) }}" class="btn btn-sm btn-warning">Unfollow</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Who's Following Me </h3>
-            <ul>
-                {% for follower in consumer.followers %}
-                <li> <a href="/consumer/{{ follower.consumer_url }}">
-                    {{ follower.user.first_name }} {{ follower.user.last_name }}
-                </a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> My Favorites </h3>
-            <ul>
-                {% for fav in consumer.favorites %}
-                <li>
-                    <a href="{{ url_for('frontend.provider_url', provider_url=fav.business_url) }}">
-                        {{ fav.business_name }}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="col-md-3">
-            <a class="btn btn-primary">Edit This </a>
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> My Routine </h3>
-            <p>{{ consumer.hair_routine }}</p>
-        </div>
-
-        <div class="col-md-3">
-            <a class="btn btn-primary"
-                href="{{ url_for('dashboard.edit_routine') }}">Edit Routine</a>
-        </div>
-    </div>
-</div>
+    </div><!-- /.row -->
+</div><!-- /.container -->
 {% endblock %}
