@@ -274,7 +274,18 @@ class Consumer(db.Model, JSONSerializer):
 
 
 class HairRoutineSerializer(JSONSerializer):
-    pass
+    __json_hidden__ = [
+            'hair_condition',
+            'chemical_treat',
+            'last_treatment',
+            'fav_style',
+            'shampoo_type',
+            'shampoo_frequency',
+            'conditioner_type',
+            'scalp_condition',
+            'last_trim',
+            'fav_products'
+            ]
 
 
 class HairRoutine(db.Model, HairRoutineSerializer):
