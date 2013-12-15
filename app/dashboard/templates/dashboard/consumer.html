@@ -35,6 +35,10 @@
         </div>
         {{ render_field(form.location) }}
 
+        <div class="col-sm-2 col-sm-offset-10">
+        {{ form.submit(class_='btn btn-success') }}
+        </div>
+
         <h2> Your Hair Routine </h2>
         {{ render_field(form.hair_condition) }}
         {{ render_field(form.scalp_condition) }}
@@ -47,15 +51,19 @@
         {{ render_field(form.condition_freq) }}
         {{ render_field(form.trim_last) }}
 
+        <div class="col-sm-2 col-sm-offset-10">
+        {{ form.submit(class_='btn btn-success') }}
+        </div>
+
         <h2> Social Media </h2>
         {{ render_field(form.facebook_url) }}
         {{ render_field(form.google_plus_url) }}
         {{ render_field(form.blog_url) }}
         {{ render_field(form.youtube_url) }}
-        <hr>
+
         <div class="col-sm-2 col-sm-offset-10">
         {{ form.submit(class_='btn btn-success') }}
-    </div>
+        </div>
 
     </form>
     {% endif %}
