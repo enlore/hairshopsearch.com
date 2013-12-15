@@ -131,6 +131,7 @@ class Product(db.Model, JSONSerializer):
     description         = db.Column(db.String)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
+    hair_routine_id     = db.Column(db.Integer, db.ForeignKey('hairroutine.id'))
 
 
 class HoursSerializer(JSONSerializer):
@@ -231,7 +232,7 @@ class Provider(db.Model, ProviderSerializer):
 
 
 class ProviderInstance(db.Model):
-    __table_name__      = 'provider_instance'
+    __tablename__      = 'provider_instance'
 
     name                = db.Column(db.String, primary_key=True)
     count               = db.Column(db.Integer)
@@ -272,23 +273,28 @@ class Consumer(db.Model, JSONSerializer):
         self._consumer_url = value
 
 
-class HairRoutine(db.Model, JSONSerializer):
+class HairRoutineSerializer(JSONSerializer):
+    pass
+
+
+class HairRoutine(db.Model, HairRoutineSerializer):
+    __tablename__       = 'hairroutine'
     id                  = db.Column(db.Integer, primary_key=True)
-    hair_condition      = None # select -> string
+    hair_condition      = db.Column(db.String()) # text
     chemical_treat      = db.Column(db.Boolean()) # bool
-    last_treatment      = None # select -> string?
+    last_treatment      = db.Column(db.String()) # text
     fav_style           = db.Column(db.String()) # text
     shampoo_type        = db.Column(db.String()) # text
     shampoo_frequency   = db.Column(db.String()) # string
     conditioner_type    = db.Column(db.String()) # string
     condition_frequency = db.Column(db.String()) # string
+    scalp_condition     = db.Column(db.String())
+    last_trim           = db.Column(db.Date())
     fav_products        = db.relationship('Product')
-    scalp_condition     = None # checkboxes
-    last_trim           = None # select
 
 
 class ConsumerInstance(db.Model):
-    __table_name__      = 'consumer_instance'
+    __tablename__      = 'consumer_instance'
 
     name                = db.Column(db.String, primary_key=True)
     count               = db.Column(db.Integer)
