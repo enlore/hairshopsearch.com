@@ -101,7 +101,15 @@ def save_gallery_photo():
 def profile():
     rm_menu_item_form = RemoveItemForm()
     if current_user.consumer:
-        form = ConsumerDashForm()
+        consumer = current_user.consumer
+        form = ConsumerDashForm(obj=consumer)
+        form.first_name.data = consumer.user.first_name
+        form.last_name.data  = consumer.user.last_name
+
+        if form.validate_on_submit():
+            pass
+            return redirect(url_for('dashboard.profile'))
+
         return render_template('dashboard/consumer.html',
                 consumer=current_user.consumer,
                 form=form)
