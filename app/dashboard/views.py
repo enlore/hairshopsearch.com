@@ -12,6 +12,7 @@ from ..models import (Provider, Consumer, Menu, MenuItem, Gallery,
 from ..core import db
 from ..helpers import acceptable_url_string, lat_lon
 from ..indexer import indexer
+from ..forms import ConsumerDashForm
 
 from datetime import datetime, timedelta
 import base64
@@ -100,8 +101,10 @@ def save_gallery_photo():
 def profile():
     rm_menu_item_form = RemoveItemForm()
     if current_user.consumer:
+        form = ConsumerDashForm()
         return render_template('dashboard/consumer.html',
-                consumer=current_user.consumer)
+                consumer=current_user.consumer,
+                form=form)
 
     if current_user.provider:
         return render_template('dashboard/provider.html',
