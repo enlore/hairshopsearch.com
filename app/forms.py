@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, SelectField, SubmitField
+from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField
 from wtforms.validators import Required
 
 
@@ -42,6 +42,7 @@ maintenance_freq = [
         ]
 
 class ConsumerDashForm(Form):
+    avatar          = FileField('Profile Photo')
     first_name      = TextField('First Name', [Required()])
     last_name       = TextField('Last Name', [Required()])
     gender          = SelectField('Gender', choices=[

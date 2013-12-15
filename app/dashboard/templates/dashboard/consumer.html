@@ -21,18 +21,25 @@
         </div>
     </div><!-- /.row -->
 
-    <form class="form-horizontal dash-form" action="/profile" method="post">
+    <form class="form-horizontal dash-group" action="/profile" method="post">
     {% if form %}
         <h2> General Information </h2>
+        <div class="row">
+                {{ form.avatar.label(class_='control-label col-sm-3') }}
+            <div class="col-sm-9">
+                <img class="img-responsive" src="http://placehold.it/125x125">
+                {{ form.avatar(class_='form-control') }}
+            </div>
+        </div>
         {{ render_field(form.first_name) }}
         {{ render_field(form.last_name) }}
         {{ render_field(form.gender) }}
-        {{ render_field(form.birth_day) }}
         <div class="row">
-            <div class="col-sm-10 col-sm-push-2">
+            <div class="col-sm-9 col-sm-push-3">
                 <p class="hint"> YYYY/MM/DD please </p>
             </div>
         </div>
+        {{ render_field(form.birth_day) }}
         {{ render_field(form.location) }}
 
         <div class="col-sm-2 col-sm-offset-10">
@@ -64,17 +71,32 @@
         <div class="col-sm-2 col-sm-offset-10">
         {{ form.submit(class_='btn btn-success') }}
         </div>
-
     </form>
-    {% endif %}
 
-    <div class="row dashboard-form">
-        <div class="col-md-2">
-        </div>
+    <div class="dash-group">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2> Your Connections </h2>
+            </div>
+            <div class="col-sm-6">
+                <h3> Who You Follow </h3>
+                {% if consumer.follows %}
+                {% for followed in consumer.follows %}
+                <a href="/consumer/{{ followed.consumer_url }}">{{ followed.user.first_name }}</a>
+                {% endfor %}
+                {% endif %}
+            </div>
 
-        <div class="col-md-12">
-
+            <div class="col-sm-6">
+                <h3> Who Follows You </h3>
+                {% if consumer.followers %}
+                {% for follower in consumer.followers %}
+                <a href="/consumer/{{ follower.consumer_url }}">{{ follower.user.first_name }}</a>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div><!-- /.row -->
+    {% endif %}
 </div><!-- /.container -->
 {% endblock %}
