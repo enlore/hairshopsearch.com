@@ -45,6 +45,7 @@ class ConsumerDashForm(Form):
     avatar          = FileField('Profile Photo')
     first_name      = TextField('First Name', [Required()])
     last_name       = TextField('Last Name', [Required()])
+    email           = TextField('Email', [Required()])
     gender          = SelectField('Gender', choices=[
                         ('male', 'Male'),
                         ('female', 'Female'),
