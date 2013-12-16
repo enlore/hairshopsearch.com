@@ -3,87 +3,48 @@
 
 <div class="container consumer-profile">
     <div class="row">
-        <div class="col-md-12">
-            <h1> {{ consumer.user.first_name }} {{ consumer.user.last_name }} </h1>
+        <div class="col-md-6">
+            <h2> General Info </h2>
+            {{ consumer.user.first_name }} {{ consumer.user.last_name }}
+            {{ consumer.avatar.url }}
+            <hr>
+        </div>
+        <div class="col-md-6">
+            <h2> Routine </h2>
+            {{ consumer.hair_routine.hair_condition }}
+            {{ consumer.hair_routine.fav_style }}
+            {{ consumer.hair_routine.shampoo_type }}
+            {{ consumer.hair_routine.conditioner_type }}
+
+            {% for product in consumer.favorite_products %}
+            {{ product.name }}
+            {% endfor %}
+            <hr>
         </div>
     </div><!-- /.row -->
 
     <div class="row">
-        <div class="col-md-4 profile-sidebar">
-            <img class="center img-responsive" src="http://placehold.it/225x300">
+        <div class="col-md-6">
+            <h2> Social Media </h2>
+            {{ consumer.fb_url }}
+            {{ consumer.gplus_url }}
+            {{ consumer.blog_url }}
+            {{ consumer.youtube_url }}
+            {{ consumer.vimeo_url }}
+            {{ consumer.other_url }}
         </div>
 
-
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-4">
-                    {% if current_user.consumer %}
-                    <a href="{{ url_for('frontend.follow', consumer_id=consumer.id) }}">
-                        <button class="btn btn-default btn-lg" type="button">Follow</button>
-                    </a>
-                    {% endif %}
-                </div><!-- /.row -->
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="profile-header">
-                        <h3> Hair Profile </h3>
-                    </div>
-                    <div class="profile-content">
-                        <h3> {{ consumer.hair_type }} </h3>
-                        <h3> {{ consumer.hair_state }} </h3>
-                        <h3> {{ consumer.hair_texture }} </h3>
-                    </div>
-                </div>
-            </div><!-- /.row -->
-
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="nav nav-tabs">
-                        <li><a href="#bio" data-toggle="tab" class="active">Bio</a></li>
-                        <li><a href="#routine" data-toggle="tab">Routine</a></li>
-                        <li><a href="#favorites" data-toggle="tab">Favorites</a></li>
-                        <li><a href="#following" data-toggle="tab">Following</a></li>
-                        <li><a href="#followers" data-toggle="tab">Followers</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div id="bio" class="tab-pane active">
-                            {{ consumer.bio }}
-                        </div>
-
-                        <div id="routine" class="tab-pane">
-                            {{ consumer.hair_routine }}
-                        </div>
-
-                        <div id="favorites" class="tab-pane">
-                            {% for fav in consumer.favorites %}
-                                <a href="{{ fav.business_url }}">
-                                    {{ fav.business_name }}
-                                </a>
-                            {% endfor %}
-                        </div>
-
-                        <div id="following" class="tab-pane">
-                            <ul>
-                            {% for followed in consumer.follows %}
-                                <li> {{ followed.user.first_name }} </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-
-                        <div id="followers" class="tab-pane">
-                            <ul>
-                                {% for follower in consumer.followers %}
-                                    <li> {{ follower.user.first_name }} </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div><!-- /.tab-content -->
-                </div>
-            </div><!-- /.row -->
+        <div class="col-md-6">
+            <h2> Followers </h2>
         </div>
     </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2> Favorites </h2>
+        </div>
+    </div>
+
+
 </div><!-- /.container -->
 {% endblock %}
