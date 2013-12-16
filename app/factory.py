@@ -17,10 +17,20 @@ locale.setlocale(locale.LC_ALL, 'en_CA.UTF-8')
 def pretty_cash(amount):
     return locale.currency(amount)
 
-def _create_app(pkg_name, pkg_path, config):
+def _create_app(pkg_name, pkg_path, instance_path, config):
     """Internal app factory.
     """
-    app = Flask(pkg_name)
+    use_instances = False
+
+    if instance_path is not None:
+        use_instances = True
+
+    app = Flask(
+            pkg_name,
+            pkg_path,
+            instance_path=instance_path,
+            instance_relative_config=use_instances
+            )
 
     # a little jinja config - whitespace control
     app.jinja_env.lstrip_blocks = True
