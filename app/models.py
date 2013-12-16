@@ -252,12 +252,15 @@ class Consumer(db.Model, JSONSerializer):
                             backref=db.backref('favorited_by', lazy='dynamic'),
                             secondary=consumers_providers)
     blog_url            = db.Column(db.String)
+    fb_url              = db.Column(db.String)
+    gplus_url           = db.Column(db.String)
     youtube_url         = db.Column(db.String)
     vimeo_url           = db.Column(db.String)
     other_url           = db.Column(db.String)
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
     hair_articles       = db.relationship('Article')
+    hair_routine        = db.relationship('HairRoutine')
     follows             = db.relationship('Consumer',
                             secondary=followers_followed,
                             primaryjoin=id==followers_followed.c.follower,
@@ -291,6 +294,7 @@ class HairRoutineSerializer(JSONSerializer):
 class HairRoutine(db.Model, HairRoutineSerializer):
     __tablename__       = 'hairroutine'
     id                  = db.Column(db.Integer, primary_key=True)
+    consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     hair_condition      = db.Column(db.String()) # text
     chemical_treat      = db.Column(db.Boolean()) # bool
     last_treatment      = db.Column(db.String()) # text
@@ -301,7 +305,7 @@ class HairRoutine(db.Model, HairRoutineSerializer):
     condition_frequency = db.Column(db.String()) # string
     scalp_condition     = db.Column(db.String())
     last_trim           = db.Column(db.Date())
-    fav_products        = db.relationship('Product')
+    favorite_products   = db.relationship('Product')
 
 
 class ConsumerInstance(db.Model):
