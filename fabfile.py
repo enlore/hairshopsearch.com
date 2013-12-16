@@ -1,4 +1,5 @@
 from fabric.api import *
+import os
 
 project = 'hairshopsearch'
 
@@ -21,16 +22,17 @@ def rebuild_index(filename):
     local('python manage.py reset_db')
     local('python manage.py mock_from_csv {}'.format(filename))
 
-def d():
+def d(filename):
     """Run app in dev"""
 
-    rebuild_index()
-    local('python manage.py -c dev.cfg run')
+    rebuild_index(filename)
+    local('python manage.py run')
 
 def r():
     """Run app as is"""
 
-    local('python manage.py -c dev.cfg run')
+    instance = os.path.join(os.getcwd(), 'instance')
+    local('python manage.py -i {} run'.format(instance))
 
 def sh():
     """Gimme that fancy script Shell
