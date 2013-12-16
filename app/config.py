@@ -3,19 +3,6 @@ class Default():
 
 
 class DevConfig(Default):
-    S3_URL = 'https://s3-us-west-2.amazonaws.com/hairshopsearch-dev'
-    AWS_KEY = 'AKIAJVF55UJ7EPYRRP2Q'
-    AWS_SECRET = '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'
-    AWS_POLICY = {
-            "expiration": "2013-11-26T00:00:00Z",
-            "conditions": [ {"bucket": "hairshopsearch-dev"},
-                ["starts-with", "$key", "uploads/"],
-                {"acl": "public-read"},
-                ["starts-with", "$Content-Type", ""],
-                ["content-length-range", "0", "5242880"]
-            ]
-        }
-
     ELASTICSEARCH_SERVER = 'http://localhost:9200'
 
     FILE_LOG = '/tmp/info.hairshopsearch.log'
@@ -55,3 +42,5 @@ class Config(DevConfig):
     MAIL_LOGGING = True
     MAIL_LOG_FROM = ['HSS_APP_ERROR@hairshopsearch.com']
     MAIL_LOG_ADMINS = ['oneofy@gmail.com']
+
+    DEV = True

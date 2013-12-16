@@ -27,9 +27,11 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
 
     app = Flask(
             pkg_name,
-            pkg_path,
             instance_path=instance_path,
-            instance_relative_config=use_instances
+            instance_relative_config=use_instances,
+            static_path='/static',
+            static_url_path='/static',
+            template_folder='templates'
             )
 
     # a little jinja config - whitespace control
@@ -62,8 +64,12 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
 
 def _config_app(app, config):
     app.config.from_object(Config)
-    if config is not None:
-        app.config.from_pyfile(config, silent=True)
+
+    if config and type(config) == dict:
+        for key, val in config.items():
+            app.config[key.upper()] = val
+
+    app.config.from_pyfile('config.py', silent=True)
 
 def _register_extensions(app):
     db.init_app(app)
