@@ -49,7 +49,7 @@ class ConsumerDashForm(Form):
     gender          = SelectField('Gender', choices=[
                         ('male', 'Male'),
                         ('female', 'Female'),
-                        (None, 'Rather Not Say')
+                        ('rather_not', 'Rather Not Say')
                     ])
     birth_day       = TextField('Birthday')
     location        = TextField('Ciy, State')
@@ -61,12 +61,13 @@ class ConsumerDashForm(Form):
                         choices=scalp_condition)
 
     treat           = SelectField('Do you chemically treat your hair?',
-                        choices=[(True, 'Yes'), (False, 'No')])
+                        coerce=int,
+                        choices=[(1, 'Yes'), (0, 'No')])
 
-    treat_last      = SelectField('When was your last treatment?',
+    last_treat      = SelectField('When was your last treatment?',
                         choices=treat_last)
 
-    fav_cut         = TextField('What is your favorite cut or style?')
+    fav_style       = TextField('What is your favorite cut or style?')
 
     shampoo         = TextField('What shampoo do you use?')
     shampoo_freq    = SelectField('How often do you shampoo your hair?',

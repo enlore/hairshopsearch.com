@@ -8,7 +8,7 @@ from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     RoutineForm)
 from ..models import (Provider, Consumer, Menu, MenuItem, Gallery,
     ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product,
-    Location)
+    Location, HairRoutine)
 from ..core import db
 from ..helpers import acceptable_url_string, lat_lon
 from ..indexer import indexer
@@ -96,18 +96,73 @@ def save_gallery_photo():
     return redirect(url_for('dashboard.profile'))
 
 
-@dashboard.route('/profile')
+@dashboard.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     rm_menu_item_form = RemoveItemForm()
+
     if current_user.consumer:
         consumer = current_user.consumer
-        form = ConsumerDashForm(obj=consumer)
-        form.first_name.data = consumer.user.first_name
-        form.last_name.data  = consumer.user.last_name
 
-        if form.validate_on_submit():
-            pass
+        if not consumer.hair_routine:
+            consumer.hair_routine = HairRoutine()
+
+        form = ConsumerDashForm(obj=consumer)
+
+        if not form.validate_on_submit():
+            form.first_name.data    = consumer.user.first_name
+            form.last_name.data     = consumer.user.last_name
+            form.email.data         = consumer.user.email
+            form.gender.data        = consumer.user.gender
+            if consumer.user.birth_day:
+                form.birth_day.data     = consumer.user.birth_day.strftime('%Y/%m/%d')
+
+            form.location.data          = consumer.location
+            form.hair_condition.data    = consumer.hair_routine.hair_condition
+            form.scalp_condition.data   = consumer.hair_routine.scalp_condition
+            form.treat.data             = consumer.hair_routine.chemical_treat
+            form.last_treat.data        = consumer.hair_routine.last_treatment
+            form.fav_style.data         = consumer.hair_routine.fav_style
+            form.shampoo.data           = consumer.hair_routine.shampoo_type
+            form.shampoo_freq.data      = consumer.hair_routine.shampoo_frequency
+            form.conditioner.data       = consumer.hair_routine.conditioner_type
+            form.condition_freq.data    = consumer.hair_routine.condition_frequency
+            form.trim_last.data         = consumer.hair_routine.last_trim
+            form.facebook_url.data      = consumer.fb_url
+            form.google_plus_url.data   = consumer.gplus_url
+            form.blog_url.data          = consumer.blog_url
+
+            flash(form.errors, 'error')
+
+        else:
+            consumer.user.first_name    = form.first_name.data
+            consumer.user.last_name     = form.last_name.data
+            consumer.user.email         = form.email.data
+            consumer.user.birth_day     = datetime.strptime(form.birth_day.data, '%Y/%m/%d')
+            consumer.location           = form.location.data
+
+            consumer.hair_routine.hair_condition        = form.hair_condition.data
+            consumer.hair_routine.scalp_condition       = form.scalp_condition.data
+            consumer.hair_routine.chemical_treat        = form.treat.data
+            consumer.hair_routine.last_treatment        = form.last_treat.data
+            consumer.hair_routine.fav_style             = form.fav_style.data
+            consumer.hair_routine.shampoo_type          = form.shampoo.data
+            consumer.hair_routine.shampoo_frequency     = form.shampoo_freq.data
+            consumer.hair_routine.conditioner_type      = form.conditioner.data
+            consumer.hair_routine.condition_frequency   = form.condition_freq.data
+            consumer.hair_routine.last_trim             = form.trim_last.data
+
+            consumer.blog_url           = form.blog_url.data
+            consumer.fb_url             = form.facebook_url.data
+            consumer.gplus_url          = form.google_plus_url.data
+            consumer.youtube_url        = form.youtube_url.data
+            #consumer.vimeo_url         = form.vimeo_url.data
+            #consumer.other_url         = form.other_url.data
+
+            db.session.add(consumer)
+            db.session.add(consumer.user)
+            db.session.commit()
+
             return redirect(url_for('dashboard.profile'))
 
         return render_template('dashboard/consumer.html',

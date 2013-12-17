@@ -23,6 +23,8 @@ class User(db.Model, UserMixin):
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     first_name          = db.Column(db.String)
     last_name           = db.Column(db.String)
+    gender              = db.Column(db.String)
+    birth_day           = db.Column(db.DateTime)
     email               = db.Column(db.String(), unique=True)
     password            = db.Column(db.String())
     active              = db.Column(db.Boolean())
@@ -259,6 +261,7 @@ class Consumer(db.Model, JSONSerializer):
     other_url           = db.Column(db.String)
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
+    location            = db.Column(db.String)
     hair_articles       = db.relationship('Article')
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
                             uselist=False)
@@ -305,7 +308,7 @@ class HairRoutine(db.Model, HairRoutineSerializer):
     conditioner_type    = db.Column(db.String()) # string
     condition_frequency = db.Column(db.String()) # string
     scalp_condition     = db.Column(db.String())
-    last_trim           = db.Column(db.Date())
+    last_trim           = db.Column(db.String())
     favorite_products   = db.relationship('Product')
 
 
