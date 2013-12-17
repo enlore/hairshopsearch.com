@@ -5,20 +5,24 @@
     <div class="row">
         <div class="col-md-6">
             <h2> General Info </h2>
-            {{ consumer.user.first_name }} {{ consumer.user.last_name }}
-            {{ consumer.avatar.url }}
-            <hr>
+            <h3>{{ consumer.user.first_name }} {{ consumer.user.last_name }}</h3>
+            <img class="img-responsive" src="{{ consumer.avatar.url }}">
+            <p> {{ consumer.location }} </p>
+            <p> {{ consumer.user.gender }} </p>
         </div>
+
         <div class="col-md-6">
             <h2> Routine </h2>
-            {{ consumer.hair_routine.hair_condition }}
-            {{ consumer.hair_routine.fav_style }}
-            {{ consumer.hair_routine.shampoo_type }}
-            {{ consumer.hair_routine.conditioner_type }}
+            <p>Hair Condition: {{ consumer.hair_routine.hair_condition }}</p>
+            <p>Favorite cut or style: {{ consumer.hair_routine.fav_style }}</p>
+            <p>Shampoo: {{ consumer.hair_routine.shampoo_type }}</p>
+            <p>Conditioner: {{ consumer.hair_routine.conditioner_type }}</p>
 
+            <ul>
             {% for product in consumer.favorite_products %}
-            {{ product.name }}
+                <li>{{ product.name }}</li>
             {% endfor %}
+        </ul>
             <hr>
         </div>
     </div><!-- /.row -->
@@ -26,16 +30,37 @@
     <div class="row">
         <div class="col-md-6">
             <h2> Social Media </h2>
-            {{ consumer.fb_url }}
-            {{ consumer.gplus_url }}
-            {{ consumer.blog_url }}
-            {{ consumer.youtube_url }}
-            {{ consumer.vimeo_url }}
-            {{ consumer.other_url }}
+            <p><a href="{{ consumer.fb_url }}">Facebook</a></p>
+            <p><a href="{{ consumer.gplus_url }}">G+</a></p>
+            <p><a href="{{ consumer.blog_url }}">Blog</a></p>
+            <p><a href="{{ consumer.youtube_url }}">Youtube Channel</a></p>
+            <p><a href="{{ consumer.vimeo_url }}">Vimeo Page</a></p>
+            <p><a href="{{ consumer.other_url }}">Other</a></p>
         </div>
 
         <div class="col-md-6">
             <h2> Followers </h2>
+            <h3> Who I Follow </h3>
+            {% if consumer.followed %}
+                {% for followed in consumer.followed %}
+                <a href="{{ followed.consumer_url }}">
+                    {{ followed.user.first_name }} {{ followed.user.last_name}}
+                </a>
+                {% endfor %}
+            {% else %}
+                <p> You're not following anyone. Give somebody a follow. </p>
+            {% endif %}
+
+            <h3> Following Me </h3>
+            {% if consumer.followers %}
+                {% for follower in consumer.followers %}
+                <a href="{{ follower.consumer_url }}">
+                    {{ follower.user.first_name }} {{ follower.user.last_name}}
+                </a>
+                {% endfor %}
+            {% else %}
+                <p> Nobody yet! Get out there and mingle! </p>
+            {% endif %}
         </div>
     </div><!-- /.row -->
 
