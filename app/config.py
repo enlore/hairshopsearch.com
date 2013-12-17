@@ -9,9 +9,7 @@ class DevConfig(Default):
     FILE_ERROR_LOG = '/tmp/error.hairshopsearch.log'
     SECRET_KEY = 'dev key'
     DEBUG = True
-    DEBUG_TB_ENABLED = DEBUG
-    DEBUG_TB_PROFILER_ENABLED = True
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    DEBUG_TB_ENABLED = False
 
     ACCEPTABLE_URL_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789."
 
