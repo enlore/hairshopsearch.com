@@ -9,6 +9,12 @@
             <img class="img-responsive" src="{{ consumer.avatar.url }}">
             <p> {{ consumer.location }} </p>
             <p> {{ consumer.user.gender }} </p>
+            <hr>
+            {% if current_user.consumer %}
+                <a href="{{ url_for('frontend.follow', consumer_id=consumer.id) }}">
+                    <button class="btn btn-default btn-lg" type="button">Follow</button>
+                </a>
+            {% endif %}
         </div>
 
         <div class="col-md-6">
@@ -36,6 +42,7 @@
             <p><a href="{{ consumer.youtube_url }}">Youtube Channel</a></p>
             <p><a href="{{ consumer.vimeo_url }}">Vimeo Page</a></p>
             <p><a href="{{ consumer.other_url }}">Other</a></p>
+            <hr>
         </div>
 
         <div class="col-md-6">
@@ -61,6 +68,7 @@
             {% else %}
                 <p> Nobody yet! Get out there and mingle! </p>
             {% endif %}
+            <hr>
         </div>
     </div><!-- /.row -->
 
