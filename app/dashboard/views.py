@@ -6,9 +6,10 @@ from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
-from ..models import (Provider, Consumer, Menu, MenuItem, Gallery,
-    ConsumerInstance, ProviderInstance, Address, Hours, Photo, Product,
-    Location, HairRoutine)
+from ..models import (Gallery, Photo, Product)
+from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
+        Address, Hours, Product, Location)
+from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 from ..core import db
 from ..helpers import acceptable_url_string, lat_lon
 from ..indexer import indexer
