@@ -8,6 +8,12 @@ followers_followed = db.Table('followers_followed',
             db.Column('followed', db.Integer, db.ForeignKey('consumer.id'), primary_key=True)
         )
 
+consumers_providers = db.Table('consumers_providers',
+        db.Column('consumer_id', db.Integer, db.ForeignKey('consumer.id')),
+        db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
+        )
+
+
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',

@@ -89,8 +89,3 @@ class Product(db.Model, JSONSerializer):
     hair_routine_id     = db.Column(db.Integer, db.ForeignKey('hairroutine.id'))
 
 
-consumers_providers = db.Table('consumers_providers',
-        db.Column('consumer_id', db.Integer, db.ForeignKey('consumer.id')),
-        db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
-        )
-
