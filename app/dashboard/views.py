@@ -2,18 +2,21 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, request, jsonify)
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
+
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
+from ..forms import ConsumerDashForm
+
 from ..models import (Gallery, Photo, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
-        Address, Hours, Product, Location)
+    Address, Hours, Product, Location)
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
+
 from ..core import db
 from ..helpers import acceptable_url_string, lat_lon
 from ..indexer import indexer
-from ..forms import ConsumerDashForm
 
 from datetime import datetime, timedelta
 import base64
