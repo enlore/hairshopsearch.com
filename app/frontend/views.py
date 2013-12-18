@@ -2,9 +2,14 @@
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, abort)
 from flask.ext.security import login_required, roles_required, current_user
-from ..config import Config
+
 from ..search.forms import SearchForm
-from ..models import Provider, Consumer, User
+
+from ..provider.models import Provider
+from ..consumer.models import Consumer
+from ..models import User
+
+from ..config import Config
 from ..core import db
 
 if Config.DEV:
