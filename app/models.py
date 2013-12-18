@@ -37,20 +37,6 @@ class User(db.Model, UserMixin):
     roles               = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('user', lazy='dynamic'))
 
-    reviews             = db.relationship('Review', backref=db.backref('user'))
-
-
-class ReviewSerializer(JSONSerializer):
-    __json_hidden__ = ['user', 'provider']
-
-
-class Review(db.Model, ReviewSerializer):
-    id                  = db.Column(db.Integer, primary_key=True)
-    user_id             = db.Column(db.Integer, db.ForeignKey('user.id'))
-    provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
-    body                = db.Column(db.Text)
-
-
 class Photo(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
     url                 = db.Column(db.Text)
@@ -65,17 +51,6 @@ class Gallery(db.Model):
     photos              = db.relationship('Photo', backref='gallery')
 
 
-class ArticleSerializer(JSONSerializer):
-    __json_hidden__ = ['consumer']
-
-
-class Article(db.Model, ArticleSerializer):
-    id                  = db.Column(db.Integer, primary_key=True)
-    consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
-    body                = db.Column(db.Text)
-    title               = db.Column(db.String)
-
-
 class ProductSerializer(JSONSerializer):
     __json_hidden__ = ['consumer', 'provider']
 
@@ -87,5 +62,3 @@ class Product(db.Model, JSONSerializer):
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     hair_routine_id     = db.Column(db.Integer, db.ForeignKey('hairroutine.id'))
-
-

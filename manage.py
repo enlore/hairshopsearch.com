@@ -3,7 +3,7 @@ from flask.ext.script import Manager, Server, Shell
 from flask_security.utils import encrypt_password
 from app import create_app
 from app.core import db, ud
-from app.models import (User, Role, Photo, Review, Gallery)
+from app.models import (User, Role, Photo, Gallery)
 from app.provider.models import Provider, Address, Menu, MenuItem, Location
 from app.consumer.models import Consumer
 from app.helpers import JSONEncoder, acceptable_url_string

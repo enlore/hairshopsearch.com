@@ -30,7 +30,6 @@ class Consumer(db.Model, JSONSerializer):
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
     location            = db.Column(db.String)
-    hair_articles       = db.relationship('Article')
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
                             uselist=False)
     follows             = db.relationship('Consumer',

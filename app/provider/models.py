@@ -47,8 +47,6 @@ class Provider(db.Model, ProviderSerializer):
     twitter_url         = db.Column(db.String)
     links               = db.Column(db.String)
 
-    reviews             = db.relationship('Review',
-                            backref=db.backref('provider'))
     menus               = db.relationship('Menu',
                             backref=db.backref('provider'))
     gallery             = db.relationship('Gallery', uselist=False)
