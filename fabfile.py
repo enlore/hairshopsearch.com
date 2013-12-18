@@ -26,7 +26,8 @@ def d(filename):
     """Run app in dev"""
 
     rebuild_index(filename)
-    local('python manage.py run')
+    instance = os.path.join(os.getcwd(), 'instance')
+    local('python manage.py -i {} run'.format(instance))
 
 def r():
     """Run app as is"""
