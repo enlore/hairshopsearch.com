@@ -26,8 +26,6 @@ import hashlib
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-
-
 @dashboard.route('/photo/upload', methods=['GET'])
 def upload_photo():
     fmat = '%Y-%m-%dT%H:%M:%SZ'
