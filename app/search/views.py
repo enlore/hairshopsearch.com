@@ -1,8 +1,11 @@
 from flask import Blueprint, render_template, current_app, flash, redirect, url_for
-from ..core import es
-from ..helpers import lat_lon
-from ..models import Provider, Address
+
 from .forms import SearchForm
+
+from ..provider.models import Provider, Address
+
+from ..helpers import lat_lon
+from ..core import es
 
 search = Blueprint('search', __name__, template_folder='templates',
     url_prefix='/search')
