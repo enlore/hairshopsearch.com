@@ -11,7 +11,7 @@ from ..forms import ConsumerDashForm
 
 from ..models import (Gallery, Photo, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
-    Address, Hours, Product, Location)
+    Address, Hours, Location)
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
