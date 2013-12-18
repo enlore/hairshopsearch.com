@@ -13,7 +13,6 @@ consumers_providers = db.Table('consumers_providers',
         db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
         )
 
-
 class Consumer(db.Model, JSONSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
@@ -49,6 +48,13 @@ class Consumer(db.Model, JSONSerializer):
         self._consumer_url = value
 
 
+class ConsumerInstance(db.Model):
+    __tablename__      = 'consumer_instance'
+
+    name                = db.Column(db.String, primary_key=True)
+    count               = db.Column(db.Integer)
+
+
 class HairRoutineSerializer(JSONSerializer):
     __json_hidden__ = [
             'hair_condition',
@@ -79,10 +85,3 @@ class HairRoutine(db.Model, HairRoutineSerializer):
     scalp_condition     = db.Column(db.String())
     last_trim           = db.Column(db.String())
     favorite_products   = db.relationship('Product')
-
-
-class ConsumerInstance(db.Model):
-    __tablename__      = 'consumer_instance'
-
-    name                = db.Column(db.String, primary_key=True)
-    count               = db.Column(db.Integer)
