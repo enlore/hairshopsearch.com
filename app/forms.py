@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField, SelectMultipleField
+from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField, SelectMultipleField, DecimalField
 from wtforms.validators import Required
 
 from markupsafe import Markup
@@ -152,6 +152,13 @@ times = [('closed', 'Closed'),
         ('10:15pm', '10:15pm'), ('10:30pm', '10:30pm'), ('10:45pm', '10:45pm'),
         ('11:00pm', '11:00pm'), ('11:15pm', '11:15pm'), ('11:30pm', '11:30pm'),
         ('11:45pm', '11:45pm'), ('12:00am', '12:00am')]
+
+
+class MenuItemForm(Form):
+    name            = TextField(u'Name')
+    price           = DecimalField(u'Price', places=2, rounding=None)
+    description     = TextAreaField('Description')
+    submit          = SubmitField('Save Item')
 
 
 class ProviderDashForm(Form):
