@@ -7,7 +7,7 @@ from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
-from ..forms import ConsumerDashForm
+from ..forms import ConsumerDashForm, ProviderDashForm
 
 from ..models import (Gallery, Photo, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
@@ -171,8 +171,11 @@ def profile():
                 consumer=current_user.consumer,
                 form=form)
 
+    # TODO: use /profile as a redirect to entity specific route
     if current_user.provider:
+        form = ProviderDashForm()
         return render_template('dashboard/provider.html',
+                form=form,
                 provider=current_user.provider,
                 rm_menu_item_form=rm_menu_item_form)
 
