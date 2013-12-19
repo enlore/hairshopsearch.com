@@ -111,6 +111,7 @@ class MenuItem(db.Model, MenuItemSerializer):
     menu_id             = db.Column(db.Integer, db.ForeignKey('menu.id'))
     name                = db.Column(db.String)
     price               = db.Column(db.Float(precision=2))
+    description         = db.Column(db.Text())
 
 
 class HoursSerializer(JSONSerializer):
