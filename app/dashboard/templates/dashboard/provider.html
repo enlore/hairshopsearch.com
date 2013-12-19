@@ -10,8 +10,7 @@
             <a class="btn btn-info dashboard" href="{{ url_for('frontend.provider_url',
                 provider_url=provider.business_url) }}">
                 View Profile
-            </a>
-        </div>
+            </a> </div>
 
         <div class="col-md-3">
             <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
@@ -45,8 +44,62 @@
         <h2> Payment Methods </h2>
         {{ render_field(form.payment_methods) }}
 
+        <h2> Service Menu </h2>
+        <div id="service-menu"></div>
+
+        <h2> Hours </h2>
+        {{ render_field(form.monday_open) }}
+        {{ render_field(form.monday_close) }}
+        {{ render_field(form.tuesday_open) }}
+        {{ render_field(form.tuesday_close) }}
+        {{ render_field(form.wednesday_open) }}
+        {{ render_field(form.wednesday_close) }}
+        {{ render_field(form.thursday_open) }}
+        {{ render_field(form.thursday_close) }}
+        {{ render_field(form.friday_open) }}
+        {{ render_field(form.friday_close) }}
+        {{ render_field(form.saturday_open) }}
+        {{ render_field(form.saturday_close) }}
+        {{ render_field(form.sunday_open) }}
+        {{ render_field(form.sunday_close) }}
+
+
+        <h2> Endorsements </h2>
+        {% for endorser in provider.endorsed_by %}
+        {% endfor %}
+
+        {% for endorsee in provider.endorses %}
+        {% endfor %}
     </form>
     {% endif %}
+
+    <div class="dash-group">
+        <div class="row">
+            <div class="col-sm-7">
+                <h2> Your Menus </h2>
+                {% for menu in provider.menus %}
+                    <h3> {{ menu.menu_type }}
+                    {% for item in mene.menu_items %}
+                    <p> {{ item.name }} </p>
+                    <p> {{ item.price | cash }} </p>
+                    <p> {{ item.description }} </p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-5">
+                {% if menu_form %}
+                <h2> Add Menu Item </h2>
+                <form class="form-horizontal" action="/profile" method="post">
+                    {{ menu_form.csrf_token() }}
+                    {{ render_field(menu_form.name) }}
+                    {{ render_field(menu_form.price) }}
+                    {{ render_field(menu_form.description) }}
+                </form>
+                {% endif %}
+            </div>
+        </div>
+</div>
 </div><!-- /.container -->
             <!-- <table class="hours">
                 <tr>
