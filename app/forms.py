@@ -1,7 +1,8 @@
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField
+from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField, SelectMultipleField
 from wtforms.validators import Required
 
+from markupsafe import Markup
 
 class TestForm(Form):
     name        = TextField()
@@ -86,3 +87,63 @@ class ConsumerDashForm(Form):
     youtube_url     = TextField('Link your youtube account')
     submit          = SubmitField('Save Changes')
 
+
+payment_methods = [
+        ('cash', 'Cash'),
+        ('check', 'Check'),
+        ('visa', 'Visa'),
+        ('mastercard', 'Mastercard'),
+        ('amex', 'Amex')
+        ]
+
+
+def multi_checkboxes(field, ul_class=u'', **kwargs):
+    html = []
+    html.append(Markup('<ul>'))
+    for value, label, checked in field.iter_choices():
+        html.append(Markup('<li>'))
+
+        if checked:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}" checked="checked">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+        else:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+
+
+        html.append(Markup('</li>'))
+    html.append(Markup('</ul>'))
+    return Markup('\n').join(html)
+
+
+class ProviderDashForm(Form):
+    avatar          = TextField('Avatar')
+    business_name   = TextField('Business Name')
+    phone           = TextField('Phone Number')
+    email           = TextField('Business Email')
+
+    street_1        = TextField('Street')
+    street_2        = TextField('Street 2')
+    city            = TextField('City')
+    state           = TextField('State')
+    zip_code        = TextField('Zip')
+
+    payment_methods     = SelectMultipleField(u'Payment Methods',
+                            widget=multi_checkboxes,
+                            choices=payment_methods)
+
+    bio             = TextField('About Us')
+    fb_url          = TextField('Facebook Page')
+    twitter_url     = TextField('Twitter')
+
+    submit          = SubmitField('Save Changes')

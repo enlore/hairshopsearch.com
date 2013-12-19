@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% from "macros/_form.html" import render_form %}
+{% from "macros/_form.html" import render_field %}
 
 {% block body %}
 {% if provider %}
@@ -18,173 +18,37 @@
                 Change Password
             </a>
         </div>
-    </div>
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h2> {{ provider.business_name }} </h2>
-            <br>
-
-            {% if provider.avatar.url %}
-            <img src="{{ provider.avatar.url }}">
-            {% else %}
-            <img src="http://placehold.it/225x300">
-            {% endif %}
-            <br >
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-primary" id="pick-one">Upload Avatar</button>
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Endorsed By: </h3>
-            <ul>
-                {% for endorser in provider.endorsed_by %}
-                <li>
-                    <a href="{{ endorser.business_url }}"> {{ endorser.business_name }} </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="col-md-3">
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> We Endorse: </h3>
-            <ul>
-                {% for endorsee in provider.endorses %}
-                <li>
-                    <a href="{{ endorsee.business_url }}"> {{ endorsee.business_name }} </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="col-md-3">
-        </div>
-    </div>
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <address>
-                <h3> Contact Info: </h3>
-                <table>
-                    <tr>
-                        <td>
-                            Phone:
-                        </td>
-                        <td>
-                            {% if provider.phone %}
-                                {{ provider.phone }}
-                            {% else %}
-                                Enter your phone number
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Street 1:
-                        </td>
-                        <td>
-                            {% if provider.address.street_1 %}
-                            {{ provider.address.street_1 }}
-                            {% else %}
-                            Enter your street address
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Street 2:
-                        </td>
-                        <td>
-                            {% if provider.address.street_2 %}
-                                {{ provider.address.street_2 }}
-                            {% else %}
-                                Enter your street address
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            City:
-                        </td>
-                        <td>
-                            {% if provider.address.city %}
-                                {{ provider.address.city }}
-                            {% else %}
-                                Enter your city
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            State:
-                        </td>
-                        <td>
-                            {% if provider.address.state %}
-                                {{ provider.address.state }}
-                            {% else %}
-                                Enter you state
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Zip Code:
-                        </td>
-                        <td>
-                            {% if provider.address.zip_code %}
-                                {{ provider.address.zip_code }}
-                            {% else %}
-                                Enter your zip
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Email:
-                        </td>
-                        <td>
-                            {% if provider.email %}
-                            <a href="mailto:{{ provider.email }}">
-                                {{ provider.email }}
-                            </a>
-                            {% else %}
-                                Enter your email
-                            {% endif %}
-                        </td>
-                    </tr>
-                </table>
-            </address>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_nap') }}">Edit Business Info</a>
-        </div>
     </div><!-- /.row -->
 
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Accepted Forms of Payment </h3>
-            <table>
-                {% for val in provider.payment_methods.split(',') %} 
-                <tr><td>{{ val.capitalize() }}</td></tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_payment') }}">Edit Payment Methods</a>
-        </div>
-    </div><!-- /.row -->
+    {% if form %}
+    <form class="form-horizontal dash-group" action="/profile" method="POST">
+        {{ form.csrf_token() }}
+        <h2> General Information </h2>
 
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Hours </h3>
-            <table>
+        <div class="form-group">
+            {{ form.avatar.label(class_="control-label col-sm-3") }}
+            <div class="col-sm-9">
+                <img class="img-responsive" src="http://placehold.it/125x125">
+                {{ form.avatar(class_="form-control") }}
+            </div>
+        </div><!-- /.row -->
+
+        {{ render_field(form.business_name) }}
+        {{ render_field(form.phone) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.street_1) }}
+        {{ render_field(form.street_2) }}
+        {{ render_field(form.city) }}
+        {{ render_field(form.state) }}
+        {{ render_field(form.zip_code) }}
+
+        <h2> Payment Methods </h2>
+        {{ render_field(form.payment_methods) }}
+
+    </form>
+    {% endif %}
+</div><!-- /.container -->
+            <!-- <table class="hours">
                 <tr>
                     <td> Monday </td>
                     <td> from {{ provider.hours.monday_open }} </td>
@@ -221,114 +85,6 @@
                     <td> to {{ provider.hours.sunday_close }} </td>
                 </tr>
             </table>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_hours') }}">Edit Hours</a>
-        </div>
-    </div><!-- /.row -->
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            {% if provider.bio %}
-                <p> {{ provider.bio }} </p>
-            {% else %}
-                <p> Tell us about your business </p>
-            {% endif %}
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_bio') }}">Edit Bio</a>
-        </div>
-    </div><!-- /.row -->
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            <h3> Social Media </h3>
-            <table>
-                <tr>
-                    <td>
-                        {% if not provider.fb_url %}
-                            <p>Add your FaceBook page to your profile!</p>
-                        {% else %}
-                            <a href="{{ provider.fb_url }}">{{ provider.fb_url }}</a>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {% if not provider.twitter_url %}
-                            <p>Add your account url to your profile!</p>
-                        {% else %}
-                            <a href="{{ provider.twitter_url }}">
-                                @{{ provider.business_name }}
-                            </a>
-                        {% endif %}
-                    </td>
-
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ url_for('dashboard.edit_social_media') }}">Edit Social Media Links</a>
-        </div>
-    </div><!-- /.row -->
-
-    <div class="row user-dashboard-group">
-        <div class="col-md-9">
-            {% for menu in provider.menus %}
-                <h3> {{ menu.menu_type.capitalize() }} Menu </h3>
-                <table class="menu {{ menu.menu_type }}">
-                    {% for item in menu.menu_items %}
-                    <tr>
-                        <td>{{ item.name }} </td>
-                        <td>{{ item.price | cash }}</td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ url_for('dashboard.rm_menu_item', menu_id=menu.id,
-                                item_id=item.id) }}"> Remove </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ url_for('dashboard.add_menu_item', menu_id=menu.id) }}">Add Item</a>
-                        </td>
-                    </tr>
-                </table>
-            {% endfor %}
-        </div>
-    </div><!-- /.row -->
-            <div class="menus">
-            </div>
-
-        <div class="row user-dashboard-group">
-            <div class="col-md-9">
-                <h3> Customer Reviews</h3>
-                <ul>
-                    {% for review in provider.reviews %}
-                    <li>
-                        {{ review.body }}
-                        <br>
-                        <a href="mailto:{{ review.user.email }}">{{ review.user.email }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div><!-- /.row -->
-
-        <div class="row user-dashboard-group">
-            <div class="col-md-9">
-                <h3> Gallery of Our Work </h3>
-                {% for photo in provider.gallery.photos %}
-                <img src="{{ photo.url }}">
-                {% endfor %}
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-primary" id="pick-files">
-                    Upload Photos to Gallery
-                </button>
-            </div>
-        </div><!-- /.row -->
-    </div>
+            -->
     {% endif %}
     {% endblock %}
