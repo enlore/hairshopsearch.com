@@ -25,63 +25,63 @@
 
     <form class="form-horizontal" action="{{ url_for('dashboard.profile') }}" method="post">
         <div class="dash-group">
-    {% if form %}
-        {{ form.csrf_token() }}
-        <h2> General Information </h2>
-        <div class="row">
+            {% if form %}
+            {{ form.csrf_token() }}
+            <h2> General Information </h2>
+            <div class="row">
                 {{ form.avatar.label(class_='control-label col-sm-3') }}
-            <div class="col-sm-9">
-                <img class="img-responsive" src="http://placehold.it/125x125">
-                {{ form.avatar(class_='form-control') }}
+                <div class="col-sm-9">
+                    <img class="img-responsive" src="http://placehold.it/125x125">
+                    {{ form.avatar(class_='form-control') }}
+                </div>
+            </div>
+            {{ render_field(form.first_name) }}
+            {{ render_field(form.last_name) }}
+            {{ render_field(form.email) }}
+            {{ render_field(form.gender) }}
+            <div class="row">
+                <div class="col-sm-9 col-sm-push-3">
+                    <p class="hint"> MM/DD please </p>
+                </div>
+            </div>
+            {{ render_field(form.birth_day) }}
+            {{ render_field(form.location) }}
+
+            <div class="col-sm-2 col-sm-offset-10">
+                {{ form.submit(class_='btn btn-success') }}
+            </div>
+
+        </div>
+        <div class="dash-group">
+
+            <h2> Your Hair Routine </h2>
+            {{ render_field(form.hair_condition) }}
+            {{ render_field(form.scalp_condition) }}
+            {{ render_field(form.treat) }}
+            {{ render_field(form.last_treat) }}
+            {{ render_field(form.fav_style) }}
+            {{ render_field(form.shampoo) }}
+            {{ render_field(form.shampoo_freq) }}
+            {{ render_field(form.conditioner) }}
+            {{ render_field(form.condition_freq) }}
+            {{ render_field(form.trim_last) }}
+
+            <div class="col-sm-2 col-sm-offset-10">
+                {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
-        {{ render_field(form.first_name) }}
-        {{ render_field(form.last_name) }}
-        {{ render_field(form.email) }}
-        {{ render_field(form.gender) }}
-        <div class="row">
-            <div class="col-sm-9 col-sm-push-3">
-                <p class="hint"> MM/DD please </p>
+        <div class="dash-group">
+
+            <h2> Social Media </h2>
+            {{ render_field(form.facebook_url) }}
+            {{ render_field(form.google_plus_url) }}
+            {{ render_field(form.blog_url) }}
+            {{ render_field(form.youtube_url) }}
+
+            <div class="col-sm-2 col-sm-offset-10">
+                {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
-        {{ render_field(form.birth_day) }}
-        {{ render_field(form.location) }}
-
-        <div class="col-sm-2 col-sm-offset-10">
-        {{ form.submit(class_='btn btn-success') }}
-        </div>
-
-    </div>
-    <div class="dash-group">
-
-        <h2> Your Hair Routine </h2>
-        {{ render_field(form.hair_condition) }}
-        {{ render_field(form.scalp_condition) }}
-        {{ render_field(form.treat) }}
-        {{ render_field(form.last_treat) }}
-        {{ render_field(form.fav_style) }}
-        {{ render_field(form.shampoo) }}
-        {{ render_field(form.shampoo_freq) }}
-        {{ render_field(form.conditioner) }}
-        {{ render_field(form.condition_freq) }}
-        {{ render_field(form.trim_last) }}
-
-        <div class="col-sm-2 col-sm-offset-10">
-        {{ form.submit(class_='btn btn-success') }}
-        </div>
-    </div>
-    <div class="dash-group">
-
-        <h2> Social Media </h2>
-        {{ render_field(form.facebook_url) }}
-        {{ render_field(form.google_plus_url) }}
-        {{ render_field(form.blog_url) }}
-        {{ render_field(form.youtube_url) }}
-
-        <div class="col-sm-2 col-sm-offset-10">
-        {{ form.submit(class_='btn btn-success') }}
-        </div>
-    </div>
     </form>
 
     <div class="dash-group">
@@ -89,6 +89,15 @@
             <div class="col-sm-12">
                 <h2> Your Connections </h2>
             </div>
+        </div><!-- /.row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3> Favorites </h3>
+            </div>
+        </div><!-- /.row -->
+
+        <div class="row">
             <div class="col-sm-6">
                 <h3> Who You Follow </h3>
                 {% if consumer.follows %}
@@ -106,8 +115,7 @@
                 {% endfor %}
                 {% endif %}
             </div>
-        </div>
-    </div><!-- /.row -->
-    {% endif %}
-</div><!-- /.container -->
-{% endblock %}
+        </div><!-- /.row -->
+        {% endif %}
+    </div><!-- /.container -->
+    {% endblock %}
