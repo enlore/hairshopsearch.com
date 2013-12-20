@@ -30,7 +30,7 @@ trim_last = treat_last = [
     ('', '1 - 3 months ago'),
     ('', '3 - 6 months ago'),
     ('', '6 - 12 months ago'),
-    ('', '1 year or month')
+    ('', '1 year or longer')
         ]
 
 maintenance_freq = [
@@ -53,7 +53,7 @@ class ConsumerDashForm(Form):
                         ('rather_not', 'Rather Not Say')
                     ])
     birth_day       = TextField('Birthday')
-    location        = TextField('Ciy, State')
+    location        = TextField('City, State')
 
     hair_condition  = SelectField('What is your hair condition?',
                         choices=hair_condition)
