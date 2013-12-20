@@ -10,6 +10,7 @@
                 <img class="img-responsive" src="{{ consumer.avatar.url }}">
                 <p> {{ consumer.location }} </p>
                 <p> {{ consumer.user.gender }} </p>
+
                 {% if current_user.consumer %}
                 <a href="{{ url_for('frontend.follow', consumer_id=consumer.id) }}">
                     <button class="btn btn-info btn-lg" type="button">
@@ -37,6 +38,15 @@
             <div class="profile-group">
                 <h2> Routine </h2>
                 <p>Hair Condition: {{ consumer.hair_routine.hair_condition }}</p>
+                <p>Scalp Condition: {{ consumer.hair_routine.scalp_condition }}</p>
+                <p>Treat or relax? {{ consumer.hair_routine.chemical_treat }}</p>
+                <p>Last treatment: {{ consumer.hair_routine.last_treatment }} </p>
+                <p>Favorite style: {{ consumer.hair_routine.fav_style }} </p>
+                <p>Last trime: {{ consumer.hair_routine.last_trim }}</p>
+                <p>Shampoo: {{ consumer.hair_routine.shampoo }}</p>
+                <p>Shampoo Frequency: {{ consumer.hair_routine.shampoo_freq }}</p>
+                <p>Conditioner: {{ consumer.hair_routine.conditioner }}</p>
+                <p>Condition Frequency: {{ consumer.hair_routine.condition_frequency }}</p>
                 <p>Favorite cut or style: {{ consumer.hair_routine.fav_style }}</p>
                 <p>Shampoo: {{ consumer.hair_routine.shampoo_type }}</p>
                 <p>Conditioner: {{ consumer.hair_routine.conditioner_type }}</p>
