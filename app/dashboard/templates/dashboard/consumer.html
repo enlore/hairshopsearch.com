@@ -1,4 +1,5 @@
 {% from "macros/_form.html" import render_field %}
+{% from "macros/_form.html" import render_social_media_field %}
 
 {% extends "layouts/base.html" %}
 {% block body %}
@@ -73,10 +74,10 @@
         <div class="dash-group">
 
             <h2> Social Media </h2>
-            {{ render_field(form.facebook_url) }}
-            {{ render_field(form.google_plus_url) }}
-            {{ render_field(form.blog_url) }}
-            {{ render_field(form.youtube_url) }}
+            {{ render_social_media_field(form.facebook_url) }}
+            {{ render_social_media_field(form.google_plus_url) }}
+            {{ render_social_media_field(form.blog_url) }}
+            {{ render_social_media_field(form.youtube_url) }}
 
             <div class="col-sm-2 col-sm-offset-10">
                 {{ form.submit(class_='btn btn-success') }}

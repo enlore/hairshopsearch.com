@@ -52,3 +52,15 @@
     </div>
 </div>
 {% endmacro %}
+
+{% macro render_social_media_field(field, icon_url="http://placehold.it/30x30") %}
+<div class="form-group">
+    <div class="col-sm-4">
+        <img src="{{'{}'.format(icon_url) }}">
+        {{ field.label(class_="control-label") }}
+    </div>
+    <div class="col-sm-8">
+        {{ field(class_="form-conrol") }}
+    </div>
+</div>
+{% endmacro %}
