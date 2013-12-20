@@ -117,7 +117,7 @@ def profile():
             form.email.data         = consumer.user.email
             form.gender.data        = consumer.user.gender
             if consumer.user.birth_day:
-                form.birth_day.data     = consumer.user.birth_day.strftime('%Y/%m/%d')
+                form.birth_day.data     = consumer.user.birth_day.strftime('%m/%d')
 
             form.location.data          = consumer.location
             form.hair_condition.data    = consumer.hair_routine.hair_condition
@@ -140,7 +140,7 @@ def profile():
             consumer.user.first_name    = form.first_name.data
             consumer.user.last_name     = form.last_name.data
             consumer.user.email         = form.email.data
-            consumer.user.birth_day     = datetime.strptime(form.birth_day.data, '%Y/%m/%d')
+            consumer.user.birth_day     = datetime.strptime(form.birth_day.data, '%m/%d')
             consumer.location           = form.location.data
 
             consumer.hair_routine.hair_condition        = form.hair_condition.data
