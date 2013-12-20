@@ -10,6 +10,34 @@ class TestForm(Form):
     submit      = SubmitField()
 
 
+def multi_checkboxes(field, ul_class=u'', **kwargs):
+    html = []
+    html.append(Markup('<ul>'))
+    for value, label, checked in field.iter_choices():
+        html.append(Markup('<li>'))
+
+        if checked:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}" checked="checked">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+        else:
+            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+                    value="{}">{}</input>'.format(
+                        field.id,
+                        value,
+                        field.name,
+                        value,
+                        label)))
+
+
+        html.append(Markup('</li>'))
+    html.append(Markup('</ul>'))
+    return Markup('\n').join(html)
+
 hair_condition = [
     ('exceptionally_curly', 'Exceptionally Curly (4a, 4b, 4c)'),
     ('curly', 'Curly (3a, 3b, 3c)'),
@@ -55,10 +83,12 @@ class ConsumerDashForm(Form):
     birth_day       = TextField('Birthday')
     location        = TextField('City, State')
 
-    hair_condition  = SelectField('What is your hair condition?',
+    hair_condition  = SelectMultipleField('What is your hair condition?',
+                        widget=multi_checkboxes,
                         choices=hair_condition)
 
-    scalp_condition = SelectField('What is your scalp condition?',
+    scalp_condition = SelectMultipleField('What is your scalp condition?',
+                        widget=multi_checkboxes,
                         choices=scalp_condition)
 
     treat           = SelectField('Do you chemically treat your hair?',
@@ -96,34 +126,6 @@ payment_methods = [
         ('amex', 'Amex')
         ]
 
-
-def multi_checkboxes(field, ul_class=u'', **kwargs):
-    html = []
-    html.append(Markup('<ul>'))
-    for value, label, checked in field.iter_choices():
-        html.append(Markup('<li>'))
-
-        if checked:
-            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
-                    value="{}" checked="checked">{}</input>'.format(
-                        field.id,
-                        value,
-                        field.name,
-                        value,
-                        label)))
-        else:
-            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
-                    value="{}">{}</input>'.format(
-                        field.id,
-                        value,
-                        field.name,
-                        value,
-                        label)))
-
-
-        html.append(Markup('</li>'))
-    html.append(Markup('</ul>'))
-    return Markup('\n').join(html)
 
 times = [('closed', 'Closed'),
         ('5:00am', '5:00am'), ('5:15am', '5:15am'), ('5:30am', '5:30am'),
