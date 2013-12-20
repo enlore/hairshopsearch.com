@@ -91,7 +91,7 @@ class ConsumerDashForm(Form):
                         widget=multi_checkboxes,
                         choices=scalp_condition)
 
-    treat           = SelectField('Do you chemically treat your hair?',
+    treat           = SelectField('Do you relax or chemically treat your hair?',
                         coerce=int,
                         choices=[(1, 'Yes'), (0, 'No')])
 
