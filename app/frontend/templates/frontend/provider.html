@@ -30,14 +30,14 @@
 
     <a href="{{ url_for('frontend.favorite', provider_id=provider.id) }}">
         <button type="button" class="btn btn-default btn-lg">
-            <span class="glyphicon glyphicon-star-empty"> Favorite</span>
+            <span class="glyphicon glyphicon-heart-empty"> Favorite</span>
         </button>
     </a>
 
     {% if current_user.provider %}
     <a href="{{ url_for('frontend.endorse', provider_id=provider.id) }}">
         <button type="button" class="btn btn-default btn-lg">
-            Endorse
+            <span class="glyphicon glyphicon-thumbs-up"> Endorse</span>
         </button>
     </a>
     {% endif %}
