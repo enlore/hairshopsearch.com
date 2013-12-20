@@ -74,7 +74,7 @@ class HairRoutine(db.Model, HairRoutineSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     hair_condition      = db.Column(db.String()) # text
-    chemical_treat      = db.Column(db.Boolean()) # bool
+    chemical_treat      = db.Column(db.String()) # bool
     last_treatment      = db.Column(db.String()) # text
     fav_style           = db.Column(db.String()) # text
     shampoo_type        = db.Column(db.String()) # text

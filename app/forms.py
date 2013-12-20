@@ -17,7 +17,7 @@ def multi_checkboxes(field, ul_class=u'', **kwargs):
         html.append(Markup('<li>'))
 
         if checked:
-            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+            html.append(Markup('<input id="{}-{}" type="checkbox" name="{}" \
                     value="{}" checked="checked">{}</input>'.format(
                         field.id,
                         value,
@@ -25,14 +25,13 @@ def multi_checkboxes(field, ul_class=u'', **kwargs):
                         value,
                         label)))
         else:
-            html.append(Markup('<input id ="{}-{}" type="checkbox" name="{}" \
+            html.append(Markup('<input id="{}-{}" type="checkbox" name="{}" \
                     value="{}">{}</input>'.format(
                         field.id,
                         value,
                         field.name,
                         value,
                         label)))
-
 
         html.append(Markup('</li>'))
     html.append(Markup('</ul>'))
@@ -44,7 +43,7 @@ hair_condition = [
     ('curly', 'Curly (3a, 3b, 3c)'),
     ('wavy', 'Wavy (2a, 2b, 2c)'),
     ('straight', 'Straight (1a, 1b, 1c)')
-        ]
+]
 
 scalp_condition = [
     ('none', 'No answer'),
@@ -53,37 +52,39 @@ scalp_condition = [
     ('flaky', 'Flaky'),
     ('itchy', 'Itchy'),
     ('normal', 'Normal')
-        ]
+]
 
 trim_last = treat_last = [
     ('none', 'No answer'),
-    ('', '0 - 4 weeks ago'),
-    ('', '1 - 3 months ago'),
-    ('', '3 - 6 months ago'),
-    ('', '6 - 12 months ago'),
-    ('', '1 year or longer')
-        ]
+    ('0 - 4 weeks ago', '0 - 4 weeks ago'),
+    ('1 - 3 months ago', '1 - 3 months ago'),
+    ('3 - 6 months ago', '3 - 6 months ago'),
+    ('6 - 12 months ago', '6 - 12 months ago'),
+    ('1 year or longer', '1 year or longer')
+]
 
 maintenance_freq = [
     ('none', 'No answer'),
-    ('', 'Daily'),
-    ('', 'Twice a week'),
-    ('', 'Once a week'),
-    ('', 'Twice a month'),
-    ('', 'Once a month'),
-    ('', 'Every other month')
-        ]
+    ('Daily', 'Daily'),
+    ('Twice a week', 'Twice a week'),
+    ('Once a week', 'Once a week'),
+    ('Twice a month', 'Twice a month'),
+    ('Once a month', 'Once a month'),
+    ('Every other month', 'Every other month')
+]
+
+genders = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('rather_not', 'Rather Not Say')
+]
 
 class ConsumerDashForm(Form):
     avatar          = FileField('Profile Photo')
     first_name      = TextField('First Name', [Required()])
     last_name       = TextField('Last Name', [Required()])
     email           = TextField('Email', [Required()])
-    gender          = SelectField('Gender', choices=[
-                        ('male', 'Male'),
-                        ('female', 'Female'),
-                        ('rather_not', 'Rather Not Say')
-                    ])
+    gender          = SelectField('Gender', choices=genders)
     birth_day       = TextField('Birthday')
     location        = TextField('City, State')
 
@@ -96,11 +97,10 @@ class ConsumerDashForm(Form):
                         choices=scalp_condition)
 
     treat           = SelectField('Do you relax or chemically treat your hair?',
-                        coerce=int,
                         choices=[
-                            (0, 'No answer'),
-                            (1, 'Yes'),
-                            (2, 'No')
+                            ('none', 'No answer'),
+                            ('yes', 'Yes'),
+                            ('no', 'No')
                             ])
 
     last_treat      = SelectField('When was your last treatment?',

@@ -22,6 +22,7 @@ from datetime import datetime, timedelta
 import base64
 import hmac
 import hashlib
+import json
 
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
@@ -109,42 +110,23 @@ def profile():
         if not consumer.hair_routine:
             consumer.hair_routine = HairRoutine()
 
-        form = ConsumerDashForm(obj=consumer)
+        form = ConsumerDashForm()
 
         if not form.validate_on_submit():
-            form.first_name.data    = consumer.user.first_name
-            form.last_name.data     = consumer.user.last_name
-            form.email.data         = consumer.user.email
-            form.gender.data        = consumer.user.gender
-            if consumer.user.birth_day:
-                form.birth_day.data     = consumer.user.birth_day.strftime('%m/%d')
-
-            form.location.data          = consumer.location
-            form.hair_condition.data    = consumer.hair_routine.hair_condition
-            form.scalp_condition.data   = consumer.hair_routine.scalp_condition
-            form.treat.data             = consumer.hair_routine.chemical_treat
-            form.last_treat.data        = consumer.hair_routine.last_treatment
-            form.fav_style.data         = consumer.hair_routine.fav_style
-            form.shampoo.data           = consumer.hair_routine.shampoo_type
-            form.shampoo_freq.data      = consumer.hair_routine.shampoo_frequency
-            form.conditioner.data       = consumer.hair_routine.conditioner_type
-            form.condition_freq.data    = consumer.hair_routine.condition_frequency
-            form.trim_last.data         = consumer.hair_routine.last_trim
-            form.facebook_url.data      = consumer.fb_url
-            form.google_plus_url.data   = consumer.gplus_url
-            form.blog_url.data          = consumer.blog_url
-
-            flash(form.errors, 'error')
+            if form.errors:
+                flash(form.errors, 'error')
 
         else:
             consumer.user.first_name    = form.first_name.data
             consumer.user.last_name     = form.last_name.data
             consumer.user.email         = form.email.data
-            consumer.user.birth_day     = datetime.strptime(form.birth_day.data, '%m/%d')
+            consumer.user.birth_day     = form.birth_day.data
+            consumer.user.gender        = form.gender.data
             consumer.location           = form.location.data
 
-            consumer.hair_routine.hair_condition        = form.hair_condition.data
-            consumer.hair_routine.scalp_condition       = form.scalp_condition.data
+            consumer.hair_routine.hair_condition        = ' '.join(form.hair_condition.data)
+            consumer.hair_routine.scalp_condition       = ' '.join(form.scalp_condition.data)
+
             consumer.hair_routine.chemical_treat        = form.treat.data
             consumer.hair_routine.last_treatment        = form.last_treat.data
             consumer.hair_routine.fav_style             = form.fav_style.data
@@ -158,14 +140,47 @@ def profile():
             consumer.fb_url             = form.facebook_url.data
             consumer.gplus_url          = form.google_plus_url.data
             consumer.youtube_url        = form.youtube_url.data
-            #consumer.vimeo_url         = form.vimeo_url.data
-            #consumer.other_url         = form.other_url.data
-
+#            #consumer.vimeo_url         = form.vimeo_url.data
+#            #consumer.other_url         = form.other_url.data
+#
             db.session.add(consumer)
-            db.session.add(consumer.user)
             db.session.commit()
 
             return redirect(url_for('dashboard.profile'))
+
+        if not consumer.hair_routine:
+            consumer.hair_routine = HairRoutine()
+
+        form.first_name.data    = consumer.user.first_name
+        form.last_name.data     = consumer.user.last_name
+        form.email.data         = consumer.user.email
+        form.gender.data        = consumer.user.gender or 'rather_not'
+        form.birth_day.data     = consumer.user.birth_day
+
+        form.location.data          = consumer.location
+
+        if not consumer.hair_routine.hair_condition:
+            consumer.hair_routine.hair_condition = 'none'
+
+        form.hair_condition.data    = consumer.hair_routine.hair_condition.split(' ')
+
+        if not consumer.hair_routine.scalp_condition:
+            consumer.hair_routine.scalp_condition = 'none'
+
+        form.scalp_condition.data   = consumer.hair_routine.scalp_condition.split(' ')
+
+        form.treat.data             = consumer.hair_routine.chemical_treat
+        form.last_treat.data        = consumer.hair_routine.last_treatment
+        form.fav_style.data         = consumer.hair_routine.fav_style
+        form.shampoo.data           = consumer.hair_routine.shampoo_type
+        form.shampoo_freq.data      = consumer.hair_routine.shampoo_frequency
+        form.conditioner.data       = consumer.hair_routine.conditioner_type
+        form.condition_freq.data    = consumer.hair_routine.condition_frequency
+        form.trim_last.data         = consumer.hair_routine.last_trim
+        form.facebook_url.data      = consumer.fb_url
+        form.google_plus_url.data   = consumer.gplus_url
+        form.blog_url.data          = consumer.blog_url
+        form.youtube_url.data       = consumer.youtube_url
 
         return render_template('dashboard/consumer.html',
                 consumer=current_user.consumer,
