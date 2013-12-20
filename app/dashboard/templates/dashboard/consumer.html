@@ -8,6 +8,8 @@
             <p class="h1"> Your Profile </p>
             <p> All entries made on this page can be seen by the public. </p>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-3">
             <a class="btn btn-info dashboard" href="{{ url_for('frontend.consumer_url', consumer_url=consumer.consumer_url) }}">
                 View Profile
@@ -15,13 +17,14 @@
         </div>
 
         <div class="col-md-3">
-            <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
+            <a class="btn btn-warning dashboard" href="{{ url_for('security.change_password') }}">
                 Change Password
             </a>
         </div>
     </div><!-- /.row -->
 
-    <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="post">
+    <form class="form-horizontal" action="{{ url_for('dashboard.profile') }}" method="post">
+        <div class="dash-group">
     {% if form %}
         {{ form.csrf_token() }}
         <h2> General Information </h2>
@@ -48,6 +51,9 @@
         {{ form.submit(class_='btn btn-success') }}
         </div>
 
+    </div>
+    <div class="dash-group">
+
         <h2> Your Hair Routine </h2>
         {{ render_field(form.hair_condition) }}
         {{ render_field(form.scalp_condition) }}
@@ -63,6 +69,8 @@
         <div class="col-sm-2 col-sm-offset-10">
         {{ form.submit(class_='btn btn-success') }}
         </div>
+    </div>
+    <div class="dash-group">
 
         <h2> Social Media </h2>
         {{ render_field(form.facebook_url) }}
@@ -73,6 +81,7 @@
         <div class="col-sm-2 col-sm-offset-10">
         {{ form.submit(class_='btn btn-success') }}
         </div>
+    </div>
     </form>
 
     <div class="dash-group">
