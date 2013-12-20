@@ -39,6 +39,7 @@ def multi_checkboxes(field, ul_class=u'', **kwargs):
     return Markup('\n').join(html)
 
 hair_condition = [
+    ('none', 'No answer'),
     ('exceptionally_curly', 'Exceptionally Curly (4a, 4b, 4c)'),
     ('curly', 'Curly (3a, 3b, 3c)'),
     ('wavy', 'Wavy (2a, 2b, 2c)'),
@@ -46,6 +47,7 @@ hair_condition = [
         ]
 
 scalp_condition = [
+    ('none', 'No answer'),
     ('oily', 'Oily'),
     ('dry', 'Dry'),
     ('flaky', 'Flaky'),
@@ -54,6 +56,7 @@ scalp_condition = [
         ]
 
 trim_last = treat_last = [
+    ('none', 'No answer'),
     ('', '0 - 4 weeks ago'),
     ('', '1 - 3 months ago'),
     ('', '3 - 6 months ago'),
@@ -62,6 +65,7 @@ trim_last = treat_last = [
         ]
 
 maintenance_freq = [
+    ('none', 'No answer'),
     ('', 'Daily'),
     ('', 'Twice a week'),
     ('', 'Once a week'),
@@ -93,7 +97,11 @@ class ConsumerDashForm(Form):
 
     treat           = SelectField('Do you relax or chemically treat your hair?',
                         coerce=int,
-                        choices=[(1, 'Yes'), (0, 'No')])
+                        choices=[
+                            (0, 'No answer'),
+                            (1, 'Yes'),
+                            (2, 'No')
+                            ])
 
     last_treat      = SelectField('When was your last treatment?',
                         choices=treat_last)
