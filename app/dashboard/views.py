@@ -209,12 +209,19 @@ def profile():
         else:
             #acceptable_url_string()
             provider.business_name  = form.business_name.data
+            provider.business_url   = acceptable_url_string(
+                form.business_name.data,
+                current_app.config['ACCEPTABLE_URL_CHARS']
+                    )
             provider.email          = form.email.data
             provider.phone          = form.phone.data
 
+            provider.payment_methods = ' '.join(form.payment_methods.data)
+            current_app.logger.info(provider.payment_methods)
+
             provider.address.street_1   = form.street_1.data
             provider.address.street_2   = form.street_2.data
-            provider.address_city       = form.city.data
+            provider.address.city       = form.city.data
             provider.address.state      = form.state.data
             provider.address.zip_code   = form.zip_code.data
 
@@ -244,6 +251,7 @@ def profile():
         form.email.data           = provider.email
         form.business_name.data   = provider.business_name
         form.phone.data           = provider.phone
+        form.payment_methods.data = provider.payment_methods
 
         form.street_1.data        = provider.address.street_1
         form.street_2.data        = provider.address.street_2
