@@ -188,8 +188,88 @@ def profile():
 
     # TODO: use /profile as a redirect to entity specific route
     if current_user.provider:
+        provider = current_user.provider
+
+        if not provider.address:
+            provider.address = Address()
+
+        if not provider.hours:
+            provider.hours = Hours()
+
+        if not provider.location:
+            provider.location = Location()
+
         form = ProviderDashForm()
         menu_form = MenuItemForm()
+
+        if not form.validate_on_submit():
+            if form.errors:
+                flash(form.errors, 'error')
+
+        else:
+            #acceptable_url_string()
+            provider.business_name  = form.business_name.data
+            provider.email          = form.email.data
+            provider.phone          = form.phone.data
+
+            provider.address.street_1   = form.street_1.data
+            provider.address.street_2   = form.street_2.data
+            provider.address_city       = form.city.data
+            provider.address.state      = form.state.data
+            provider.address.zip_code   = form.zip_code.data
+
+            provider.bio            = form.bio.data
+            provider.fb_url         = form.fb_url.data
+            provider.twitter_url    = form.twitter_url.data
+
+            provider.hours.monday_open      = form.monday_open.data
+            provider.hours.monday_close     = form.monday_close.data
+            provider.hours.tuesday_open     = form.tuesday_open.data
+            provider.hours.tuesday_close    = form.tuesday_close.data
+            provider.hours.wednesday_open   = form.wednesday_open.data
+            provider.hours.wednesday_close  = form.wednesday_close.data
+            provider.hours.thursday_open    = form.thursday_open.data
+            provider.hours.thursday_close   = form.thursday_close.data
+            provider.hours.friday_open      = form.friday_open.data
+            provider.hours.friday_close     = form.friday_close.data
+            provider.hours.saturday_open    = form.saturday_open.data
+            provider.hours.saturday_close   = form.saturday_close.data
+            provider.hours.sunday_open      = form.sunday_open.data
+            provider.hours.sunday_close     = form.sunday_close.data
+
+            db.session.add(provider)
+            db.session.commit()
+            return redirect(url_for('dashboard.profile'))
+
+        form.email.data           = provider.email
+        form.business_name.data   = provider.business_name
+        form.phone.data           = provider.phone
+
+        form.street_1.data        = provider.address.street_1
+        form.street_2.data        = provider.address.street_2
+        form.city.data            = provider.address.city
+        form.state.data           = provider.address.state
+        form.zip_code.data        = provider.address.zip_code
+
+        form.bio.data             = provider.bio
+        form.fb_url.data          = provider.fb_url
+        form.twitter_url.data     = provider.twitter_url
+
+        form.monday_open.data     = provider.hours.monday_open
+        form.monday_close.data    = provider.hours.monday_close
+        form.tuesday_open.data    = provider.hours.tuesday_open
+        form.tuesday_close.data   = provider.hours.tuesday_close
+        form.wednesday_open.data  = provider.hours.wednesday_open
+        form.wednesday_close.data = provider.hours.wednesday_close
+        form.thursday_open.data   = provider.hours.thursday_open
+        form.thursday_close.data  = provider.hours.thursday_close
+        form.friday_open.data     = provider.hours.friday_open
+        form.friday_close.data    = provider.hours.friday_close
+        form.saturday_open.data   = provider.hours.saturday_open
+        form.saturday_close.data  = provider.hours.saturday_close
+        form.sunday_open.data     = provider.hours.sunday_open
+        form.sunday_close.data    = provider.hours.sunday_close
+
         return render_template('dashboard/provider.html',
                 form=form,
                 menu_form=menu_form,
