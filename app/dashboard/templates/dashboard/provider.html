@@ -20,7 +20,7 @@
     </div><!-- /.row -->
 
     {% if form %}
-    <form class="form-horizontal dash-group" action="/profile" method="POST">
+    <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
         {{ form.csrf_token() }}
         <h2> General Information </h2>
 
