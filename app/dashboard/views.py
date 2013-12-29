@@ -29,54 +29,45 @@ dashboard = Blueprint('dashboard', __name__,
 
 @dashboard.route('/photo/upload', methods=['GET'])
 def upload_photo():
-    fmat = '%Y-%m-%dT%H:%M:%SZ'
-    expiration_date = datetime.today() + timedelta(0, 3600)
-    iso_datetime = expiration_date.strftime(fmat)
-
-    policy = current_app.config['AWS_POLICY']
-
-    # set our one hour expiration time limit
-    policy['expiration'] = iso_datetime
-
-    policy_64 = base64.b64encode(str(policy))
-
-    signature = base64.b64encode(
-            hmac.new(
-                current_app.config['AWS_SECRET'],
-                str(policy),
-                hashlib.sha1).digest()
-            )
-
     return render_template('dashboard/photo_upload.html',
             s3_url=current_app.config['S3_URL'],
             aws_key=current_app.config['AWS_KEY'],
             policy_64=policy_64,
             signature=signature)
 
-@dashboard.route('/photo/save', methods=['POST'])
+@dashboard.route('/photo/save', methods=['GET', 'POST'])
 def save_photo():
-    entity = current_user.provider or current_user.consumer
-    current_app.logger.info(entity)
+    if request.method == 'GET':
+        fmat = '%Y-%m-%dT%H:%M:%SZ'
+        expiration_date = datetime.today() + timedelta(0, 3600)
+        iso_datetime = expiration_date.strftime(fmat)
 
-    if not entity.avatar:
-        entity.avatar = Photo()
+        policy = current_app.config['AWS_POLICY']
 
-    photo_url = '{}/{}'.format(
-            current_app.config['S3_URL'],
-            request.form['photo_key']
-            )
+        # set our one hour expiration time limit
+        policy['expiration'] = iso_datetime
+        current_app.logger.info(policy)
 
-    current_app.logger.info(photo_url)
-    entity.avatar.url = photo_url
-    db.session.add(entity)
+        policy_64 = base64.b64encode(str(policy))
 
-    try:
-        db.session.commit()
-    except Exception as e:
-        current_app.logger.error(e.msg)
-        return jsonify(status='Your file wasn\'t saved! Please try again.')
+        signature = base64.b64encode(
+                hmac.new(
+                    current_app.config['AWS_SECRET'],
+                    str(policy),
+                    hashlib.sha1)
+                .digest()
+                )
 
-    return redirect(url_for('dashboard.profile'))
+        return jsonify(
+            s3_url=current_app.config['S3_URL'],
+            aws_key=current_app.config['AWS_KEY'],
+            policy_64=policy_64,
+            signature=signature)
+
+    current_app.logger.info('barrrffffffuh')
+    current_app.logger.info(request.files)
+
+    return jsonify(mai_balls='hyoog')
 
 @dashboard.route('/gallery/photo/save', methods=['POST'])
 def save_gallery_photo():

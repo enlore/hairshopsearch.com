@@ -1,5 +1,82 @@
 $(document).on('ready', function() {
+
+    /* blah */
+    var aws_stuff = {}
+    $.ajax({
+        url: '/dashboard/photo/save',
+        type: 'GET',
+    }).done(function (res, stat, jqxhr) {
+        aws_stuff.s3_url = res.s3_url
+        aws_stuff.policy_64 = res.policy_64
+        aws_stuff.aws_key = res.aws_key
+        aws_stuff.signature = res.signature
+        if (window.FormData)
+            fd = new FormData()
+
+        if (fd) {
+            fd.append('awsaccesskeyid', aws_stuff.aws_key)
+            fd.append('signature', aws_stuff.signature)
+            fd.append('policy', aws_stuff.policy_64)
+            fd.append('key', '${filename}')
+            fd.append('success_action_status', 200)
+        }
+
+        /* jquery file uploader */
+        if (!window.fileupload)
+            console.log('No jQuery File Upload')
+        else {
+            var csrf_token = $('meta[name="csrf"]').attr('content')
+            $('#fileupload').fileupload({
+                url: aws_stuff.s3_url,
+                formData: fd,
+                //url: '/dashboard/photo/save',
+                dataType: 'json',
+                type: 'POST',
+                headers: {'X-CSRFToken': csrf_token},
+                done: function (e, data) {
+                    console.log(data.result)
+                },
+                always: function (evt, resp) {
+                    console.log(resp.textStatus)
+                    console.log(resp.jqXHR.responseText)
+                }
+            })
+        }
+    }).fail(function (res, stat, jqxhr) {
+        console.log(stat)
+    })
+
+    var $avatar_upload_form = $('#upload-avatar')
+
+    $avatar_upload_form.on('submit', function (e) {
+        e.preventDefault()
+        var csrf_token = $('meta[name="csrf"]').attr('content')
+        // send image data to amazon and retain key on success
+        $.ajax({
+            url     : aws_stuff.s3_url,
+            type    : 'POST',
+            data    : $avatar_upload_form.balls
+        })
+
+        // send new s3 key to our app
+        $.ajax({
+            url     : '/dashboard/photo/save',
+            headers : {'X-CSRFToken': csrf_token},
+            type: 'post',
+            data: { payload: 'BUTTS BUTTS BUTTS'}
+        }).done(function (response, textStatus, jqXHR) {
+            console.log(textStatus)
+        }).fail(function (response, textStatus, jqXHR) {
+            console.log(textStatus)
+        }).always(function (response, textStatus, jqXHR) {
+            console.log('always cb status code: %s', textStatus)
+        })
+
+        console.log('post ajax')
+    })
+
         /* Ink File Picker */
+        /*
         filepicker.setKey('ATqxZ7zONQgaSqWFtAAFOz')
 
         var store_options = {}
@@ -7,7 +84,6 @@ $(document).on('ready', function() {
 
         store_options.location = "S3"
 
-        /* pick and store a bunch */
         $('#pick-files').click(function() {
             filepicker.pickMultiple(picker_options, function(InkBlobs) {
                 for (var j=0; j < InkBlobs.length; j++) {
@@ -42,7 +118,6 @@ $(document).on('ready', function() {
         })
 
 
-        /* pick and store a one */
         $('#pick-one').click(function () {
             filepicker.pickAndStore(picker_options, store_options,
                     // fp pickAndStore callback
@@ -74,6 +149,7 @@ $(document).on('ready', function() {
                         console.log(FPError)
                     })
         })
+    */
 
     // turn the profile section headers blue on hover and click
     var $profile_header = $('.profile-header h3')

@@ -19,18 +19,18 @@
         </div>
     </div><!-- /.row -->
 
+    <div class="row">
+        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data">
+            <label for="file_data" class="control-label">Upload An Avatar</label>
+            <input multiple id="fileupload" type="file" name="file" class="form-control">
+        </form>
+    </div><!-- /.row -->
+
     {% if form %}
     <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
         {{ form.csrf_token() }}
         <h2> General Information </h2>
 
-        <div class="form-group">
-            {{ form.avatar.label(class_="control-label col-sm-3") }}
-            <div class="col-sm-9">
-                <img class="img-responsive" src="http://placehold.it/125x125">
-                {{ form.avatar(class_="form-control") }}
-            </div>
-        </div><!-- /.row -->
 
         {{ render_field(form.business_name) }}
         {{ render_field(form.phone) }}
