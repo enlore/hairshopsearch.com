@@ -6,6 +6,7 @@ from app.core import db, ud
 from app.models import (User, Role, Photo, Gallery)
 from app.provider.models import Provider, Address, Menu, MenuItem, Location
 from app.consumer.models import Consumer
+from app.models import Gallery, Photo
 from app.helpers import JSONEncoder, acceptable_url_string
 from app.indexer import indexer
 from app.config import Config
@@ -40,6 +41,36 @@ def reset_db():
     p.menus[1].menu_items.append(MenuItem(name="Blowout", price="150", description="Blast it to the moon"))
     p.menus[1].menu_items.append(MenuItem(name="Trim", price="25", description="Keep things neat and tidy"))
     p.menus[1].menu_items.append(MenuItem(name="Cut and Style", price="60", description="The full package"))
+
+    p.gallery = Gallery()
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=1"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=2"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=3"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=4"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=5"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=6"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=7"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=9"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=10"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=11"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=12"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=13"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=14"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=15"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=16"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=17"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=18"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=19"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=20"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=21"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=22"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=23"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=24"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=25"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=26"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=27"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=28"))
+    p.gallery.photos.append(Photo(url="http://placehold.it/300x300&text=29"))
 
     db.session.add(p)
 
