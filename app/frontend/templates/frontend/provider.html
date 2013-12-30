@@ -5,21 +5,35 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <img class="img-responsive"
-                src="{{ provider.avatar.url }}">
+                <img class="img-responsive avatar"
+                {% if provider.avatar.url %}
+                    src="{{ provider.avatar.url }}">
+                {% else %}
+                    src="http://placehold.it/225x300">
+                {% endif %}
             </div>
 
             <div class="col-md-7 hidden-sm hidden-xs">
                 <div class="row">
-                    {% for image in provider.gallery.photos %}
+                    {% for image in provider.gallery.photos[0:3] %}
                     <div class="col-md-4">
                         <div class="thumbnail-container">
-                            <img class="" src="{{ image.url }}">
+                            <img class="img-responsive" src="{{ image.url }}">
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-            </div>
+                </div><!-- /.row -->
+
+                <div class="row">
+                    {% for image in provider.gallery.photos[3:6] %}
+                    <div class="col-md-4">
+                        <div class="thumbnail-container">
+                            <img class="img-responsive" src="{{ image.url }}">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div><!-- /.row -->
+            </div><!-- /.col-md-7 -->
 
         </div>
     </div>
@@ -151,17 +165,25 @@
                         data-target="#gallery">
                         <h3> Gallery </h3>
                     </div>
+
                     <div class="profile-content collapse" id="gallery">
                         <div class="row">
-                            {% for image in provider.gallery.photos %}
-                            <div class="col-md-4">
-                                <div class="thumbnail-container">
-                                    <img class="" src="{{ image.url }}">
+                            {% set count = 0 %}
+                            {% for photo in provider.gallery.photos %}
+                                {% set count = count + 1 %}
+                                <div class="col-sm-4">
+                                    <a href="">
+                                        <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
+                                    </a>
                                 </div>
-                            </div>
+                                {% if count == 3 %}
+                        </div><!-- /.row -->
+                        <div class="row">
+                                    {% set count = 0 %}
+                                {% endif %}
                             {% endfor %}
-                        </div>
-                    </div>
+                        </div><!-- /.row -->
+                    </div><!-- /.profile-content -->
                 </div>
             </div><!-- /.row -->
         </div><!-- 2/3 left col -->
