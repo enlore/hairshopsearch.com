@@ -113,8 +113,26 @@
                 </form>
                 {% endif %}
             </div>
-        </div>
-</div>
+        </div><!-- /.row -->
+    </div><!-- /.dash-group -->
+
+    <div class="dash-group">
+        <div class="row">
+            {% set count = 0 %}
+            {% for photo in provider.gallery.photos %}
+                {% set count = count + 1 %}
+                <div class="col-sm-4">
+                    <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
+                </div>
+                {% if count == 3 %}
+        </div><!-- /.row -->
+        <div class="row">
+                    {% set count = 0 %}
+                {% endif %}
+            {% endfor %}
+        </div><!-- /.row -->
+    </div><!-- /.dash-group -->
+
 </div><!-- /.container -->
             <!-- <table class="hours">
                 <tr>
