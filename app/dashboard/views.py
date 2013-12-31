@@ -38,22 +38,25 @@ def upload_photo():
 @dashboard.route('/photo/save', methods=['GET', 'POST'])
 def save_photo():
     if request.method == 'GET':
+        if request.args and request.args.has_key('key'):
+            s3_key = request.args.get('key', '')
+            current_app.logger.info(s3_key)
         fmat = '%Y-%m-%dT%H:%M:%SZ'
-        expiration_date = datetime.today() + timedelta(0, 3600)
+        expiration_date = datetime.today() + timedelta(0, 36000)
         iso_datetime = expiration_date.strftime(fmat)
 
         policy = current_app.config['AWS_POLICY']
 
         # set our one hour expiration time limit
         policy['expiration'] = iso_datetime
-        current_app.logger.info(policy)
 
-        policy_64 = base64.b64encode(str(policy))
+        policy_64 = base64.b64encode(json.dumps(policy))
+        current_app.logger.info(policy)
 
         signature = base64.b64encode(
                 hmac.new(
                     current_app.config['AWS_SECRET'],
-                    str(policy),
+                    policy_64,
                     hashlib.sha1)
                 .digest()
                 )
