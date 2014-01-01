@@ -25,7 +25,7 @@ def reset_db():
 
     # Provider
     password = encrypt_password('password')
-    p = Provider(user=ud.create_user(email="n.e.lorenson@gmail.com", password=password),
+    p = Provider(user=ud.create_user(email="provider@test.com", password=password),
             business_name = 'Sparky\'s',
             business_url = 'sparkys'
             )
@@ -75,7 +75,7 @@ def reset_db():
     db.session.add(p)
 
     # Consumer
-    c = Consumer(user=ud.create_user(email='oneofy@gmail.com', password=password,
+    c = Consumer(user=ud.create_user(email='consumer@test.com', password=password,
             first_name='Bob', last_name='Johnson'))
     c.user.confirmed_at = datetime.date.today()
     c.consumer_url = 'bob.johnson'
