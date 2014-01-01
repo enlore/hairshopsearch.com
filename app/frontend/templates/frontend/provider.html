@@ -169,10 +169,10 @@
                     <div class="profile-content collapse" id="gallery">
                         <div class="row">
                             {% set count = 0 %}
-                            {% for photo in provider.gallery.photos %}
+                            {% for photo in provider.gallery.photos[0:6] %}
                                 {% set count = count + 1 %}
                                 <div class="col-sm-4">
-                                    <a href="">
+                                    <a href="{{ url_for('frontend.gallery') }}">
                                         <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
                                     </a>
                                 </div>
