@@ -7,7 +7,7 @@
             <ul id="elastigallery" class="elastislide-list">
             {% for photo in gallery.photos %}
                 <li>
-                    <a href="#"><img src="{{ photo.url }}" /></a>
+                    <a href="#"><img class="es-thumbnail img-responsive" src="{{ photo.url }}" /></a>
                 </li>
             {% endfor %}
             </ul>
