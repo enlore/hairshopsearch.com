@@ -37,6 +37,28 @@ def upload_photo():
 
 @dashboard.route('/photo/save', methods=['GET', 'POST'])
 def save_photo():
+    if request.method == 'POST':
+
+        entity = current_user.provider or current_user.consumer
+
+        if not entity.gallery:
+            entity.gallery = Gallery()
+        
+        s3_key = '{}/{}/{}'.format(
+            current_app.config['S3_URL'],
+            'uploads',
+            request.form['filename']
+        )
+
+        current_app.logger.info(s3_key)
+
+        entity.gallery.photos.append(Photo(url=s3_key))
+
+        db.session.add(entity)
+        db.session.commit()
+
+        return jsonify(status='filename recieved')
+
     if request.method == 'GET':
         if request.args and request.args.has_key('key'):
             s3_key = request.args.get('key', '')
