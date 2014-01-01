@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+        </div>
+    </div>
+</div>
+
+            <ul id="elastigallery" class="elastislide-list">
+            {% for photo in gallery.photos %}
+                <li>
+                    <a href="#"><img src="{{ photo.url }}" /></a>
+                </li>
+            {% endfor %}
+            </ul>
+{% endblock %}

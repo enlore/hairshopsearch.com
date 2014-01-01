@@ -1,5 +1,17 @@
 $(document).on('ready', function() {
 
+    $.Elastislide.defaults = {
+        orientation: 'horizontal', 
+        minItems: 5,
+        start: 0,
+        easing: 'ease-in-out',
+        onClick: function (el, position, evt) { return false },
+        onReady: function () { return false },
+        onBeforeSlide: function () { return false },
+        onAfterSlide: function () { return false }
+    }
+    $('#elastigallery').elastislide()
+
     /* blah */
     var aws_stuff = {}
     $.ajax({
@@ -10,6 +22,7 @@ $(document).on('ready', function() {
         aws_stuff.policy_64 = res.policy_64
         aws_stuff.aws_key = res.aws_key
         aws_stuff.signature = res.signature
+
         if (window.FormData)
             fd = new FormData()
 
@@ -17,28 +30,28 @@ $(document).on('ready', function() {
             fd.append('awsaccesskeyid', aws_stuff.aws_key)
             fd.append('signature', aws_stuff.signature)
             fd.append('policy', aws_stuff.policy_64)
-            fd.append('key', '${filename}')
-            fd.append('success_action_status', 200)
+            fd.append('key', 'uploads/${filename}')
+            fd.append('acl', 'public-read')
+            fd.append('Content-Type', '')
+            fd.append('success_action_redirect', 'http://localhost:9016/dashboard/profile')
         }
 
         /* jquery file uploader */
         if (!window.fileupload)
             console.log('No jQuery File Upload')
         else {
-            var csrf_token = $('meta[name="csrf"]').attr('content')
+            //var csrf_token = $('meta[name="csrf"]').attr('content')
             $('#fileupload').fileupload({
                 url: aws_stuff.s3_url,
                 formData: fd,
-                //url: '/dashboard/photo/save',
                 dataType: 'json',
                 type: 'POST',
-                headers: {'X-CSRFToken': csrf_token},
+                //headers: {'X-CSRFToken': csrf_token},
                 done: function (e, data) {
-                    console.log(data.result)
+                    console.log(typeof(e))
                 },
                 always: function (evt, resp) {
-                    console.log(resp.textStatus)
-                    console.log(resp.jqXHR.responseText)
+                    console.log(resp.jqXHR.getResponseHeader('location'))
                 }
             })
         }
