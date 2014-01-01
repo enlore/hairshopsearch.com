@@ -1,5 +1,6 @@
 $(document).on('ready', function() {
 
+    /* Gallery init and config */
     $.Elastislide.defaults = {
         orientation: 'horizontal', 
         minItems: 3,
@@ -10,15 +11,18 @@ $(document).on('ready', function() {
         onBeforeSlide: function () { return false },
         onAfterSlide: function () { return false }
     }
+
     $gallery = $('#elastigallery') 
     $gallery_view = $('#gallery-view')
+
     $gallery.elastislide()
+
     $gallery.on('click', function (e) { 
             console.log(e.target)
             $gallery_view.find('img').attr({src: e.target.src})
     })
 
-    /* blah */
+    /* AWS S3 Upload */
     var aws_stuff = {}
     $.ajax({
         url: '/dashboard/photo/save',
@@ -45,135 +49,33 @@ $(document).on('ready', function() {
         if (!window.fileupload)
             console.log('No jQuery File Upload')
         else {
+            // initialize the uploader
             $('#fileupload').fileupload({
+                // ajax style options
                 url: aws_stuff.s3_url,
                 formData: fd,
                 dataType: 'json',
                 type: 'POST',
                 done: function (e, resp) {
-                    var csrf_token = $('meta[name="csrf"]').attr('content')
+                    // on success, post the s3 key to our app
                     $.ajax({
                             url: '/dashboard/photo/save', 
                             type: 'POST',
-                            headers: {'X-CSRFToken': csrf_token},
+                            headers: {'X-CSRFToken': $('meta[name="csrf"]').attr('content')},
                             data: {filename: resp.files[0].name},
-                            done: function () { console.log('posted!')},
-                            always: function () { console.log('well something happened') }
+                            done: function (res, stat, jqxhr) {
+                                console.log('posted!')
+                                window.location.reload(true)
+                            },
+                            always: function (res, stat, jqhxr) { console.log('well something happened') }
                     })
-                    window.location.reload(true)
                 },
-                always: function (evt, resp) {
-                }
+                always: function (evt, resp) { console.log(arguments) }
             })
         }
     }).fail(function (res, stat, jqxhr) {
-        console.log(stat)
+            console.log(res, stat)
     })
-
-    var $avatar_upload_form = $('#upload-avatar')
-
-    $avatar_upload_form.on('submit', function (e) {
-        e.preventDefault()
-        var csrf_token = $('meta[name="csrf"]').attr('content')
-        // send image data to amazon and retain key on success
-        $.ajax({
-            url     : aws_stuff.s3_url,
-            type    : 'POST',
-            data    : $avatar_upload_form.balls
-        })
-
-        // send new s3 key to our app
-        $.ajax({
-            url     : '/dashboard/photo/save',
-            headers : {'X-CSRFToken': csrf_token},
-            type: 'post',
-            data: { payload: 'BUTTS BUTTS BUTTS'}
-        }).done(function (response, textStatus, jqXHR) {
-            console.log(textStatus)
-        }).fail(function (response, textStatus, jqXHR) {
-            console.log(textStatus)
-        }).always(function (response, textStatus, jqXHR) {
-            console.log('always cb status code: %s', textStatus)
-        })
-
-        console.log('post ajax')
-    })
-
-        /* Ink File Picker */
-        /*
-        filepicker.setKey('ATqxZ7zONQgaSqWFtAAFOz')
-
-        var store_options = {}
-            , picker_options = {}
-
-        store_options.location = "S3"
-
-        $('#pick-files').click(function() {
-            filepicker.pickMultiple(picker_options, function(InkBlobs) {
-                for (var j=0; j < InkBlobs.length; j++) {
-                    console.log('multi: ' + InkBlobs[j].url)
-
-                    filepicker.store(InkBlobs[j],
-                        function (InkBlob) {
-                            console.log('s3 key: ' + InkBlob.key)
-
-                            var csrf_token = $('meta[name="csrf"]').attr('content')
-                            $.ajax({
-                                url     : '/dashboard/gallery/photo/save',
-                                headers : {'X-CSRFToken': csrf_token},
-                                type: 'post',
-                                data: { photo_key: InkBlob.key }
-                            }).done(function (response, textStatus, jqXHR) {
-                                console.log(response)
-
-                            }).fail(function (response, textStatus, jqXHR) {
-                                console.log(response)
-                            })
-
-                        },
-                        function (FPError) {
-                            console.log('oh shit: ' + FPError)
-                        },
-                        function (progress) {
-                            console.log(progress + '% complete!')
-                        })
-                }
-            })
-        })
-
-
-        $('#pick-one').click(function () {
-            filepicker.pickAndStore(picker_options, store_options,
-                    // fp pickAndStore callback
-                    function (InkBlobs) {
-                        console.log(JSON.stringify(InkBlobs))
-
-                        var csrf_token = $('meta[name="csrf"]').attr('content')
-                        for (var i=0; i < InkBlobs.length; i++) {
-                            request = $.ajax({
-                                url: '/dashboard/photo/save',
-                                headers: { 'X-CSRFToken': csrf_token },
-                                type: 'post',
-                                data: { photo_key: InkBlobs[i].key }
-                            })
-
-                            request.done(function (response, textStatus, jqXHR) {
-                                console.log(response.status)
-                                console.log(textStatus)
-                            })
-
-                            request.fail(function (response, textStatus, jqXHR) {
-                                console.log(response.status)
-                                console.log(textStatus)
-                            })
-                        }
-                    }
-                    // fp on error callback
-                    , function (FPError) {
-                        console.log(FPError)
-                    })
-        })
-    */
 
     // turn the profile section headers blue on hover and click
     var $profile_header = $('.profile-header h3')
