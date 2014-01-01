@@ -17,11 +17,12 @@ if Config.DEV:
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
-@frontend.route('/gallery')
-def gallery():
+@frontend.route('/<user_id>/gallery')
+def gallery(user_id):
     title = 'Gallery'
-    user = User.query.filter_by(email='provider@test.com').one()
-    gallery = user.provider.gallery
+    user = User.query.get(user_id)
+    entity = user.provider or user.consumer
+    gallery = entity.gallery
     return render_template('frontend/gallery.html', title=title, gallery=gallery)
 
 

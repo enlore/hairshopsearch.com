@@ -172,7 +172,7 @@
                             {% for photo in provider.gallery.photos[-6:] %}
                                 {% set count = count + 1 %}
                                 <div class="col-sm-4">
-                                    <a href="{{ url_for('frontend.gallery') }}">
+                                    <a href="{{ url_for('frontend.gallery', user_id=current_user.id) }}">
                                         <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
                                     </a>
                                 </div>
