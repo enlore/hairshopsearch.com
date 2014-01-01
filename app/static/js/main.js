@@ -10,7 +10,13 @@ $(document).on('ready', function() {
         onBeforeSlide: function () { return false },
         onAfterSlide: function () { return false }
     }
-    $('#elastigallery').elastislide()
+    $gallery = $('#elastigallery') 
+    $gallery_view = $('#gallery-view')
+    $gallery.elastislide()
+    $gallery.on('click', function (e) { 
+            console.log(e.target)
+            $gallery_view.find('img').attr({src: e.target.src})
+    })
 
     /* blah */
     var aws_stuff = {}

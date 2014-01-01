@@ -1,13 +1,9 @@
 {% extends "layouts/base.html" %}
 {% block title %} {{ title }} {% endblock %}
 {% block body %}
-<div class="container">
+<div class="gallery container">
     <div class="row">
         <div class="col-sm-12">
-        </div>
-    </div>
-</div>
-
             <ul id="elastigallery" class="elastislide-list">
             {% for photo in gallery.photos %}
                 <li>
@@ -15,4 +11,16 @@
                 </li>
             {% endfor %}
             </ul>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="gallery-view">
+                <img src=""> 
+            </div>
+        </div>
+    </div><!-- /.row -->
+</div>
+
 {% endblock %}
