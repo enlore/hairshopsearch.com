@@ -17,6 +17,14 @@ if Config.DEV:
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
+@frontend.route('/gallery')
+def gallery():
+    title = 'Gallery'
+    user = User.query.filter_by(email='n.e.lorenson@gmail.com').one()
+    gallery = user.provider.gallery
+    return render_template('frontend/gallery.html', title=title, gallery=gallery)
+
+
 @frontend.route('/test_flash')
 def test_flash():
     flash('An error, oh noes!', 'error')
