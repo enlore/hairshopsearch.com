@@ -39,25 +39,30 @@ $(document).on('ready', function() {
             fd.append('key', 'uploads/${filename}')
             fd.append('acl', 'public-read')
             fd.append('Content-Type', '')
-            fd.append('success_action_redirect', 'http://localhost:9016/dashboard/profile')
         }
 
         /* jquery file uploader */
         if (!window.fileupload)
             console.log('No jQuery File Upload')
         else {
-            //var csrf_token = $('meta[name="csrf"]').attr('content')
             $('#fileupload').fileupload({
                 url: aws_stuff.s3_url,
                 formData: fd,
                 dataType: 'json',
                 type: 'POST',
-                //headers: {'X-CSRFToken': csrf_token},
-                done: function (e, data) {
-                    console.log(typeof(e))
+                done: function (e, resp) {
+                    var csrf_token = $('meta[name="csrf"]').attr('content')
+                    $.ajax({
+                            url: '/dashboard/photo/save', 
+                            type: 'POST',
+                            headers: {'X-CSRFToken': csrf_token},
+                            data: {filename: resp.files[0].name},
+                            done: function () { console.log('posted!')},
+                            always: function () { console.log('well something happened') }
+                    })
+                    window.location.reload(true)
                 },
                 always: function (evt, resp) {
-                    console.log(resp.jqXHR.getResponseHeader('location'))
                 }
             })
         }
