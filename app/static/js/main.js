@@ -2,7 +2,7 @@ $(document).on('ready', function() {
 
     $.Elastislide.defaults = {
         orientation: 'horizontal', 
-        minItems: 5,
+        minItems: 3,
         start: 0,
         easing: 'ease-in-out',
         onClick: function (el, position, evt) { return false },
