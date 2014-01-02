@@ -27,84 +27,59 @@ import json
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-@dashboard.route('/photo/save', methods=['GET', 'POST'])
-def save_photo():
-    if request.method == 'POST':
-
-        entity = current_user.provider or current_user.consumer
-
-        if not entity.gallery:
-            entity.gallery = Gallery()
-        
-        s3_key = '{}/{}/{}'.format(
-            current_app.config['S3_URL'],
-            'uploads',
-            request.form['filename']
-        )
-
+@dashboard.route('/photo/new')
+def new_photo():
+    if request.args and request.args.has_key('key'):
+        s3_key = request.args.get('key', '')
         current_app.logger.info(s3_key)
+    fmat = '%Y-%m-%dT%H:%M:%SZ'
+    expiration_date = datetime.today() + timedelta(0, 36000)
+    iso_datetime = expiration_date.strftime(fmat)
 
-        entity.gallery.photos.append(Photo(url=s3_key))
+    policy = current_app.config['AWS_POLICY']
 
-        db.session.add(entity)
-        db.session.commit()
+    # set our one hour expiration time limit
+    policy['expiration'] = iso_datetime
 
-        return jsonify(status='filename recieved')
+    policy_64 = base64.b64encode(json.dumps(policy))
+    current_app.logger.info(policy)
 
-    if request.method == 'GET':
-        if request.args and request.args.has_key('key'):
-            s3_key = request.args.get('key', '')
-            current_app.logger.info(s3_key)
-        fmat = '%Y-%m-%dT%H:%M:%SZ'
-        expiration_date = datetime.today() + timedelta(0, 36000)
-        iso_datetime = expiration_date.strftime(fmat)
+    signature = base64.b64encode(
+            hmac.new(
+                current_app.config['AWS_SECRET'],
+                policy_64,
+                hashlib.sha1)
+            .digest()
+            )
 
-        policy = current_app.config['AWS_POLICY']
+    return jsonify(
+        s3_url=current_app.config['S3_URL'],
+        aws_key=current_app.config['AWS_KEY'],
+        policy_64=policy_64,
+        signature=signature)
 
-        # set our one hour expiration time limit
-        policy['expiration'] = iso_datetime
 
-        policy_64 = base64.b64encode(json.dumps(policy))
-        current_app.logger.info(policy)
+@dashboard.route('/photo/save', methods=['POST'])
+def save_photo():
+    entity = current_user.provider or current_user.consumer
 
-        signature = base64.b64encode(
-                hmac.new(
-                    current_app.config['AWS_SECRET'],
-                    policy_64,
-                    hashlib.sha1)
-                .digest()
-                )
-
-        return jsonify(
-            s3_url=current_app.config['S3_URL'],
-            aws_key=current_app.config['AWS_KEY'],
-            policy_64=policy_64,
-            signature=signature)
-
-    current_app.logger.info(request.files)
-
-    return jsonify(mai_balls='hyoog')
-
-@dashboard.route('/gallery/photo/save', methods=['POST'])
-def save_gallery_photo():
-    entity = current_user.provider
     if not entity.gallery:
         entity.gallery = Gallery()
+    
+    s3_key = '{}/{}/{}'.format(
+        current_app.config['S3_URL'],
+        'uploads',
+        request.form['filename']
+    )
 
-    photo_url = '{}/{}'.format(
-            current_app.config['S3_URL'],
-            request.form['photo_key']
-            )
-    entity.gallery.photos.append(Photo(url=photo_url))
+    current_app.logger.info(s3_key)
+
+    entity.gallery.photos.append(Photo(url=s3_key))
+
     db.session.add(entity)
-    try:
-        db.session.commit()
-    except Exception as e:
-        current_app.logger.info(e.msg)
-        return jsonify(status='Your file wasn\'t saved! Please try again.')
+    db.session.commit()
 
-    return redirect(url_for('dashboard.profile'))
-
+    return jsonify(status='filename recieved')
 
 @dashboard.route('/profile', methods=['GET', 'POST'])
 @login_required
