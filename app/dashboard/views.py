@@ -27,14 +27,6 @@ import json
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-@dashboard.route('/photo/upload', methods=['GET'])
-def upload_photo():
-    return render_template('dashboard/photo_upload.html',
-            s3_url=current_app.config['S3_URL'],
-            aws_key=current_app.config['AWS_KEY'],
-            policy_64=policy_64,
-            signature=signature)
-
 @dashboard.route('/photo/save', methods=['GET', 'POST'])
 def save_photo():
     if request.method == 'POST':
@@ -89,7 +81,6 @@ def save_photo():
             policy_64=policy_64,
             signature=signature)
 
-    current_app.logger.info('barrrffffffuh')
     current_app.logger.info(request.files)
 
     return jsonify(mai_balls='hyoog')
@@ -302,7 +293,7 @@ def profile():
 
     return redirect(url_for('frontend.welcome'))
 
-@dashboard.route('/new_provider', methods=['GET', 'POST'])
+@dashboard.route('/provider/new', methods=['GET', 'POST'])
 @login_required
 def new_provider():
     form = NewProviderForm()
@@ -343,7 +334,7 @@ def new_provider():
         return redirect(url_for('dashboard.profile'))
     return render_template('dashboard/new_provider.html', form=form)
 
-@dashboard.route('/new_consumer', methods=['GET', 'POST'])
+@dashboard.route('/consumer/new', methods=['GET', 'POST'])
 @login_required
 def new_consumer():
     form = NewConsumerForm()
