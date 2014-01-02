@@ -164,10 +164,17 @@ times = [('closed', 'Closed'),
         ('11:45pm', '11:45pm'), ('12:00am', '12:00am')]
 
 
+menu_types = [
+        ('barber', 'Barber'),
+        ('salon', 'Salon'),
+        ('product', 'Product')
+        ]
+
 class MenuItemForm(Form):
     name            = TextField(u'Name')
     price           = DecimalField(u'Price', places=2, rounding=None)
     description     = TextAreaField('Description')
+    menu_type       = SelectField(u'Menu Type', choices=menu_types)
     submit          = SubmitField('Save Item')
 
 

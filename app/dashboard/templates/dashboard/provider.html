@@ -46,7 +46,7 @@
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-3">
-                {{ menu_form.submit(class_='btn btn-success') }}
+                {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
 
@@ -68,7 +68,7 @@
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-3">
-                {{ menu_form.submit(class_='btn btn-success') }}
+                {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
 
@@ -87,20 +87,27 @@
             <div class="col-sm-7">
                 <h2> Your Menus </h2>
                 {% for menu in provider.menus %}
-                    <h3> {{ menu.menu_type }}
-                    {% for item in menu.menu_items %}
-                    <p> {{ item.name }} </p>
-                    <p> {{ item.price | cash }} </p>
-                    <p> {{ item.description }} </p>
-                    {% endfor %}
+                <table class="table">
+                    <thead>
+                        <tr><th>{{ menu.menu_type | upper }}</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for item in menu.menu_items %}
+                        <tr><td> {{ item.name }} </td>
+                            <td> {{ item.price | cash }} </td>
+                            <td> {{ item.description }} </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 {% endfor %}
             </div>
 
             <div class="col-sm-5">
                 {% if menu_form %}
                 <h2> Add Menu Item </h2>
-                <form class="form-horizontal" action="{{ url_for('dashboard.profile') }}" method="post">
+                <form class="form-horizontal" action="{{ url_for('dashboard.save_menu_item') }}" method="post">
                     {{ menu_form.csrf_token() }}
+                    {{ render_field(menu_form.menu_type) }}
                     {{ render_field(menu_form.name) }}
                     {{ render_field(menu_form.price) }}
                     {{ render_field(menu_form.description) }}

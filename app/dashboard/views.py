@@ -78,6 +78,36 @@ def save_photo():
 
     return jsonify(status='filename recieved')
 
+@dashboard.route('/menu/add', methods=['POST'])
+@login_required
+def save_menu_item():
+    current_app.logger.info(request.form)
+    p = current_user.provider
+
+    # if menu_type already exists, append thing to it's items
+    # if not, create it and then append thing to it's items
+    menu_item = MenuItem(
+           name=request.form['name'],
+           price=request.form['price'],
+           description=request.form['description']
+    )
+
+    got_it = False
+
+    for menu in p.menus:
+        if menu.menu_type == request.form['menu_type']:
+            got_it = True
+            menu.menu_items.append(menu_item)
+     
+    if not got_it:
+        menu = Menu(menu_type=request.form['menu_type']) 
+        p.menus.append(menu)
+        p.menu.menu_items.append(item)
+
+    db.session.add(p)
+    db.session.commit()
+    return redirect(url_for('.profile'))
+
 @dashboard.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -119,9 +149,9 @@ def profile():
             consumer.fb_url             = form.facebook_url.data
             consumer.gplus_url          = form.google_plus_url.data
             consumer.youtube_url        = form.youtube_url.data
-#            #consumer.vimeo_url         = form.vimeo_url.data
-#            #consumer.other_url         = form.other_url.data
-#
+            #consumer.vimeo_url         = form.vimeo_url.data
+            #consumer.other_url         = form.other_url.data
+
             db.session.add(consumer)
             db.session.commit()
 
