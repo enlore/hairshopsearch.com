@@ -19,12 +19,27 @@
         </div>
     </div><!-- /.row -->
 
-    <div class="row">
-        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data">
-            <label for="file_data" class="control-label">Upload An Avatar</label>
-            <input id="fileupload" type="file" name="file" class="form-control">
-        </form>
-    </div><!-- /.row -->
+    <div class="dash-group">
+        <div class="row">
+            <div class="col-sm-3">
+                {% if provider.avatar.url %}
+                <img src="{{ provider.avatar.url }}">
+                {% else %}
+                <img src="http://placehold.it/200x225">
+                {% endif %}
+            </div>
+        <div class="col-sm-9">
+                <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file_data" class="control-label col-sm-3">Upload An Avatar</label>
+                        <div class="col-sm-9">
+                            <input id="fileupload" type="file" name="file" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.dash-group -->
 
     {% if form %}
     <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
@@ -71,8 +86,10 @@
                 {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
+    </form>
 
 
+    <div class="dash-group">
         <h2> Endorsements </h2>
         <p.lead> We are endorsed by </p>
         <ul>
@@ -95,7 +112,7 @@
             </li>
             {% endfor %}
         </ul>
-    </form>
+    </div>
     {% endif %}
 
     <div class="dash-group">
