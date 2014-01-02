@@ -29,9 +29,6 @@ dashboard = Blueprint('dashboard', __name__,
 
 @dashboard.route('/photo/new')
 def new_photo():
-    if request.args and request.args.has_key('key'):
-        s3_key = request.args.get('key', '')
-        current_app.logger.info(s3_key)
     fmat = '%Y-%m-%dT%H:%M:%SZ'
     expiration_date = datetime.today() + timedelta(0, 36000)
     iso_datetime = expiration_date.strftime(fmat)
