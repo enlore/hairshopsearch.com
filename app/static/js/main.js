@@ -25,7 +25,7 @@ $(document).on('ready', function() {
     /* AWS S3 Upload */
     var aws_stuff = {}
     $.ajax({
-        url: '/dashboard/photo/save',
+        url: '/dashboard/photo/new',
         type: 'GET',
     }).done(function (res, stat, jqxhr) {
         aws_stuff.s3_url = res.s3_url
