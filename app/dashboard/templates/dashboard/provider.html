@@ -157,6 +157,14 @@
     </div><!-- /.dash-group -->
 
     <div class="dash-group">
+        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file_data" class="control-label col-sm-2">Upload An Image</label>
+                <div class="col-sm-10">
+                    <input id="fileupload" type="file" name="file" class="form-control">
+                </div>
+            </div>
+        </form>
         <div class="row">
             {% set count = 0 %}
             {% for photo in provider.gallery.photos %}
