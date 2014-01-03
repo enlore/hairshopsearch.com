@@ -186,7 +186,6 @@ def _make_context():
             Role=Role,
             Provider=Provider,
             Consumer=Consumer,
-            Review=Review,
             Address=Address,
             Gallery=Gallery,
             Photo=Photo,
