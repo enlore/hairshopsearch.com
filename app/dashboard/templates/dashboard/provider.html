@@ -22,8 +22,8 @@
     <div class="dash-group">
         <div class="row">
             <div class="col-sm-3">
-                {% if provider.avatar.url %}
-                <img src="{{ provider.avatar.url }}">
+                {% if provider.avatar.sm_thumb %}
+                <img src="{{ provider.avatar.sm_thumb }}">
                 {% else %}
                 <img src="http://placehold.it/200x225">
                 {% endif %}
@@ -33,7 +33,9 @@
                 <form method="POST" action="{{ url_for('dashboard.save_photo') }}" class="form-horizontal" enctype="multipart/form-data">
                     {{ upload_form.csrf_token() }}
                     {{ render_field(upload_form.filename) }}
-                    {{ upload_form.submit() }}
+                    <div class="form-group">
+                        {{ upload_form.submit(class_="col-sm-3 col-sm-offset-8 btn btn-success") }}
+                    </div>
                     </form>
                 </div>
         </div><!-- /.row -->
