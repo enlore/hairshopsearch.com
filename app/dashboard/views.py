@@ -74,18 +74,30 @@ def save_photo():
         f = form.filename.data
 
         f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
-        thumbs = generate_thumbs(f.filename, [(200, 200), (350, 350)])
+
+        thumbs = generate_thumbs(f.filename,
+                current_app.config['THUMB_SIZES'])
+
         current_app.logger.info('~~~~| Saved {}'.format(f.filename))
 
+        # wtf
         url = current_app.config['S3_URL'] + '/' + put_s3(f.filename)
-        current_app.logger.info(url)
-        entity.avatar = Photo(url=url)
+
+        thumb_keys = []
+        for fname in thumbs:
+            thumb_keys.append(put_s3(fname))
+
+        sm_thumb = current_app.config['S3_URL'] + '/' + thumb_keys[0]
+        lg_thumb = current_app.config['S3_URL'] + '/' + thumb_keys[1]
+
+        entity.avatar = Photo(
+                url=url,
+                sm_thumb=sm_thumb,
+                lg_thumb=lg_thumb)
 
         db.session.add(entity)
         db.session.commit()
 
-        for fname in thumbs:
-            put_s3(fname)
 
 
     return jsonify(status='filename recieved')
