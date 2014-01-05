@@ -22,61 +22,6 @@ $(document).on('ready', function() {
             $gallery_view.find('img').attr({src: e.target.src})
     })
 
-    /* AWS S3 Upload */
-    var aws_stuff = {}
-    $.ajax({
-        url: '/dashboard/photo/new',
-        type: 'GET',
-    }).done(function (res, stat, jqxhr) {
-        aws_stuff.s3_url = res.s3_url
-        aws_stuff.policy_64 = res.policy_64
-        aws_stuff.aws_key = res.aws_key
-        aws_stuff.signature = res.signature
-
-        if (window.FormData)
-            fd = new FormData()
-
-        if (fd) {
-            fd.append('awsaccesskeyid', aws_stuff.aws_key)
-            fd.append('signature', aws_stuff.signature)
-            fd.append('policy', aws_stuff.policy_64)
-            fd.append('key', 'uploads/${filename}')
-            fd.append('acl', 'public-read')
-            fd.append('Content-Type', '')
-        }
-
-        /* jquery file uploader */
-        if (!window.fileupload)
-            console.log('No jQuery File Upload')
-        else {
-            // initialize the uploader
-            $('#fileupload').fileupload({
-                // ajax style options
-                url: aws_stuff.s3_url,
-                formData: fd,
-                dataType: 'json',
-                type: 'POST',
-                done: function (e, resp) {
-                    // on success, post the s3 key to our app
-                    $.ajax({
-                            url: '/dashboard/photo/save', 
-                            type: 'POST',
-                            headers: {'X-CSRFToken': $('meta[name="csrf"]').attr('content')},
-                            data: {filename: resp.files[0].name},
-                            done: function (res, stat, jqxhr) {
-                                console.log('posted!')
-                                window.location.reload(true)
-                            },
-                            always: function (res, stat, jqhxr) { console.log('well something happened') }
-                    })
-                },
-                always: function (evt, resp) { console.log(arguments) }
-            })
-        }
-    }).fail(function (res, stat, jqxhr) {
-            console.log(res, stat)
-    })
-
     // turn the profile section headers blue on hover and click
     var $profile_header = $('.profile-header h3')
         , mover_color = '#3DAA98'
