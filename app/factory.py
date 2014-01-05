@@ -55,9 +55,9 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
     def four_oh_four(msg):
         return render_template('errors/404.html')
 
-
     _config_app(app, config)
     _register_extensions(app)
+    _register_pre_stuff(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
     _leverage_logging(app)
     return app
@@ -77,6 +77,12 @@ def _register_extensions(app):
     mail.init_app(app)
     toolbar = DebugToolbarExtension(app)
     CsrfProtect(app)
+
+def _register_pre_stuff(app):
+    @app.before_first_request
+    def check_for_uploads_dir():
+        if not os.path.isdir(app.config['UPLOAD_DIR']):
+            os.mkdir(app.config['UPLOAD_DIR'])
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
     """Sniff the blueprints out of the modules contained in the package's src
