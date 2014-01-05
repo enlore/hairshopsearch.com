@@ -15,7 +15,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
-from ..helpers import acceptable_url_string, lat_lon
+from ..helpers import acceptable_url_string, lat_lon, put_s3, generate_thumbs
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
@@ -24,6 +24,7 @@ import hmac
 import hashlib
 import json
 
+import os
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
@@ -63,12 +64,16 @@ def save_photo():
     if not entity.gallery:
         entity.gallery = Gallery()
     
-    s3_key = '{}/{}/{}'.format(
-        current_app.config['S3_URL'],
-        'uploads',
-        request.form['filename']
-    )
+    if request.form['filename']:
+        f = request.form['filename']
+        f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
+        thumbs = generate_thumbs(f.filename, [(200, 200), (350, 350)])
+        current_app.logger.info('~~~~| Saved {}'.format(f.filename))
 
+        put_s3(f.filename)
+
+        for fname in thumbs:
+            put_s3(fname)
     current_app.logger.info(s3_key)
 
     entity.gallery.photos.append(Photo(url=s3_key))
