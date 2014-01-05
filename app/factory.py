@@ -9,6 +9,7 @@ from .search.forms import SearchForm
 import pkgutil
 import importlib
 import locale
+import os
 from logging import Formatter, ERROR, INFO
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
@@ -82,7 +83,7 @@ def _register_pre_stuff(app):
     @app.before_first_request
     def check_for_uploads_dir():
         if not os.path.isdir(app.config['UPLOAD_DIR']):
-            os.mkdir(app.config['UPLOAD_DIR'])
+            os.makedirs(app.config['UPLOAD_DIR'])
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
     """Sniff the blueprints out of the modules contained in the package's src
