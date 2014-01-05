@@ -31,7 +31,7 @@
             
             <div class="col-sm-9">
                 <form method="POST" action="{{ url_for('dashboard.save_photo') }}" class="form-horizontal" enctype="multipart/form-data">
-                    <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+                    <input id="csrf_token" type="hidden" value="{{ csrf_token() }}" name="csrf_token">
                         <div class="form-group">
                             <label for="file_data" class="control-label col-sm-3">Upload An Avatar</label>
                             <div class="col-sm-9">
