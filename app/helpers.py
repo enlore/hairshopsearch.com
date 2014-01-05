@@ -2,6 +2,12 @@ import requests
 import simplejson as json
 from pyelasticsearch.client import _iso_datetime
 from six import PY3
+from PIL import Image
+
+def save_thumb(filename, sizes):
+    image = Image.open(filname)
+    for size in sizes:
+        image.thumbnail(size).save('thumb_{}'.format(filename))
 
 def ellipsize(string, limit=50):
     """Jinja template filter
