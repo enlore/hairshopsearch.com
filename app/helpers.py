@@ -1,3 +1,4 @@
+from flask import current_app, g
 import requests
 import simplejson as json
 from pyelasticsearch.client import _iso_datetime
@@ -9,6 +10,9 @@ from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
 import os
+
+def info(msg):
+    current_app.logger.info(msg)
 
 def get_bucket():
     # return bucket from app.g or make a new one
@@ -29,6 +33,7 @@ def put_s3(file_name):
         )))
     k.set_acl('public-read')
     info('~~~| Put {} bytes at key {}'.format(bytes_up, k.key))
+    return k.key
 
 def generate_thumbs(filename, sizes):
     """Read a file from disk, size it down to thumbnail size and

@@ -10,6 +10,11 @@ class TestForm(Form):
     submit      = SubmitField()
 
 
+class FileUploadForm(Form):
+    filename    = FileField(u'Upload a File')
+    submit      = SubmitField(u'Save Photo')
+
+
 def multi_checkboxes(field, ul_class=u'', **kwargs):
     html = []
     html.append(Markup('<ul>'))

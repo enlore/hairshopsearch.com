@@ -3,11 +3,14 @@ from flask import (Blueprint, render_template, current_app, redirect, url_for,
 from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 
+from flask_wtf.csrf import CsrfProtect
+csrf = CsrfProtect()
+
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
     NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
     RoutineForm)
-from ..forms import ConsumerDashForm, ProviderDashForm, MenuItemForm
+from ..forms import ConsumerDashForm, ProviderDashForm, MenuItemForm, FileUploadForm
 
 from ..models import (Gallery, Photo, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
@@ -57,6 +60,7 @@ def new_photo():
         signature=signature)
 
 
+@csrf.exempt
 @dashboard.route('/photo/save', methods=['POST'])
 def save_photo():
     entity = current_user.provider or current_user.consumer
@@ -64,22 +68,25 @@ def save_photo():
     if not entity.gallery:
         entity.gallery = Gallery()
     
-    if request.form['filename']:
-        f = request.form['filename']
+    form = FileUploadForm()
+
+    if form.validate_on_submit():
+        f = form.filename.data
+
         f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
         thumbs = generate_thumbs(f.filename, [(200, 200), (350, 350)])
         current_app.logger.info('~~~~| Saved {}'.format(f.filename))
 
-        put_s3(f.filename)
+        url = current_app.config['S3_URL'] + '/' + put_s3(f.filename)
+        current_app.logger.info(url)
+        entity.avatar = Photo(url=url)
+
+        db.session.add(entity)
+        db.session.commit()
 
         for fname in thumbs:
             put_s3(fname)
-    current_app.logger.info(s3_key)
 
-    entity.gallery.photos.append(Photo(url=s3_key))
-
-    db.session.add(entity)
-    db.session.commit()
 
     return jsonify(status='filename recieved')
 
@@ -292,11 +299,13 @@ def profile():
         form.sunday_open.data     = provider.hours.sunday_open
         form.sunday_close.data    = provider.hours.sunday_close
 
+        upload_form = FileUploadForm()
         return render_template('dashboard/provider.html',
                 form=form,
                 menu_form=menu_form,
                 provider=current_user.provider,
-                rm_menu_item_form=rm_menu_item_form)
+                rm_menu_item_form=rm_menu_item_form,
+                upload_form=upload_form)
 
     return redirect(url_for('frontend.welcome'))
 

@@ -31,19 +31,9 @@
             
             <div class="col-sm-9">
                 <form method="POST" action="{{ url_for('dashboard.save_photo') }}" class="form-horizontal" enctype="multipart/form-data">
-                    <input id="csrf_token" type="hidden" value="{{ csrf_token() }}" name="csrf_token">
-                        <div class="form-group">
-                            <label for="file_data" class="control-label col-sm-3">Upload An Avatar</label>
-                            <div class="col-sm-9">
-                                <input id="" type="file" name="filename" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-9 col-sm-offset-3">
-                                <input type="submit" class="btn btn-primary" value="Save!">
-                            </div>
-                        </div>
+                    {{ upload_form.csrf_token() }}
+                    {{ render_field(upload_form.filename) }}
+                    {{ upload_form.submit() }}
                     </form>
                 </div>
         </div><!-- /.row -->
