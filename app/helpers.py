@@ -2,12 +2,57 @@ import requests
 import simplejson as json
 from pyelasticsearch.client import _iso_datetime
 from six import PY3
+
 from PIL import Image
 
-def save_thumb(filename, sizes):
-    image = Image.open(filname)
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+
+import os
+
+def get_bucket():
+    # return bucket from app.g or make a new one
+    if not g.get('bucket', False):
+        g.bucket = S3Connection(
+                current_app.config['AWS_KEY'],
+                current_app.config['AWS_SECRET']
+            ).get_bucket( current_app.config['BUCKET_NAME'])
+    return g.bucket 
+
+
+def put_s3(file_name):
+    k = Key(get_bucket())
+    k.key = 'uploads/{}'.format(file_name)
+    bytes_up = k.set_contents_from_file(open(os.path.join(
+        current_app.config['UPLOAD_DIR'],
+        file_name
+        )))
+    k.set_acl('public-read')
+    info('~~~| Put {} bytes at key {}'.format(bytes_up, k.key))
+
+def generate_thumbs(filename, sizes):
+    """Read a file from disk, size it down to thumbnail size and
+    save it in the uploads dir
+
+    :param filename: name of the file
+    :param sizes: sizes we intend to make thumbnails of
+    :type sizes: tuple or list of tuples, width by height
+    :rtype thumbs: list of locally saved filenames of thumbs
+    """
+    thumbs = []
+
+    if not type(sizes) == list:
+        sizes = [sizes]
+
+    path = os.path.join(current_app.config['UPLOAD_DIR'], filename)
     for size in sizes:
-        image.thumbnail(size).save('thumb_{}'.format(filename))
+        image = Image.open(path)
+        image.thumbnail(size)
+        save_name = '{}x{}_{}'.format(size[0], size[1], filename)
+        save_path = os.path.join( current_app.config['UPLOAD_DIR'], save_name)
+        image.save(save_path)
+        thumbs.append(save_name)
+    return thumbs
 
 def ellipsize(string, limit=50):
     """Jinja template filter
