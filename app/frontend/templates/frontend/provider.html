@@ -5,29 +5,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <img class="img-responsive avatar"
-                {% if provider.avatar.url %}
-                    src="{{ provider.avatar.url }}">
-                {% else %}
-                    src="http://placehold.it/225x300">
-                {% endif %}
+                <div class="avatar-container">
+                    <img class="img-responsive avatar"
+                    {% if provider.avatar.url %}
+                        src="{{ provider.avatar.lg_thumb }}">
+                    {% else %}
+                        src="http://placehold.it/225x300">
+                    {% endif %}
+                </div>
             </div>
 
             <div class="col-md-7 hidden-sm hidden-xs">
                 <div class="row">
-                    {% for image in provider.gallery.photos[0:3] %}
+                    {% for image in provider.gallery.photos[-3:] %}
                     <div class="col-md-4">
-                        <div class="thumbnail-container">
-                            <img class="img-responsive" src="{{ image.url }}">
+                        <div class="gallery-container small">
+                            <img class="img-responsive" src="{{ image.lg_thumb }}">
                         </div>
                     </div>
                     {% endfor %}
                 </div><!-- /.row -->
 
                 <div class="row">
-                    {% for image in provider.gallery.photos[3:6] %}
+                    {% for image in provider.gallery.photos[-6:-3] %}
                     <div class="col-md-4">
-                        <div class="thumbnail-container">
+                        <div class="gallery-container small">
                             <img class="img-responsive" src="{{ image.url }}">
                         </div>
                     </div>
@@ -172,9 +174,11 @@
                             {% for photo in provider.gallery.photos[-6:] %}
                                 {% set count = count + 1 %}
                                 <div class="col-sm-4">
-                                    <a href="{{ url_for('frontend.gallery', user_id=current_user.id) }}">
-                                        <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
-                                    </a>
+                                    <div class="gallery-container small">
+                                        <a href="{{ url_for('frontend.gallery', user_id=current_user.id) }}">
+                                            <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
+                                        </a>
+                                    </div>
                                 </div>
                                 {% if count == 3 %}
                         </div><!-- /.row -->
