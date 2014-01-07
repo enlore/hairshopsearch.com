@@ -5,7 +5,10 @@ class Default():
 class DevConfig(Default):
     ELASTICSEARCH_SERVER = 'http://localhost:9200'
 
-    THUMB_SIZES = [(250, 250), (350, 350)]
+    THUMB_SIZES = {
+            'sm_thumb': (250, 250),
+            'lg_thumb': (350, 350)
+            }
 
     FILE_LOG = '/tmp/info.hairshopsearch.log'
     FILE_ERROR_LOG = '/tmp/error.hairshopsearch.log'
