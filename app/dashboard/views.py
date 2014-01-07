@@ -1,10 +1,8 @@
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
     flash, request, jsonify)
 from flask.ext.security import current_user, login_required
-from sqlalchemy import or_
 
-from flask_wtf.csrf import CsrfProtect
-csrf = CsrfProtect()
+from sqlalchemy import or_
 
 from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
     MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
@@ -22,12 +20,13 @@ from ..helpers import acceptable_url_string, lat_lon, put_s3, generate_thumbs
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
+
 import base64
 import hmac
 import hashlib
 import json
-
 import os
+
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
@@ -60,7 +59,6 @@ def new_photo():
         signature=signature)
 
 
-@csrf.exempt
 @dashboard.route('/photo/save', methods=['POST'])
 def save_photo():
     entity = current_user.provider or current_user.consumer
