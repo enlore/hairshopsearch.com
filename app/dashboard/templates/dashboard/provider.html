@@ -180,7 +180,7 @@
             {% for photo in provider.gallery.photos %}
                 {% set count = count + 1 %}
                 <div class="col-sm-4 gallery-container">
-                    <div class="gallery-container">
+                    <div class="gallery-container gallery-size">
                         <a href="{{ photo.url }}">
                             <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
                         </a>
