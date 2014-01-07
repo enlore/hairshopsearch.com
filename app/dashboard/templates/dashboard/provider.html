@@ -22,11 +22,13 @@
     <div class="dash-group">
         <div class="row">
             <div class="col-sm-3">
-                {% if provider.avatar.sm_thumb %}
-                <img src="{{ provider.avatar.sm_thumb }}">
-                {% else %}
-                <img src="http://placehold.it/200x225">
-                {% endif %}
+                <div id="avatar-container">
+                    {% if provider.avatar.sm_thumb %}
+                    <img src="{{ provider.avatar.lg_thumb }}">
+                    {% else %}
+                    <img src="http://placehold.it/200x225">
+                    {% endif %}
+                </div>
             </div>
             
             <div class="col-sm-9">
@@ -177,8 +179,12 @@
             {% set count = 0 %}
             {% for photo in provider.gallery.photos %}
                 {% set count = count + 1 %}
-                <div class="col-sm-4">
-                    <img class="gallery-img img-responsive" src="{{ photo.url }}" alt=""></img> 
+                <div class="col-sm-4 gallery-container">
+                    <div class="gallery-container">
+                        <a href="{{ photo.url }}">
+                            <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
+                        </a>
+                    </div>
                 </div>
                 {% if count == 3 %}
         </div><!-- /.row -->
