@@ -157,11 +157,13 @@
     </div><!-- /.dash-group -->
 
     <div class="dash-group">
-        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data" action="{{ url_for('dashboard.save_avatar') }}">
+        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data" action="{{ url_for('dashboard.save_photo') }}" method="post">
+
+            {{ gallery_upload_form.csrf_token() }}
             <div class="form-group">
                 <label for="file_data" class="control-label col-sm-2">Upload An Image</label>
                 <div class="col-sm-10">
-                    <input id="fileupload" type="file" name="file" class="form-control">
+                    <input type="file" name="up_file" class="form-control">
                 </div>
             </div>
 

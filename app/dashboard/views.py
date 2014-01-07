@@ -61,6 +61,7 @@ def save_photo():
     form = FileUploadForm()
 
     if form.validate_on_submit():
+        current_app.logger.info(form.up_file.data)
         s3_keys = process_img(form.up_file.data)
 
         entity.gallery.photos.append(Photo(
