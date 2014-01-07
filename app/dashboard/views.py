@@ -297,13 +297,15 @@ def profile():
         form.sunday_open.data     = provider.hours.sunday_open
         form.sunday_close.data    = provider.hours.sunday_close
 
-        upload_form = FileUploadForm()
+        gallery_upload_form = FileUploadForm()
+        avatar_upload_form = FileUploadForm()
         return render_template('dashboard/provider.html',
                 form=form,
                 menu_form=menu_form,
                 provider=current_user.provider,
                 rm_menu_item_form=rm_menu_item_form,
-                upload_form=upload_form)
+                avatar_upload_form=avatar_upload_form,
+                gallery_upload_form=gallery_upload_form)
 
     return redirect(url_for('frontend.welcome'))
 
