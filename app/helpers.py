@@ -9,6 +9,9 @@ from PIL import Image
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
+from werkzeug import secure_filename
+
+
 import os
 
 def info(msg):
@@ -20,7 +23,7 @@ def _get_bucket():
         g.bucket = S3Connection(
                 current_app.config['AWS_KEY'],
                 current_app.config['AWS_SECRET']
-            )._get_bucket( current_app.config['BUCKET_NAME'])
+            ).get_bucket( current_app.config['BUCKET_NAME'])
     return g.bucket 
 
 
@@ -58,6 +61,30 @@ def generate_thumbs(filename, sizes):
         image.save(save_path)
         thumbs.append(save_name)
     return thumbs
+
+def process_img(fh):
+    filename = secure_filename(fh.filename)
+    s3_put_names = dict(original=filename)
+    path = os.path.join(current_app.config['UPLOAD_DIR'], filename)
+    fh.save(path)
+    
+    for size_name, size in current_app.config['THUMB_SIZES'].items():
+        image = Image.open(path)
+        image.thumbnail(size)
+        save_name = '{}x{}_{}'.format(size[0], size[1], filename)
+        save_path = os.path.join(current_app.config['UPLOAD_DIR'],
+                save_name)
+        image.save(save_path)
+        s3_put_names[size_name] = save_name
+
+    s3_keys = {}
+    for size_name, put_name in s3_put_names.items():
+        key = put_s3(put_name)
+        s3_keys[size_name] = current_app.config['S3_URL'] + '/' + key
+
+    # {'lg_thumb': 'uploads/image_name.jpg'}
+    return s3_keys
+
 
 def ellipsize(string, limit=50):
     """Jinja template filter

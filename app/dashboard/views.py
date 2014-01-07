@@ -16,7 +16,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
-from ..helpers import acceptable_url_string, lat_lon, put_s3, generate_thumbs
+from ..helpers import acceptable_url_string, lat_lon, put_s3, generate_thumbs, process_img
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
@@ -30,20 +30,25 @@ import os
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-@dashboard.route('/avatar/new')
-def new_avatar():
+@dashboard.route('/avatar/save', methods=['POST'])
+def save_avatar():
     entity = current_user.provider or current_user.consumer
-
-    if not entity.avatar:
-        entity.avatar = Photo()
 
     form = FileUploadForm()
 
     if form.validate_on_submit():
-        f = form.up_file.data
-        
-        f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
+        s3_keys = process_img(form.up_file.data)
 
+        current_app.logger.info(s3_keys)
+        entity.avatar = Photo(
+            url=s3_keys['original'],
+            sm_thumb=s3_keys['sm_thumb'],
+            lg_thumb=s3_keys['lg_thumb']
+            )
+
+        db.session.add(entity)
+        db.session.commit()
+    return redirect(url_for('dashboard.profile'))
 
 
 @dashboard.route('/photo/save', methods=['POST'])
@@ -58,6 +63,24 @@ def save_photo():
     if form.validate_on_submit():
         f = form.filename.data
 
+        # pre: file obj given
+        # post: file data, thumbs data uploaded to s3, keys created
+        # deps: config['UPLOAD_DIR'], config['AWS_KEY'], config['AWS_SECRET'], config['THUMB_SIZES']
+        # params: file obj
+        # returns: dict of {image_type: s3_key}
+
+        # take file obj
+        # save file obj with secure filename
+        # open image
+        # make thumb of image
+        # save thumb on disk
+        # add thumbname of saved thumb to thumbnames
+        #   repeat for all thumb sizes
+        # 
+        # for each image (original and thumbs)
+        #  send to s3
+        # add keys to key dict
+        # return key dict
         f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
 
         thumbs = generate_thumbs(f.filename,
