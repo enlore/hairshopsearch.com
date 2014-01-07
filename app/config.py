@@ -6,8 +6,8 @@ class DevConfig(Default):
     ELASTICSEARCH_SERVER = 'http://localhost:9200'
 
     THUMB_SIZES = {
-            'sm_thumb': (250, 250),
-            'lg_thumb': (350, 350)
+            'sm_thumb': (450, 450),
+            'lg_thumb': (550, 550)
             }
 
     FILE_LOG = '/tmp/info.hairshopsearch.log'
