@@ -14,18 +14,18 @@ import os
 def info(msg):
     current_app.logger.info(msg)
 
-def get_bucket():
+def _get_bucket():
     # return bucket from app.g or make a new one
     if not g.get('bucket', False):
         g.bucket = S3Connection(
                 current_app.config['AWS_KEY'],
                 current_app.config['AWS_SECRET']
-            ).get_bucket( current_app.config['BUCKET_NAME'])
+            )._get_bucket( current_app.config['BUCKET_NAME'])
     return g.bucket 
 
 
 def put_s3(file_name):
-    k = Key(get_bucket())
+    k = Key(_get_bucket())
     k.key = 'uploads/{}'.format(file_name)
     bytes_up = k.set_contents_from_file(open(os.path.join(
         current_app.config['UPLOAD_DIR'],
