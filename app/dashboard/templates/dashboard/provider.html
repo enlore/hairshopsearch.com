@@ -22,7 +22,7 @@
     <div class="dash-group">
         <div class="row">
             <div class="col-sm-3">
-                <div id="avatar-container">
+                <div class="gallery-container large">
                     {% if provider.avatar.sm_thumb %}
                     <img src="{{ provider.avatar.lg_thumb }}">
                     {% else %}
@@ -180,7 +180,7 @@
             {% for photo in provider.gallery.photos %}
                 {% set count = count + 1 %}
                 <div class="col-sm-4 gallery-container">
-                    <div class="gallery-container gallery-size">
+                    <div class="gallery-container large">
                         <a href="{{ photo.url }}">
                             <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
                         </a>

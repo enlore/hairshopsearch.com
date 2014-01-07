@@ -2,7 +2,6 @@ $(document).on('ready', function() {
 
     /* Nail thumb */
     $('.gallery-container').nailthumb()
-    $('#avatar-container').nailthumb({width: 325, height: 300})
     /* Gallery init and config */
     $.Elastislide.defaults = {
         orientation: 'horizontal', 
