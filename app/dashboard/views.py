@@ -30,33 +30,20 @@ import os
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
-@dashboard.route('/photo/new')
-def new_photo():
-    fmat = '%Y-%m-%dT%H:%M:%SZ'
-    expiration_date = datetime.today() + timedelta(0, 36000)
-    iso_datetime = expiration_date.strftime(fmat)
+@dashboard.route('/avatar/new')
+def new_avatar():
+    entity = current_user.provider or current_user.consumer
 
-    policy = current_app.config['AWS_POLICY']
+    if not entity.avatar:
+        entity.avatar = Photo()
 
-    # set our one hour expiration time limit
-    policy['expiration'] = iso_datetime
+    form = FileUploadForm()
 
-    policy_64 = base64.b64encode(json.dumps(policy))
-    current_app.logger.info(policy)
+    if form.validate_on_submit():
+        f = form.up_file.data
+        
+        f.save(os.path.join(current_app.config['UPLOAD_DIR'], f.filename))
 
-    signature = base64.b64encode(
-            hmac.new(
-                current_app.config['AWS_SECRET'],
-                policy_64,
-                hashlib.sha1)
-            .digest()
-            )
-
-    return jsonify(
-        s3_url=current_app.config['S3_URL'],
-        aws_key=current_app.config['AWS_KEY'],
-        policy_64=policy_64,
-        signature=signature)
 
 
 @dashboard.route('/photo/save', methods=['POST'])
@@ -88,10 +75,11 @@ def save_photo():
         sm_thumb = current_app.config['S3_URL'] + '/' + thumb_keys[0]
         lg_thumb = current_app.config['S3_URL'] + '/' + thumb_keys[1]
 
-        entity.avatar = Photo(
+        entity.gallery.photos.append(Photo(
                 url=url,
                 sm_thumb=sm_thumb,
                 lg_thumb=lg_thumb)
+                )
 
         db.session.add(entity)
         db.session.commit()

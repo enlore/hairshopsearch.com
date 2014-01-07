@@ -32,7 +32,7 @@
             <div class="col-sm-9">
                 <form method="POST" action="{{ url_for('dashboard.save_photo') }}" class="form-horizontal" enctype="multipart/form-data">
                     {{ upload_form.csrf_token() }}
-                    {{ render_field(upload_form.filename) }}
+                    {{ render_field(upload_form.up_file) }}
                     <div class="form-group">
                         {{ upload_form.submit(class_="col-sm-3 col-sm-offset-8 btn btn-success") }}
                     </div>

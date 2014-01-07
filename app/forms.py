@@ -11,7 +11,7 @@ class TestForm(Form):
 
 
 class FileUploadForm(Form):
-    filename    = FileField(u'Upload a File')
+    up_file     = FileField(u'Upload a File')
     submit      = SubmitField(u'Save Photo')
 
 
