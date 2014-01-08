@@ -190,6 +190,7 @@ def profile():
 
         return render_template('dashboard/consumer.html',
                 avatar_upload_form=FileUploadForm(),
+                gallery_upload_form=FileUploadForm(),
                 consumer=current_user.consumer,
                 form=form)
 

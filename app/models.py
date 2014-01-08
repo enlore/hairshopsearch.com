@@ -50,6 +50,7 @@ class Photo(db.Model):
 class Gallery(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
+    consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     photos              = db.relationship('Photo', backref='gallery')
 
 

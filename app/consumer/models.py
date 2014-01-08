@@ -37,6 +37,7 @@ class Consumer(db.Model, JSONSerializer):
                             primaryjoin=id==followers_followed.c.follower,
                             secondaryjoin=id==followers_followed.c.followed,
                             backref='followers')
+    gallery             = db.relationship('Gallery', uselist=False)
 
     @hybrid_property
     def consumer_url(self):
