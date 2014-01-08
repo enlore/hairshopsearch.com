@@ -38,30 +38,6 @@ def put_s3(file_name):
     info('~~~| Put {} bytes at key {}'.format(bytes_up, k.key))
     return k.key
 
-def generate_thumbs(filename, sizes):
-    """Read a file from disk, size it down to thumbnail size and
-    save it in the uploads dir
-
-    :param filename: name of the file
-    :param sizes: sizes we intend to make thumbnails of
-    :type sizes: tuple or list of tuples, width by height
-    :rtype thumbs: list of locally saved filenames of thumbs
-    """
-    thumbs = []
-
-    if not type(sizes) == list:
-        sizes = [sizes]
-
-    path = os.path.join(current_app.config['UPLOAD_DIR'], filename)
-    for size in sizes:
-        image = Image.open(path)
-        image.thumbnail(size)
-        save_name = '{}x{}_{}'.format(size[0], size[1], filename)
-        save_path = os.path.join( current_app.config['UPLOAD_DIR'], save_name)
-        image.save(save_path)
-        thumbs.append(save_name)
-    return thumbs
-
 def process_img(fh):
     filename = secure_filename(fh.filename)
     s3_put_names = dict(original=filename)

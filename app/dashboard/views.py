@@ -16,7 +16,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
-from ..helpers import acceptable_url_string, lat_lon, put_s3, generate_thumbs, process_img
+from ..helpers import acceptable_url_string, lat_lon, put_s3, process_img
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
