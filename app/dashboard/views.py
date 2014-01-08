@@ -189,6 +189,7 @@ def profile():
         form.youtube_url.data       = consumer.youtube_url
 
         return render_template('dashboard/consumer.html',
+                avatar_upload_form=FileUploadForm(),
                 consumer=current_user.consumer,
                 form=form)
 
