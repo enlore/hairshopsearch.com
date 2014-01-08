@@ -27,6 +27,12 @@ def _get_bucket():
     return g.bucket 
 
 
+def delete_from_s3(url):
+    k = Key(_get_bucket())
+    k.key = '/'.join(url.rsplit('/', 2)[1:])
+    current_app.logger.info(k.key)
+    k.delete()
+
 def put_s3(file_name):
     k = Key(_get_bucket())
     k.key = 'uploads/{}'.format(file_name)

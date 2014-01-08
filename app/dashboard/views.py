@@ -16,7 +16,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
-from ..helpers import acceptable_url_string, lat_lon, put_s3, process_img
+from ..helpers import acceptable_url_string, lat_lon, put_s3, process_img, delete_from_s3
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
@@ -35,9 +35,14 @@ dashboard = Blueprint('dashboard', __name__,
 def delete_photo(id):
     photo = Photo.query.get(id)
     current_app.logger.info(photo.url)
-    # del_from_s3(photo.key)
-    # db.session.delete(photo)
-    return jsonify({'message': 'good stuff'})
+
+    delete_from_s3(photo.url)
+    delete_from_s3(photo.lg_thumb)
+    delete_from_s3(photo.sm_thumb)
+
+    db.session.delete(photo)
+    db.session.commit()
+    return redirect(url_for('.profile'))
 
 
 @dashboard.route('/avatar/save', methods=['POST'])
