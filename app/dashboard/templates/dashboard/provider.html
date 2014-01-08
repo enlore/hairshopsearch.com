@@ -180,7 +180,8 @@
             {% for photo in provider.gallery.photos %}
                 {% set count = count + 1 %}
                 <div class="col-sm-4 gallery-container">
-                    <div class="gallery-container large">
+                    <div class="gallery-container large overlay">
+                        <a class="del-button" href="{{ url_for('dashboard.delete_photo', id=photo.id) }}">Delete</a>
                         <a href="{{ photo.url }}">
                             <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
                         </a>

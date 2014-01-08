@@ -30,6 +30,16 @@ import os
 dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
+
+@dashboard.route('/photo/<int:id>/delete')
+def delete_photo(id):
+    photo = Photo.query.get(id)
+    current_app.logger.info(photo.url)
+    # del_from_s3(photo.key)
+    # db.session.delete(photo)
+    return jsonify({'message': 'good stuff'})
+
+
 @dashboard.route('/avatar/save', methods=['POST'])
 def save_avatar():
     entity = current_user.provider or current_user.consumer
