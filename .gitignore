@@ -5,7 +5,6 @@ tests
 *.swq
 app/static/font/MinionPro-Regular.otf
 *.tar.gz
-app/static/js/vendor
 bin
 node_modules
 recess
