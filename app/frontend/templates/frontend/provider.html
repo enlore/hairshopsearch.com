@@ -173,7 +173,7 @@
                             {% set count = 0 %}
                             {% for photo in provider.gallery.photos[-6:] %}
                                 {% set count = count + 1 %}
-                                <div class="col-sm-4">
+                                <div class="col-xs-6 col-sm-4">
                                     <div class="gallery-container small">
                                         <a href="{{ url_for('frontend.gallery', user_id=current_user.id) }}">
                                             <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
