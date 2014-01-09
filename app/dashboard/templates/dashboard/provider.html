@@ -23,14 +23,14 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="gallery-container large">
-                    {% if provider.avatar.sm_thumb %}
+                    {% if provider.avatar.lg_thumb %}
                     <img src="{{ provider.avatar.lg_thumb }}">
                     {% else %}
                     <img src="http://placehold.it/200x225">
                     {% endif %}
                 </div>
             </div>
-            
+
             <div class="col-sm-9">
                 <form method="POST" action="{{ url_for('dashboard.save_avatar') }}" class="form-horizontal" enctype="multipart/form-data">
                     {{ avatar_upload_form.csrf_token() }}
