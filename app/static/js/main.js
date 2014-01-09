@@ -1,10 +1,10 @@
 $(document).on('ready', function() {
-
     /* Nail thumb */
     $('.gallery-container').nailthumb()
+
     /* Gallery init and config */
     $.Elastislide.defaults = {
-        orientation: 'horizontal', 
+        orientation: 'horizontal',
         minItems: 3,
         start: 0,
         easing: 'ease-in-out',
@@ -14,12 +14,12 @@ $(document).on('ready', function() {
         onAfterSlide: function () { return false }
     }
 
-    $gallery = $('#elastigallery') 
+    $gallery = $('#elastigallery')
     $gallery_view = $('#gallery-view')
 
     $gallery.elastislide()
 
-    $gallery.on('click', function (e) { 
+    $gallery.on('click', function (e) {
             console.log(e.target)
             $gallery_view.find('img').attr({src: e.target.src})
     })
@@ -71,4 +71,3 @@ $(document).on('ready', function() {
     })
 
 })
-
