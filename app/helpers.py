@@ -49,10 +49,10 @@ def process_img(fh):
     s3_put_names = dict(original=filename)
     path = os.path.join(current_app.config['UPLOAD_DIR'], filename)
     fh.save(path)
-    
+
     for size_name, size in current_app.config['THUMB_SIZES'].items():
         image = Image.open(path)
-        image.thumbnail(size)
+        image.thumbnail(size, resample=Image.ANTIALIAS)
         save_name = '{}x{}_{}'.format(size[0], size[1], filename)
         save_path = os.path.join(current_app.config['UPLOAD_DIR'],
                 save_name)
