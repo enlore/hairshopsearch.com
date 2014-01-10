@@ -88,18 +88,6 @@ def endorse(provider_id):
     return redirect(url_for('frontend.provider_url',
         provider_url=endorsee.business_url))
 
-@frontend.route('/test_provider')
-def test_provider():
-    provider = Provider.query.first()
-    current_app.logger.info(provider.business_url)
-    if not provider.business_url:
-        provider.business_url = provider.business_name
-    return render_template('frontend/provider.html', provider=provider)
-
-@frontend.route('/test_consumer')
-def test_consumer():
-    consumer = Consumer.query.first()
-    return render_template('frontend/consumer.html', consumer=consumer)
 
 @frontend.route('/welcome')
 #@login_required
@@ -142,3 +130,16 @@ if Config.DEV == True:
     def sandbox():
         form = TestForm()
         return render_template('frontend/sandbox.html', form=form)
+
+    @frontend.route('/test_provider')
+    def test_provider():
+        provider = Provider.query.first()
+        current_app.logger.info(provider.business_url)
+        if not provider.business_url:
+            provider.business_url = provider.business_name
+        return render_template('frontend/provider.html', provider=provider)
+
+    @frontend.route('/test_consumer')
+    def test_consumer():
+        consumer = Consumer.query.first()
+        return render_template('frontend/consumer.html', consumer=consumer)
