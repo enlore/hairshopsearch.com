@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
-    flash, abort)
+    flash, abort, jsonify)
 from flask.ext.security import login_required, roles_required, current_user
 
 from ..search.forms import SearchForm
 
 from ..provider.models import Provider
 from ..consumer.models import Consumer
-from ..models import User
+from ..models import User, Photo
 
 from ..config import Config
 from ..core import db
@@ -37,6 +37,23 @@ def test_flash():
 def index():
     return render_template('frontend/index.html',
             index_search_form=SearchForm())
+
+@login_required
+@frontend.route('/photo/<int:photo_id>/favorite')
+def add_to_favorites(photo_id):
+    photo = Photo.query.get(photo_id) 
+    current_user.favorite_photos.append(photo)
+    db.session.add(current_user)
+    db.session.commit()
+
+    current_app.logger.info('{} favd by {}'.format(photo.url, current_user.email))
+    
+    if photo.gallery.provider_id:
+        user = Provider.query.get(photo.gallery.provider_id).user
+    else:
+        user = Consumer.query.get(photo.gallery.consumer_id).user
+
+    return redirect(url_for('frontend.gallery', user_id=user.id))
 
 @login_required
 @frontend.route('/<provider_id>/favorite')
