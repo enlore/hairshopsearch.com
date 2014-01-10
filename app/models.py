@@ -6,8 +6,8 @@ from .helpers import JSONSerializer, acceptable_url_string
 
 # association object
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
+        db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+        db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
         )
 
 
@@ -16,6 +16,11 @@ class Role(db.Model, RoleMixin):
     name            = db.Column(db.String(), unique=True)
     description     = db.Column(db.String())
 
+
+users_photos = db.Table('users_photos',
+        db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+        db.Column('photo_id', db.Integer, db.ForeignKey('photo.id'))
+        )
 
 class User(db.Model, UserMixin):
     id                  = db.Column(db.Integer, primary_key=True)
@@ -36,6 +41,9 @@ class User(db.Model, UserMixin):
     login_count         = db.Column(db.Integer())
     roles               = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('user', lazy='dynamic'))
+    favorite_photos     = db.relationship('Photo', secondary=users_photos,
+                            backref=db.backref('users', lazy='dynamic'))
+
 
 class Photo(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
