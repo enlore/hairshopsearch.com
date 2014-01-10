@@ -9,7 +9,7 @@ menu_types = [
         ('barbershop', 'Barbershops'),
         ('product', 'Products')]
 
-zip_message = 'Please enter a zip code so we can find a salon for you'
+zip_message = 'Please enter a zip code so we can find a HairShop for you'
 
 class SearchForm(Form):
     menu_type       = SelectField('Type', choices=menu_types)
@@ -23,5 +23,5 @@ class SearchForm(Form):
 
     def validate_menu_type(form, field):
         if field.data == 'none':
-            raise ValidationError('Please select a service type from the dropdown')
+            raise ValidationError('Please select a HairShop type from the dropdown')
 
