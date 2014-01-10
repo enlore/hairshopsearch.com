@@ -7,7 +7,10 @@
             <ul id="elastigallery" class="elastislide-list">
             {% for photo in gallery.photos[::-1] %}
                 <li>
-                    <a href="#"><img class="es-thumbnail img-responsive" src="{{ photo.sm_thumb }}" /></a>
+                    <a class="fav-button" href="{{ url_for('frontend.add_to_favorites', photo_id=photo.id) }}">fav me</a>
+                    <a href="#">
+                        <img class="es-thumbnail img-responsive" src="{{ photo.sm_thumb }}" />
+                    </a>
                 </li>
             {% endfor %}
             </ul>
@@ -18,7 +21,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="gallery-view">
-                    <a class="fav-button" href="{{ url_for('frontend.add_to_favorites') }}"></a>
                     <img id="view-image" class="view-image img-responsive" src="http://placehold.it/300x300"> 
                 </div>
             </div>
