@@ -3,18 +3,23 @@
 {% block body %}
 <div class="gallery container">
     <div class="row">
-        <div class="col-sm-12">
-            <ul id="elastigallery" class="elastislide-list">
+            {% set count = 0 %}
             {% for photo in gallery.photos[::-1] %}
-                <li>
+            {% set count = count + 1 %}
+            <div class="col-sm-2">
+                <div class="gallery-container small">
                     <a class="fav-button" href="{{ url_for('frontend.add_to_favorites', photo_id=photo.id) }}">fav me</a>
                     <a href="#">
-                        <img class="es-thumbnail img-responsive" src="{{ photo.sm_thumb }}" />
+                        <img class="gallery-img img-responsive" src="{{ photo.sm_thumb }}" />
                     </a>
-                </li>
-            {% endfor %}
-            </ul>
+                </div>
+            </div>
+            {% if count == 6 %}
         </div>
+        <div class="row">
+            {% set count = 0 %}
+            {% endif %}
+            {% endfor %}
     </div><!-- /.row -->
 
     <div class="gallery-view">
