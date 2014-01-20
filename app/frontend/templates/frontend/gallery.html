@@ -3,8 +3,8 @@
 {% block body %}
 <div class="gallery container">
     <div class="row">
-            {% set count = 0 %}
-            {% for photo in gallery.photos[::-1] %}
+        {% set count = 0 %}
+        {% for photo in gallery.photos[::-1] %}
             {% set count = count + 1 %}
             <div class="col-sm-2">
                 <div class="gallery-container small">
@@ -19,7 +19,7 @@
         <div class="row">
             {% set count = 0 %}
             {% endif %}
-            {% endfor %}
+        {% endfor %}
     </div><!-- /.row -->
 
     <div class="gallery-view">
