@@ -432,29 +432,29 @@
     .view-image { margin: 2em auto; }
 }
 
-.gallery-container.large  {
+.thumb-container.large  {
     width: 200px;
     height: 200px;
 }
 
-.gallery-container.small {
+.thumb-container.small {
     width: 100px;
     height: 100px;
 }
 
 @media screen and (min-width: 768px) {
-    .gallery-container.large  {
+    .thumb-container.large  {
         width: 300px;
         height: 300px;
     }
 
-    .gallery-container.small {
+    .thumb-container.small {
         width: 155px;
         height: 155px;
     }
 }
 
-.gallery-container.overlay {
+.thumb-container.overlay {
     position: relative;
     .del-button {
         font-size: 20px;
@@ -467,7 +467,7 @@
     }
 }
 
-.dash-group .gallery-container {
+.dash-group .thumb-container {
     margin: 0 auto;
     margin-top: 10px;
 }
@@ -478,5 +478,6 @@
         position: absolute;
         bottom: 0;
         left: 6px;
+        z-index: 10000;
     }
 }

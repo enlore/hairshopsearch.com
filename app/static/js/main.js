@@ -1,6 +1,6 @@
 $(document).on('ready', function() {
     /* Nail thumb */
-    $('.gallery-container').nailthumb()
+    $('.thumb-container').nailthumb()
 
     /* Gallery init and config */
     $.Elastislide.defaults = {
