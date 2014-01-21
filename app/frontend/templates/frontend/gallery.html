@@ -2,6 +2,16 @@
 {% block title %} {{ title }} {% endblock %}
 {% block body %}
 <div class="gallery container">
+    <div class="gallery-view">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gallery-view">
+                    <img id="view-image" class="view-image img-responsive" src="http://placehold.it/300x300"> 
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.gallery-view -->
+
     <div class="row">
         {% set count = 0 %}
         {% for photo in gallery.photos[::-1] %}
@@ -19,20 +29,11 @@
             </div>
             {% if count == 6 %}
         </div>
+
         <div class="row">
             {% set count = 0 %}
             {% endif %}
         {% endfor %}
     </div><!-- /.row -->
-
-    <div class="gallery-view">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="gallery-view">
-                    <img id="view-image" class="view-image img-responsive" src="http://placehold.it/300x300"> 
-                </div>
-            </div>
-        </div><!-- /.row -->
-    </div>
-</div>
+</div><!-- /.container -->
 {% endblock %}
