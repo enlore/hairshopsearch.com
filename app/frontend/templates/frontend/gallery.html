@@ -6,9 +6,10 @@
         {% set count = 0 %}
         {% for photo in gallery.photos[::-1] %}
             {% set count = count + 1 %}
-            <div class="col-sm-2">
+            <div class="col-sm-2 col-xs-6">
                 <div class="thumb-container small">
                     <a class="fav-button" href="{{ url_for('frontend.add_to_favorites', photo_id=photo.id) }}">fav me</a>
+
                     <a href="#">
                         <img class="gallery-img img-responsive" src="{{ photo.sm_thumb }}" />
                     </a>
