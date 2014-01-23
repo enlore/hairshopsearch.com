@@ -2,16 +2,6 @@
 {% block title %} {{ title }} {% endblock %}
 {% block body %}
 <div class="gallery container">
-    <div class="gallery-view">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="gallery-view">
-                    <img id="view-image" class="view-image img-responsive" src="http://placehold.it/300x300"> 
-                </div>
-            </div>
-        </div><!-- /.row -->
-    </div><!-- /.gallery-view -->
-
     <div class="row">
         {% set count = 0 %}
         {% for photo in gallery.photos[::-1] %}
@@ -22,7 +12,7 @@
                         <a class="fav-button" href="{{ url_for('frontend.add_to_favorites', photo_id=photo.id) }}">fav me</a>
                     </div>
 
-                    <a href="#">
+                    <a href="#" data-src="{{ photo.url }}">
                         <img class="gallery-img img-responsive" src="{{ photo.sm_thumb }}" />
                     </a>
                 </div>
