@@ -22,7 +22,7 @@
     <div class="dash-group">
         <div class="row">
             <div class="col-sm-3">
-                <div class="gallery-container large">
+                <div class="thumb-container large">
                     {% if provider.avatar.lg_thumb %}
                     <img src="{{ provider.avatar.lg_thumb }}">
                     {% else %}
@@ -36,7 +36,7 @@
                     {{ avatar_upload_form.csrf_token() }}
                     {{ render_field(avatar_upload_form.up_file) }}
                     <div class="form-group">
-                        {{ avatar_upload_form.submit(class_="col-sm-3 col-sm-offset-8 btn btn-success") }}
+                        {{ avatar_upload_form.submit(class_="col-sm-2 col-sm-offset-4 btn btn-success") }}
                     </div>
                     </form>
                 </div>
@@ -62,7 +62,7 @@
         {{ render_field(form.payment_methods) }}
 
         <div class="row">
-            <div class="col-sm-2 col-sm-offset-3">
+            <div class="col-sm-2 col-sm-offset-4">
                 {{ form.submit(class_='btn btn-success') }}
             </div>
         </div>
