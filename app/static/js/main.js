@@ -59,7 +59,14 @@ $(document).on('ready', function() {
 
     $reg_form.on('submit', function (e) {
         if ($pwd.val() !== $pwd_confirm.val()) {
+            e.preventDefault()
             console.log('not the same')
+            var flash_list = $('<ul/>', {'class': 'flashes'})
+              , container = $('<div/>', {'class': 'container'})
+            flash_list.append($("<li/>", {'class': 'error', 'text': "Passwords don't match"}))
+            flash_list.appendTo(container)
+             
+            $('.page-wrap').prepend(container)
             return false
         }
     })
