@@ -49,13 +49,7 @@ $(document).on('ready', function() {
         selectors[i].focusin(function () {
             $(this).val('')
             console.log('focus in')
-        }).focusout(function () {
-            console.log($(this).val())
-            if ($(this).val() === '') {
-                $(this).val($(this).data('placeholder'))
-                console.log('focus out')
-            }
-        })
+        })    
     }
 
     // register form confirm password validation
