@@ -9,10 +9,9 @@ es.json_encoder = JSONEncoder
 
 def index_one(entity, id):
     # doc = JSONEncoder().encode(entity)
-    doc = entity
     doc_type = 'provider'
     index = 'hairshopsearch'
-    resp = es.index(index, doc_type, doc, id=id)
+    resp = es.index(index, doc_type, entity, id=id)
     return resp
 
 def index_many():
