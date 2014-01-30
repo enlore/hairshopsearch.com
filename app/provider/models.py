@@ -65,6 +65,12 @@ class Provider(db.Model, ProviderSerializer):
         self._db.session.add(self)
         self._db.session.commit()
 
+    @classmethod
+    def get(cls, id):
+        return cls.query.get(id)
+
+
+
 
 class ProviderInstance(db.Model):
     __tablename__      = 'provider_instance'
