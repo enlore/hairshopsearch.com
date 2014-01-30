@@ -1,6 +1,7 @@
 from flask import current_app
 from ..helpers import JSONSerializer, acceptable_url_string
 from ..core import db
+from ..indexer.indexer import index_one
 
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
@@ -18,6 +19,8 @@ endorsers_endorsees = db.Table('endorsers_endorsees',
 
 
 class Provider(db.Model, ProviderSerializer):
+    _db = db
+
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
                             uselist=False)
@@ -57,6 +60,10 @@ class Provider(db.Model, ProviderSerializer):
                             primaryjoin=id==endorsers_endorsees.c.endorser,
                             secondaryjoin=id==endorsers_endorsees.c.endorsee,
                             backref="endorsed_by")
+
+    def save(self):
+        self._db.session.add(self)
+        self._db.session.commit()
 
 
 class ProviderInstance(db.Model):
