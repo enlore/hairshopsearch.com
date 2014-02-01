@@ -258,8 +258,8 @@ def profile():
             provider.hours.sunday_open      = form.sunday_open.data
             provider.hours.sunday_close     = form.sunday_close.data
 
-            db.session.add(provider)
-            db.session.commit()
+            provider.save()
+
             return redirect(url_for('dashboard.profile'))
 
         form.email.data           = provider.email
