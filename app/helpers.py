@@ -97,62 +97,6 @@ def acceptable_url_string(string, proto_string):
 
     return res_string
 
-def lat_lon(address, sensor='false'):
-    """Access the Google Geocoding API to return lat and lon given an address.
-
-    :param address: instance of :class:Address
-    :param sensor: 'false' or 'true': tells google api if loc data is
-        generated from a device sensor
-    :type sensor: string
-    :rtype: array of tuples of the format (lat, lon)
-    """
-
-    params = {}
-    # address builder: take address object, for each attr if not none,
-    # insert into address string
-    address_string = ' '.join([
-                address.street_1 or '',
-                address.street_2 or '',
-                address.city or '',
-                address.state or '',
-                str(address.zip_code or ''),
-                ])
-
-    params['address'] = address_string.strip()
-
-    params['sensor'] = sensor
-
-    geo_uri = 'http://maps.googleapis.com/maps/api/geocode/json'
-    resp = requests.get(geo_uri, params=params)
-
-    decoded_resp = resp.json()
-
-    if decoded_resp['status'] == 'OK':
-        locs = []
-        for res in decoded_resp['results']:
-            locs.append(
-                    (res['geometry']['location']['lat'],
-                     res['geometry']['location']['lng'])
-                )
-        return locs
-
-    elif decoded_resp['status'] == 'REQUEST_DENIED':
-        if decoded_resp['error_message']:
-            raise HSSError("GEOLOC req denied: %s" % decoded_resp['error_message'])
-        else:
-            raise HSSError("GEOLOC req denied")
-
-    elif decoded_resp['status'] == 'ZERO_RESULTS':
-        raise HSSError("We couldn't find your address.  Please try again.")
-
-    elif decoded_resp['status'] == 'UNKOWN_ERROR':
-        raise HSSError('Service error.  Try again later.')
-
-    elif decoded_resp['status'] == 'OVER_QUERY_LIMIT':
-        raise HSSError('Over query limit.')
-
-    else:
-        raise HSSError(decoded_resp['status'])
 
 class JSONSerializer():
     """Smart mixin that tags a SQLAlchemy model as serializable"""

@@ -1,10 +1,6 @@
 from flask import Blueprint, render_template, current_app, flash, redirect, url_for
-
 from .forms import SearchForm
-
 from ..provider.models import Provider, Address
-
-from ..helpers import lat_lon
 from ..core import es
 
 search = Blueprint('search', __name__, template_folder='templates',
@@ -39,7 +35,7 @@ def _search():
         a.zip_code = form.zip_code.data
 
         # TODO lat_lon expects an address object. this is perhaps silly
-        lat, lon = lat_lon(a)[0]
+        lat, lon = a.geocode(a)[0]
 
         current_app.logger.info('** Searching for {} serving {} in {} @ {} by {}'.format(
                 form.menu_type.data,
