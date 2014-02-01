@@ -26,6 +26,11 @@ class Provider(db.Model, ProviderSerializer):
         self.address = Address()
         self.location = Location()
         self.hours = Hours()
+        self.payment_methods = ''
+
+        for _type in ['barbershop', 'salon', 'product']:
+            menu = Menu(menu_type=_type)
+            provider.menus.append(menu)
 
     def save(self):
         """
