@@ -16,7 +16,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
 from ..core import db
-from ..helpers import acceptable_url_string, lat_lon, put_s3, process_img, delete_from_s3
+from ..helpers import acceptable_url_string, geocode, put_s3, process_img, delete_from_s3
 from ..indexer import indexer
 
 from datetime import datetime, timedelta
@@ -212,15 +212,6 @@ def profile():
     # TODO: use /profile as a redirect to entity specific route
     if current_user.provider:
         provider = current_user.provider
-
-        if not provider.address:
-            provider.address = Address()
-
-        if not provider.hours:
-            provider.hours = Hours()
-
-        if not provider.location:
-            provider.location = Location()
 
         form = ProviderDashForm()
         menu_form = MenuItemForm()

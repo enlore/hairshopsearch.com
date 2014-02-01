@@ -21,6 +21,12 @@ endorsers_endorsees = db.Table('endorsers_endorsees',
 class Provider(db.Model, ProviderSerializer):
     _db = db
 
+    def __init__(self, user):
+        self.user = user
+        self.address = Address()
+        self.location = Location()
+        self.hours = Hours()
+
     def save(self):
         """
         Save an instance in the db
@@ -42,11 +48,15 @@ class Provider(db.Model, ProviderSerializer):
     @classmethod
     def find(cls, **kwargs):
         """
-        Find collection of models, qualifie by args
+        Wrapper around query.filter_by(**kwargs).all()
         """
         return cls.query.filter_by(**kwargs).all()
 
     def index(self):
+        """
+        Save model as document in es index
+        :rtype: the response returned by the es server
+        """
         return index_one(self, self.id)
 
     def update_index(self):
