@@ -21,6 +21,37 @@ endorsers_endorsees = db.Table('endorsers_endorsees',
 class Provider(db.Model, ProviderSerializer):
     _db = db
 
+    def save(self):
+        """
+        Save an instance in the db
+        """
+        self._db.session.add(self)
+        self._db.session.commit()
+
+    @classmethod
+    def get(cls, id):
+        """
+        Classmethod
+        Get a model by it's id
+        :param id: 
+        :type id: integer
+        :rtype: Provider obj
+        """
+        return cls.query.get(id)
+    
+    @classmethod
+    def find(cls, **kwargs):
+        """
+        Find collection of models, qualifie by args
+        """
+        return cls.query.filter_by(**kwargs).all()
+
+    def index(self):
+        return index_one(self, self.id)
+
+    def update_index(self):
+        pass
+
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
                             uselist=False)
@@ -60,16 +91,6 @@ class Provider(db.Model, ProviderSerializer):
                             primaryjoin=id==endorsers_endorsees.c.endorser,
                             secondaryjoin=id==endorsers_endorsees.c.endorsee,
                             backref="endorsed_by")
-
-    def save(self):
-        self._db.session.add(self)
-        self._db.session.commit()
-
-    @classmethod
-    def get(cls, id):
-        return cls.query.get(id)
-
-
 
 
 class ProviderInstance(db.Model):

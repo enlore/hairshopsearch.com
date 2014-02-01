@@ -344,8 +344,9 @@ def new_provider():
             pi.count = 1
             provider.business_url = clean_name
 
+        provider.save()
+
         db.session.add(pi)
-        db.session.add(provider)
         db.session.commit()
 
         resp = indexer.index_one(provider, provider.id)
