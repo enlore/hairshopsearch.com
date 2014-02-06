@@ -8,6 +8,11 @@ es = ElasticSearch(Config.ELASTICSEARCH_SERVER)
 es.json_encoder = JSONEncoder
 
 def index_one(entity, id):
+    """ Create a document in the HSS index of the type 'provider'
+    :param entity: subset of model's attributes indexed as doc
+    :param id: persisted id of entity
+    :type id: int
+    """
     # doc = JSONEncoder().encode(entity)
     doc_type = 'provider'
     index = 'hairshopsearch'
