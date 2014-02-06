@@ -4,6 +4,8 @@ from ..helpers import JSONSerializer, acceptable_url_string
 from ..core import db
 from ..indexer.indexer import index_one
 
+import requests
+
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
             'gallery', 'avatar', 'products',
@@ -46,12 +48,12 @@ class Provider(db.Model, ProviderSerializer):
         """
         Classmethod
         Get a model by it's id
-        :param id: 
+        :param id:
         :type id: integer
         :rtype: Provider obj
         """
         return cls.query.get(id)
-    
+
     @classmethod
     def find(cls, **kwargs):
         """
@@ -130,7 +132,7 @@ class Address(db.Model, AddressSerializer):
     city                = db.Column(db.String)
     state               = db.Column(db.String)
     zip_code            = db.Column(db.Integer)
-    
+
     def geocode(self, sensor='false'):
         """Access the Google Geocoding API to return lat and lon given an address.
 
