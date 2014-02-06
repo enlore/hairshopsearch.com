@@ -25,25 +25,22 @@ def reset_db():
 
     # Provider
     password = encrypt_password('password')
-    p = Provider(user=ud.create_user(email="provider@test.com", password=password),
-            business_name = 'Sparky\'s',
-            business_url = 'sparkys'
-            )
+    p = Provider(user=ud.create_user(email="provider@test.com", password=password))
+    p.business_name = 'Sparky\'s'
+    p.business_url = 'sparkys'
     p.user.confirmed_at = datetime.date.today()
 
-    p.menus.append(Menu(menu_type="barber"))
     p.menus[0].menu_items.append(MenuItem(name="Haircut", price="25", description="We cut your hair"))
     p.menus[0].menu_items.append(MenuItem(name="Line out", price="10", description="A quick line out"))
     p.menus[0].menu_items.append(MenuItem(name="Shave", price="14", description="Shave your face"))
 
-    p.menus.append(Menu(menu_type="salon"))
     p.menus[1].menu_items.append(MenuItem(name="Color", price="40", description="A lovely color for your hair"))
     p.menus[1].menu_items.append(MenuItem(name="Blowout", price="150", description="Blast it to the moon"))
     p.menus[1].menu_items.append(MenuItem(name="Trim", price="25", description="Keep things neat and tidy"))
     p.menus[1].menu_items.append(MenuItem(name="Cut and Style", price="60", description="The full package"))
 
     p.gallery = Gallery()
-    db.session.add(p)
+    p.save()
 
     # Consumer
     c = Consumer(user=ud.create_user(email='consumer@test.com', password=password,
@@ -135,14 +132,14 @@ def mock_from_csv(filename):
     """
     entities = _consume_csv(filename)
     for entity in entities:
-        p = Provider(business_name=entity.pop('business_name'))
+        p = Provider(user=User())
+        p.business_name = entity.pop('business_name')
         p.location = Location(lat=entity.pop('lat'), lon=entity.pop('lon'))
         p.address = Address(**entity)
         p.business_url = acceptable_url_string(p.business_name,
                 Config.ACCEPTABLE_URL_CHARS)
         p.menus = _build_menus()
-        db.session.add(p)
-        db.session.commit()
+        p.save()
         # TODO indexing it here
         resp = indexer.index_one(p, id=p.id)
         print resp
