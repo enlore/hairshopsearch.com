@@ -47,3 +47,5 @@ class Config(DevConfig):
     MAIL_LOG_ADMINS = ['oneofy@gmail.com']
 
     DEV = True
+    GEOCODING_SERVICE_URI = 'http://www.mapquestapi.com/geocoding/v1/address'
+    GECODING_SERVICE_KEY = 'Fmjtd|luur2162ng,aa=o5-90z05z'
