@@ -185,6 +185,7 @@ class MenuItemForm(Form):
 class AddressForm(Form):
     street_1        = TextField('Street')
     street_2        = TextField('Street 2')
+    apartment       = TextField('Number')
     city            = TextField('City')
     state           = TextField('State')
     zip_code        = TextField('Zip')

@@ -341,6 +341,11 @@ def new_provider():
         return redirect(url_for('dashboard.profile'))
     return render_template('dashboard/new_provider.html', form=form)
 
+@dashboard.route('/provider/address/new', methods=['GET', 'POST'])
+def new_address():
+    form = AddressForm()
+    return render_template('dashboard/walkthrough/new_address.jade', form=form)
+
 @dashboard.route('/consumer/new', methods=['GET', 'POST'])
 @login_required
 def new_consumer():
