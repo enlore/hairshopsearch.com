@@ -144,8 +144,11 @@ class Address(db.Model, AddressSerializer):
         params['key']           = current_app.config['GEOCODING_SERVICE_KEY']
         params['outFormat']     = 'json'
         params['inFormat']      = 'kvp'
-        params['street']        = self.street_1 + ' '
-            + self.street_2 + ' ' + self.apartment
+        params['street']        = '{}{}{}'.format(
+                                    self.street_1 or '',
+                                    self.street_2 or '',
+                                    self.apartment or ''
+                                    )
         params['city']          = self.city
         params['state']         = self.state
         params['postalCode']    = self.zip_code
@@ -166,7 +169,7 @@ class Address(db.Model, AddressSerializer):
 
         for res in decoded_resp['results']:
             for loc in res['locations']:
-                arr.append((loc['latLng']['lat'], loc['latLng']['lng']))
+                res_arr.append((loc['latLng']['lat'], loc['latLng']['lng']))
 
         return res_arr
 
