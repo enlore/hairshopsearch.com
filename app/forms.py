@@ -182,26 +182,17 @@ class MenuItemForm(Form):
     submit          = SubmitField('Save Item')
 
 
-class ProviderDashForm(Form):
-    avatar          = TextField('Avatar')
-    business_name   = TextField('Business Name')
-    phone           = TextField('Phone Number')
-    email           = TextField('Business Email')
-
+class AddressForm(Form):
     street_1        = TextField('Street')
     street_2        = TextField('Street 2')
     city            = TextField('City')
     state           = TextField('State')
     zip_code        = TextField('Zip')
 
-    payment_methods     = SelectMultipleField(u'Payment Methods',
-                            widget=multi_checkboxes,
-                            choices=payment_methods)
+    submit          = SubmitField('Save Changes')
 
-    bio             = TextField('About Us')
-    fb_url          = TextField('Facebook Page')
-    twitter_url     = TextField('Twitter')
 
+class HoursForm(Form):
     monday_open     = SelectField(u'Monday open', choices=times)
     monday_close    = SelectField(u'Monday close', choices=times)
     tuesday_open    = SelectField(u'Tuesday open',choices=times)
@@ -216,5 +207,22 @@ class ProviderDashForm(Form):
     saturday_close  = SelectField(u'Saturday close', choices=times)
     sunday_open     = SelectField(u'Sunday open', choices=times)
     sunday_close    = SelectField(u'Sunday close', choices=times)
+
+    submit          = SubmitField('Save Changes')
+
+
+class ProviderDashForm(Form):
+    avatar          = TextField('Avatar')
+    business_name   = TextField('Business Name')
+    phone           = TextField('Phone Number')
+    email           = TextField('Business Email')
+
+    payment_methods     = SelectMultipleField(u'Payment Methods',
+                            widget=multi_checkboxes,
+                            choices=payment_methods)
+
+    bio             = TextField('About Us')
+    fb_url          = TextField('Facebook Page')
+    twitter_url     = TextField('Twitter')
 
     submit          = SubmitField('Save Changes')
