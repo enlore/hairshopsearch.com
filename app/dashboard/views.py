@@ -330,6 +330,7 @@ def new_provider():
             pi.count = 1
             provider.business_url = clean_name
 
+        current_app.logger.info(clean_name)
         provider.save()
 
         db.session.add(pi)
@@ -338,8 +339,30 @@ def new_provider():
         resp = indexer.index_one(provider, provider.id)
         current_app.logger.info('indexed: {}'.format(resp))
 
-        return redirect(url_for('dashboard.profile'))
-    return render_template('dashboard/new_provider.html', form=form)
+        return redirect(url_for('dashboard.new_address'))
+    return render_template('dashboard/new_provider.jade', form=form)
+
+@dashboard.route('/provider/general/new', methods=['GET', 'POST'])
+def new_general_info():
+    provider = current_user.provider
+    form = ProviderDashForm()
+
+    if form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+            current_app.logger.info(form.errors)
+
+        else:
+            provider.business_name = form.business_name.data
+            # phone
+            # email
+            # p methods
+            # fb url
+            # twitter_url
+
+
+            return redirect(url_for('dashboard.new_hours'))
+    return render_template('dashboard/walkthrough/new_general_info.jade', form=form)
 
 @dashboard.route('/provider/address/new', methods=['GET', 'POST'])
 def new_address():
