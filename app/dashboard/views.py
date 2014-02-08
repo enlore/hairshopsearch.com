@@ -4,10 +4,7 @@ from flask.ext.security import current_user, login_required
 
 from sqlalchemy import or_
 
-from ..user.forms import (AddressForm, HoursForm, BioForm, PaymentsForm,
-    MenuItemForm, RemoveItemForm, PhotoForm, SocialMediaForm,
-    NewProviderForm, NewConsumerForm, HairInfoForm, ProductForm,
-    RoutineForm)
+from ..user.forms import NewProviderForm, NewConsumerForm
 from ..forms import ConsumerDashForm, ProviderDashForm, MenuItemForm, FileUploadForm
 
 from ..models import (Gallery, Photo, Product)
