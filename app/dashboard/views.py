@@ -69,7 +69,7 @@ def save_photo():
 
     if not entity.gallery:
         entity.gallery = Gallery()
-    
+
     form = FileUploadForm()
 
     if form.validate_on_submit():
