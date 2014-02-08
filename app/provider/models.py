@@ -120,7 +120,7 @@ class ProviderInstance(db.Model):
 
 
 class AddressSerializer(JSONSerializer):
-    __json_hidden__ = ['provider']
+    __json_hidden__ = ['provider', 'id']
 
 
 class Address(db.Model, AddressSerializer):
@@ -133,62 +133,43 @@ class Address(db.Model, AddressSerializer):
     state               = db.Column(db.String)
     zip_code            = db.Column(db.Integer)
 
-    def geocode(self, sensor='false'):
-        """Access the Google Geocoding API to return lat and lon given an address.
+    def geocode(self):
+        """Access the Mapquest Geocoding API to return lat and lon given
+        an address.
 
-        :param address: instance of :class:Address
-        :param sensor: 'false' or 'true': tells google api if loc data is
-            generated from a device sensor
-        :type sensor: string
         :rtype: array of tuples of the format (lat, lon)
         """
 
         params = {}
-        # address builder: take address object, for each attr if not none,
-        # insert into address string
-        address_string = ' '.join([
-                    self.street_1 or '',
-                    self.street_2 or '',
-                    self.city or '',
-                    self.state or '',
-                    str(self.zip_code or ''),
-                    ])
+        params['key']           = current_app.config['GEOCODING_SERVICE_KEY']
+        params['outFormat']     = 'json'
+        params['inFormat']      = 'kvp'
+        params['street']        = self.street_1 + ' '
+            + self.street_2 + ' ' + self.apartment
+        params['city']          = self.city
+        params['state']         = self.state
+        params['postalCode']    = self.zip_code
+        params['thumbMaps']     = 'false'
 
-        params['address'] = address_string.strip()
+        geo_uri = current_app.config['GEOCODING_SERVICE_URI']
 
-        params['sensor'] = sensor
-
-        geo_uri = 'http://maps.googleapis.com/maps/api/geocode/json'
         resp = requests.get(geo_uri, params=params)
 
         decoded_resp = resp.json()
 
-        if decoded_resp['status'] == 'OK':
-            locs = []
-            for res in decoded_resp['results']:
-                locs.append(
-                        (res['geometry']['location']['lat'],
-                         res['geometry']['location']['lng'])
-                    )
-            return locs
+        if not decoded_resp['info']['statuscode'] == 0:
+            for msg in  decoded_resp['info']['messages']:
+                print msg
+                raise Exception(msg)
 
-        elif decoded_resp['status'] == 'REQUEST_DENIED':
-            if decoded_resp['error_message']:
-                raise HSSError("GEOLOC req denied: %s" % decoded_resp['error_message'])
-            else:
-                raise HSSError("GEOLOC req denied")
+        res_arr = []
 
-        elif decoded_resp['status'] == 'ZERO_RESULTS':
-            raise HSSError("We couldn't find your address.  Please try again.")
+        for res in decoded_resp['results']:
+            for loc in res['locations']:
+                arr.append((loc['latLng']['lat'], loc['latLng']['lng']))
 
-        elif decoded_resp['status'] == 'UNKOWN_ERROR':
-            raise HSSError('Service error.  Try again later.')
+        return res_arr
 
-        elif decoded_resp['status'] == 'OVER_QUERY_LIMIT':
-            raise HSSError('Over query limit.')
-
-        else:
-            raise HSSError(decoded_resp['status'])
 
     def __repr__(self):
         return '%s %s %s, %s, %s %s' %(
