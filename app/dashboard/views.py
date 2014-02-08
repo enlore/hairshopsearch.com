@@ -4,8 +4,9 @@ from flask.ext.security import current_user, login_required
 
 from sqlalchemy import or_
 
-from ..user.forms import NewProviderForm, NewConsumerForm
-from ..forms import ConsumerDashForm, ProviderDashForm, MenuItemForm, FileUploadForm
+from ..user.forms import NewProviderForm, NewConsumerForm, RemoveItemForm
+from ..forms import (ConsumerDashForm, ProviderDashForm, MenuItemForm,
+    FileUploadForm, AddressForm, HoursForm)
 
 from ..models import (Gallery, Photo, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
@@ -207,6 +208,7 @@ def profile():
                 form=form)
 
     # TODO: use /profile as a redirect to entity specific route
+    # or something, jesus
     if current_user.provider:
         provider = current_user.provider
 
@@ -230,76 +232,77 @@ def profile():
             provider.payment_methods = ' '.join(form.payment_methods.data)
             current_app.logger.info(provider.payment_methods)
 
-            provider.address.street_1   = form.street_1.data
-            provider.address.street_2   = form.street_2.data
-            provider.address.city       = form.city.data
-            provider.address.state      = form.state.data
-            provider.address.zip_code   = form.zip_code.data
-
             provider.bio            = form.bio.data
             provider.fb_url         = form.fb_url.data
             provider.twitter_url    = form.twitter_url.data
 
-            provider.hours.monday_open      = form.monday_open.data
-            provider.hours.monday_close     = form.monday_close.data
-            provider.hours.tuesday_open     = form.tuesday_open.data
-            provider.hours.tuesday_close    = form.tuesday_close.data
-            provider.hours.wednesday_open   = form.wednesday_open.data
-            provider.hours.wednesday_close  = form.wednesday_close.data
-            provider.hours.thursday_open    = form.thursday_open.data
-            provider.hours.thursday_close   = form.thursday_close.data
-            provider.hours.friday_open      = form.friday_open.data
-            provider.hours.friday_close     = form.friday_close.data
-            provider.hours.saturday_open    = form.saturday_open.data
-            provider.hours.saturday_close   = form.saturday_close.data
-            provider.hours.sunday_open      = form.sunday_open.data
-            provider.hours.sunday_close     = form.sunday_close.data
-
             provider.save()
 
             return redirect(url_for('dashboard.profile'))
+
 
         form.email.data           = provider.email
         form.business_name.data   = provider.business_name
         form.phone.data           = provider.phone
         form.payment_methods.data = provider.payment_methods
 
-        form.street_1.data        = provider.address.street_1
-        form.street_2.data        = provider.address.street_2
-        form.city.data            = provider.address.city
-        form.state.data           = provider.address.state
-        form.zip_code.data        = provider.address.zip_code
-
         form.bio.data             = provider.bio
         form.fb_url.data          = provider.fb_url
         form.twitter_url.data     = provider.twitter_url
 
-        form.monday_open.data     = provider.hours.monday_open
-        form.monday_close.data    = provider.hours.monday_close
-        form.tuesday_open.data    = provider.hours.tuesday_open
-        form.tuesday_close.data   = provider.hours.tuesday_close
-        form.wednesday_open.data  = provider.hours.wednesday_open
-        form.wednesday_close.data = provider.hours.wednesday_close
-        form.thursday_open.data   = provider.hours.thursday_open
-        form.thursday_close.data  = provider.hours.thursday_close
-        form.friday_open.data     = provider.hours.friday_open
-        form.friday_close.data    = provider.hours.friday_close
-        form.saturday_open.data   = provider.hours.saturday_open
-        form.saturday_close.data  = provider.hours.saturday_close
-        form.sunday_open.data     = provider.hours.sunday_open
-        form.sunday_close.data    = provider.hours.sunday_close
-
+        address_form = AddressForm(obj=provider.address)
+        hours_form = HoursForm(obj=provider.hours)
         gallery_upload_form = FileUploadForm()
         avatar_upload_form = FileUploadForm()
+
         return render_template('dashboard/provider.html',
-                form=form,
-                menu_form=menu_form,
                 provider=current_user.provider,
+                form=form,
+                hours_form=hours_form,
+                menu_form=menu_form,
+                address_form=address_form,
                 rm_menu_item_form=rm_menu_item_form,
                 avatar_upload_form=avatar_upload_form,
                 gallery_upload_form=gallery_upload_form)
 
     return redirect(url_for('frontend.welcome'))
+
+@dashboard.route('/provider/hours', methods=['POST'])
+def save_provider_hours():
+    provider = current_user.provider
+    hours_form = HoursForm()
+
+    provider.hours.monday_open      = hours_form.monday_open.data
+    provider.hours.monday_close     = hours_form.monday_close.data
+    provider.hours.tuesday_open     = hours_form.tuesday_open.data
+    provider.hours.tuesday_close    = hours_form.tuesday_close.data
+    provider.hours.wednesday_open   = hours_form.wednesday_open.data
+    provider.hours.wednesday_close  = hours_form.wednesday_close.data
+    provider.hours.thursday_open    = hours_form.thursday_open.data
+    provider.hours.thursday_close   = hours_form.thursday_close.data
+    provider.hours.friday_open      = hours_form.friday_open.data
+    provider.hours.friday_close     = hours_form.friday_close.data
+    provider.hours.saturday_open    = hours_form.saturday_open.data
+    provider.hours.saturday_close   = hours_form.saturday_close.data
+    provider.hours.sunday_open      = hours_form.sunday_open.data
+    provider.hours.sunday_close     = hours_form.sunday_close.data
+
+    provider.save()
+    return redirect(url_for('dashboard.profile'))
+
+
+@dashboard.route('/provider/address', methods=['POST'])
+def save_provider_address():
+    provider = current_user.provider
+    address_form = AddressForm()
+    provider.address.street_1   = address_form.street_1.data
+    provider.address.street_2   = address_form.street_2.data
+    provider.address.city       = address_form.city.data
+    provider.address.state      = address_form.state.data
+    provider.address.zip_code   = address_form.zip_code.data
+
+    provider.save()
+    return redirect(url_for('dashboard.profile'))
 
 @dashboard.route('/provider/new', methods=['GET', 'POST'])
 @login_required
