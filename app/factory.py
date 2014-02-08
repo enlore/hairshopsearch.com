@@ -44,6 +44,8 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
 
     app.jinja_env.globals['search_form'] = SearchForm
 
+    app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
+
     @app.errorhandler(HSSError)
     def handle_internal_error(error):
         raise error
