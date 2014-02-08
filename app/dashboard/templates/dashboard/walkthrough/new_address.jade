@@ -15,13 +15,13 @@ block body
               will understand where you are.
 
       .col-sm-6
-        form.form-horizontal(action="#{url_for('dashboard.new_address')}")
+        form.form-horizontal(action="#{url_for('dashboard.new_address')}", method="post")
           != form.csrf_token()
           .form-group
             .col-sm-2
               != form.street_1.label(class_="control-label")
             .col-sm-10
-              != form.street_2(class_="form-control")
+              != form.street_1(class_="form-control")
 
           .form-group
             .col-sm-2

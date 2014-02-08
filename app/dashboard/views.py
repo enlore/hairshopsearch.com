@@ -343,7 +343,27 @@ def new_provider():
 
 @dashboard.route('/provider/address/new', methods=['GET', 'POST'])
 def new_address():
-    form = AddressForm()
+    provider = current_user.provider
+    current_app.logger.info(provider.address)
+
+    form = AddressForm(obj=provider.address)
+
+    if form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+            current_app.logger.info(form.errors)
+
+        else:
+            provider.address.street_1   = form.street_1.data
+            provider.address.street_2   = form.street_2.data
+            provider.address.apartment  = form.apartment.data
+            provider.address.city       = form.city.data
+            provider.address.state      = form.state.data
+            provider.address.zip_code   = form.zip_code.data
+            provider.save()
+
+            return redirect(url_for('dashboard.new_general_info'))
+
     return render_template('dashboard/walkthrough/new_address.jade', form=form)
 
 @dashboard.route('/consumer/new', methods=['GET', 'POST'])
