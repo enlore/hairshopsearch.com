@@ -107,7 +107,7 @@ def endorse(provider_id):
 
 
 @frontend.route('/welcome')
-#@login_required
+@login_required
 def welcome():
     return render_template('frontend/welcome.html')
 
