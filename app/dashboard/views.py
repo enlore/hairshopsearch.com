@@ -13,7 +13,7 @@ from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
     Address, Hours, Location)
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
 
-from ..core import db
+from ..core import db, HSSError
 from ..helpers import acceptable_url_string, put_s3, process_img, delete_from_s3
 from ..indexer import indexer
 
@@ -291,19 +291,6 @@ def save_provider_hours():
     return redirect(url_for('dashboard.profile'))
 
 
-@dashboard.route('/provider/address', methods=['POST'])
-def save_provider_address():
-    provider = current_user.provider
-    address_form = AddressForm()
-    provider.address.street_1   = address_form.street_1.data
-    provider.address.street_2   = address_form.street_2.data
-    provider.address.city       = address_form.city.data
-    provider.address.state      = address_form.state.data
-    provider.address.zip_code   = address_form.zip_code.data
-
-    provider.save()
-    return redirect(url_for('dashboard.profile'))
-
 @dashboard.route('/provider/new', methods=['GET', 'POST'])
 @login_required
 def new_provider():
@@ -336,11 +323,27 @@ def new_provider():
         db.session.add(pi)
         db.session.commit()
 
-        resp = indexer.index_one(provider, provider.id)
-        current_app.logger.info('indexed: {}'.format(resp))
-
         return redirect(url_for('dashboard.new_address'))
     return render_template('dashboard/new_provider.jade', form=form)
+
+@dashboard.route('/provider/address/save', methods=['POST'])
+def save_provider_address():
+    provider = current_user.provider
+    address_form = AddressForm()
+    if not address_form.validate_on_submit():
+        if address_form.errors:
+            flash(form.errors, 'error')
+            current_app.logger.info(form.errors)
+
+    else:
+        provider.address.street_1   = address_form.street_1.data
+        provider.address.street_2   = address_form.street_2.data
+        provider.address.city       = address_form.city.data
+        provider.address.state      = address_form.state.data
+        provider.address.zip_code   = address_form.zip_code.data
+
+        provider.save()
+    return redirect(url_for('dashboard.profile'))
 
 @dashboard.route('/provider/hours/new', methods=['GET', 'POST'])
 def new_hours():
@@ -386,22 +389,18 @@ def new_menus():
 
     else:
         menu_item = MenuItem(
-            name=request.form['name'],
-            price=request.form['price'],
-            description=request.form['description']
+            name=form.name.data,
+            price=form.price.data,
+            description=form.description.data
         )
 
         got_it = False
 
         for menu in provider.menus:
             if menu.menu_type == request.form['menu_type']:
-                got_it = True
                 menu.menu_items.append(menu_item)
-
-        if not got_it:
-            menu = Menu(menu_type=request.form['menu_type'])
-            menu.menu_items.append(menu_item)
-            provider.menus.append(menu)
+            else:
+                raise HSSError("Invalid Menu type")
 
         provider.save()
 
@@ -414,6 +413,7 @@ def new_menus():
 def new_general_info():
     provider = current_user.provider
     form = ProviderDashForm()
+    current_app.logger.info(request.form)
 
     if form.validate_on_submit():
         if form.errors:
@@ -421,12 +421,13 @@ def new_general_info():
             current_app.logger.info(form.errors)
 
         else:
-            provider.business_name = form.business_name.data
-            # phone
-            # email
-            # p methods
+            provider.business_name      = form.business_name.data
+            provider.phone              = form.phone.data
+            provider.email              = form.email.data
+            provider.payment_methods    = ' '.join(form.payment_methods.data)
             # fb url
             # twitter_url
+            provider.save()
 
 
             return redirect(url_for('dashboard.new_hours'))
@@ -453,7 +454,7 @@ def new_address():
             provider.address.zip_code   = form.zip_code.data
             provider.save()
 
-            return redirect(url_for('dashboard.new_hours'))
+            return redirect(url_for('dashboard.new_general_info'))
 
     return render_template('dashboard/walkthrough/new_address.jade', form=form)
 
