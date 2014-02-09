@@ -108,14 +108,14 @@ def save_menu_item():
         if menu.menu_type == request.form['menu_type']:
             got_it = True
             menu.menu_items.append(menu_item)
-     
-    if not got_it:
-        menu = Menu(menu_type=request.form['menu_type']) 
-        p.menus.append(menu)
-        p.menu.menu_items.append(item)
 
-    db.session.add(p)
-    db.session.commit()
+    if not got_it:
+        menu = Menu(menu_type=request.form['menu_type'])
+        menu.menu_items.append(menu_item)
+        p.menus.append(menu)
+
+    p.save()
+
     return redirect(url_for('.profile'))
 
 @dashboard.route('/profile', methods=['GET', 'POST'])
@@ -342,6 +342,74 @@ def new_provider():
         return redirect(url_for('dashboard.new_address'))
     return render_template('dashboard/new_provider.jade', form=form)
 
+@dashboard.route('/provider/hours/new', methods=['GET', 'POST'])
+def new_hours():
+    provider = current_user.provider
+    form = HoursForm(obj=provider.hours)
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+            current_app.logger.info(form.errors)
+
+    else:
+        provider.hours.monday_open      = form.monday_open.data
+        provider.hours.monday_close     = form.monday_close.data
+        provider.hours.tuesday_open     = form.tuesday_open.data
+        provider.hours.tuesday_close    = form.tuesday_close.data
+        provider.hours.wednesday_open   = form.wednesday_open.data
+        provider.hours.wednesday_close  = form.wednesday_close.data
+        provider.hours.thursday_open    = form.thursday_open.data
+        provider.hours.thursday_close   = form.thursday_close.data
+        provider.hours.friday_open      = form.friday_open.data
+        provider.hours.friday_close     = form.friday_close.data
+        provider.hours.saturday_open    = form.saturday_open.data
+        provider.hours.saturday_close   = form.saturday_close.data
+        provider.hours.sunday_open      = form.sunday_open.data
+        provider.hours.sunday_close     = form.sunday_close.data
+
+        provider.save()
+
+        return redirect(url_for('dashboard.new_menus'))
+    return render_template('dashboard/walkthrough/new_hours.jade', form=form)
+
+@dashboard.route('/provider/menus/new', methods=['GET', 'POST'])
+def new_menus():
+    provider = current_user.provider
+    form = MenuItemForm()
+
+    if not form.validate_on_submit():
+        current_app.logger.info('bleah')
+        if form.errors:
+            flash(form.errors, 'error')
+            current_app.logger.info(form.errors)
+
+    else:
+        menu_item = MenuItem(
+            name=request.form['name'],
+            price=request.form['price'],
+            description=request.form['description']
+        )
+
+        got_it = False
+
+        for menu in provider.menus:
+            if menu.menu_type == request.form['menu_type']:
+                got_it = True
+                menu.menu_items.append(menu_item)
+
+        if not got_it:
+            menu = Menu(menu_type=request.form['menu_type'])
+            menu.menu_items.append(menu_item)
+            provider.menus.append(menu)
+
+        provider.save()
+
+    menus = provider.menus
+
+    return render_template('dashboard/walkthrough/new_menus.jade',
+            form=form, menus=menus)
+
 @dashboard.route('/provider/general/new', methods=['GET', 'POST'])
 def new_general_info():
     provider = current_user.provider
@@ -385,7 +453,7 @@ def new_address():
             provider.address.zip_code   = form.zip_code.data
             provider.save()
 
-            return redirect(url_for('dashboard.new_general_info'))
+            return redirect(url_for('dashboard.new_hours'))
 
     return render_template('dashboard/walkthrough/new_address.jade', form=form)
 
