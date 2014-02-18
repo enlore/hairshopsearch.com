@@ -35,7 +35,7 @@ def _search():
         a.zip_code = form.zip_code.data
 
         # TODO lat_lon expects an address object. this is perhaps silly
-        lat, lon = a.geocode(a)[0]
+        lat, lon = a.geocode()[0]
 
         current_app.logger.info('** Searching for {} serving {} in {} @ {} by {}'.format(
                 form.menu_type.data,

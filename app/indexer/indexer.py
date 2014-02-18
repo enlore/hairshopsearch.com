@@ -25,7 +25,7 @@ def index_many():
 
 def update_doc(entity):
     doc = {'location': entity.location }
-    resp =es.update('hairshopsearch',
+    resp = es.update('hairshopsearch',
             'provider',
             id=entity.id,
             doc=doc)

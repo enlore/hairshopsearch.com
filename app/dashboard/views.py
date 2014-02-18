@@ -88,10 +88,9 @@ def save_photo():
 
     return redirect(url_for('dashboard.profile'))
 
-@dashboard.route('/menu/add', methods=['POST'])
+@dashboard.route('/provider/menu/add', methods=['POST'])
 @login_required
 def save_menu_item():
-    current_app.logger.info(request.form)
     p = current_user.provider
 
     # if menu_type already exists, append thing to it's items
@@ -115,6 +114,7 @@ def save_menu_item():
         p.menus.append(menu)
 
     p.save()
+    p.index()
 
     return redirect(url_for('.profile'))
 
@@ -344,6 +344,7 @@ def save_provider_address():
         provider.address.zip_code   = address_form.zip_code.data
 
         lat, lon = provider.address.geocode()[0]
+        current_app.logger.info('{}, {}'.format(lat, lon))
         provider.location = Location(lat, lon)
 
         provider.update_index()
@@ -409,6 +410,7 @@ def new_menus():
                 raise HSSError("Invalid Menu type")
 
         provider.save()
+        provider.index()
 
     menus = provider.menus
 
