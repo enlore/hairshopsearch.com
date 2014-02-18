@@ -44,12 +44,6 @@
 <div class="container">
     <h1> {{ provider.business_name }} </h1>
 
-    <a href="{{ url_for('frontend.favorite', provider_id=provider.id) }}">
-        <button type="button" class="btn btn-warning btn-lg">
-            <span class="glyphicon glyphicon-heart-empty"> Favorite</span>
-        </button>
-    </a>
-
     {% if current_user.provider %}
     <a href="{{ url_for('frontend.endorse', provider_id=provider.id) }}">
         <button type="button" class="btn btn-success btn-lg">

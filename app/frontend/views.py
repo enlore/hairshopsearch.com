@@ -55,27 +55,6 @@ def add_to_favorites(photo_id):
 
     return redirect(url_for('frontend.gallery', user_id=user.id))
 
-@login_required
-@frontend.route('/<provider_id>/favorite')
-def favorite(provider_id):
-    this_provider = Provider.query.get(provider_id)
-
-    if not this_provider.business_url:
-        this_provider.business_url = this_provider.business_name
-
-    if current_user.is_anonymous():
-        current_app.logger.info('anon anon')
-        abort(403)
-
-    if this_provider not in current_user.consumer.favorites:
-        current_user.consumer.favorites.append(this_provider)
-
-    db.session.add(current_user)
-    db.session.commit()
-
-    return redirect(url_for('frontend.provider_url',
-        provider_url=this_provider.business_url))
-
 @frontend.route('/<provider_url>')
 def provider_url(provider_url):
     p = Provider.query.filter(Provider._business_url==provider_url.lower()).first()
