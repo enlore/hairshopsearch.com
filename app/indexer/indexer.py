@@ -23,6 +23,14 @@ def index_many():
     # bulk_index()
     pass
 
+def update_doc(entity):
+    doc = {'location': entity.location }
+    resp =es.update('hairshopsearch',
+            'provider',
+            id=entity.id,
+            doc=doc)
+    return resp
+
 def create_index(doc_type):
     resp = es.create_index('hairshopsearch', settings=None)
     print resp

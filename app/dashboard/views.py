@@ -319,6 +319,7 @@ def new_provider():
 
         current_app.logger.info(clean_name)
         provider.save()
+        provider.index()
 
         db.session.add(pi)
         db.session.commit()
@@ -342,7 +343,12 @@ def save_provider_address():
         provider.address.state      = address_form.state.data
         provider.address.zip_code   = address_form.zip_code.data
 
+        lat, lon = provider.address.geocode()[0]
+        provider.location = Location(lat, lon)
+
+        provider.update_index()
         provider.save()
+
     return redirect(url_for('dashboard.profile'))
 
 @dashboard.route('/provider/hours/new', methods=['GET', 'POST'])

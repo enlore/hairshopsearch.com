@@ -134,7 +134,7 @@ def mock_from_csv(filename):
     for entity in entities:
         p = Provider(user=User())
         p.business_name = entity.pop('business_name')
-        p.location = Location(lat=entity.pop('lat'), lon=entity.pop('lon'))
+        p.location = Location(entity.pop('lat'), entity.pop('lon'))
         p.address = Address(**entity)
         p.business_url = acceptable_url_string(p.business_name,
                 Config.ACCEPTABLE_URL_CHARS)
@@ -157,6 +157,7 @@ def _make_context():
             Address=Address,
             Gallery=Gallery,
             Photo=Photo,
+            Location=Location,
             Menu=Menu,
             p=Provider.query.get(4),
             c=Consumer.query.first(),

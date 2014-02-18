@@ -2,7 +2,7 @@ from flask import current_app
 from ..models import Gallery
 from ..helpers import JSONSerializer, acceptable_url_string
 from ..core import db
-from ..indexer.indexer import index_one
+from ..indexer.indexer import index_one, update_doc
 
 import requests
 
@@ -27,7 +27,7 @@ class Provider(db.Model, ProviderSerializer):
     def __init__(self, user):
         self.user = user
         self.address = Address()
-        self.location = Location()
+        self.location = Location(0, 0)
         self.hours = Hours()
         self.payment_methods = ''
         self.gallery = Gallery()
@@ -68,8 +68,9 @@ class Provider(db.Model, ProviderSerializer):
         """
         return index_one(self, self.id)
 
+    #TODO
     def update_index(self):
-        pass
+        return update_doc(self)
 
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='provider',
@@ -236,9 +237,14 @@ class LocationSerializer(JSONSerializer):
     __json_hidden__ = ['provider_id', 'id']
 
 class Location(db.Model, LocationSerializer):
+    def __init__(self, lat, lon):
+        self.lat = lat
+        self.lon = lon
+
     id              = db.Column(db.Integer, primary_key=True)
     provider_id     = db.Column(db.Integer, db.ForeignKey('provider.id'))
     lat             = db.Column(db.Float)
     lon             = db.Column(db.Float)
+
 
 
