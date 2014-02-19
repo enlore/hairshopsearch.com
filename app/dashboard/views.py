@@ -30,6 +30,7 @@ dashboard = Blueprint('dashboard', __name__,
 
 
 @dashboard.route('/photo/<int:id>/delete')
+@login_required
 def delete_photo(id):
     photo = Photo.query.get(id)
     current_app.logger.info(photo.url)
@@ -44,6 +45,7 @@ def delete_photo(id):
 
 
 @dashboard.route('/avatar/save', methods=['POST'])
+@login_required
 def save_avatar():
     entity = current_user.provider or current_user.consumer
 
@@ -65,6 +67,7 @@ def save_avatar():
 
 
 @dashboard.route('/photo/save', methods=['POST'])
+@login_required
 def save_photo():
     entity = current_user.provider or current_user.consumer
 
@@ -268,6 +271,7 @@ def profile():
     return redirect(url_for('frontend.welcome'))
 
 @dashboard.route('/provider/hours', methods=['POST'])
+@login_required
 def save_provider_hours():
     provider = current_user.provider
     hours_form = HoursForm()
@@ -328,6 +332,7 @@ def new_provider():
     return render_template('dashboard/new_provider.jade', form=form)
 
 @dashboard.route('/provider/address/save', methods=['POST'])
+@login_required
 def save_provider_address():
     provider = current_user.provider
     address_form = AddressForm()
@@ -353,6 +358,7 @@ def save_provider_address():
     return redirect(url_for('dashboard.profile'))
 
 @dashboard.route('/provider/hours/new', methods=['GET', 'POST'])
+@login_required
 def new_hours():
     provider = current_user.provider
     form = HoursForm(obj=provider.hours)
@@ -384,6 +390,7 @@ def new_hours():
     return render_template('dashboard/walkthrough/new_hours.jade', form=form)
 
 @dashboard.route('/provider/menus/new', methods=['GET', 'POST'])
+@login_required
 def new_menus():
     provider = current_user.provider
     form = MenuItemForm()
@@ -418,6 +425,7 @@ def new_menus():
             form=form, menus=menus)
 
 @dashboard.route('/provider/general/new', methods=['GET', 'POST'])
+@login_required
 def new_general_info():
     provider = current_user.provider
     form = ProviderDashForm()
@@ -442,6 +450,7 @@ def new_general_info():
     return render_template('dashboard/walkthrough/new_general_info.jade', form=form)
 
 @dashboard.route('/provider/address/new', methods=['GET', 'POST'])
+@login_required
 def new_address():
     provider = current_user.provider
     current_app.logger.info(provider.address)
