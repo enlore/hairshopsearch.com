@@ -1,63 +1,33 @@
-@vivid-orange: #f90;
-@warm-white: #F7F7F7;
-@off-white: #e2f0f0;
-@nice-blue: #4777EF;
-@cool-white: lighten(@nice-blue, 38%);
+@paper: #FFF7EB;
+@bg-color: @paper;
+@form-login-bg: lighten(@paper, 25%);
+@profile-bg: lighten(@paper, 2%);
 
-@light-blue: #57b7e5;
-@cool-grey: #E0F1F1;
-@grey: #EEE;
+@purple: #1E1D24;
+@font-color: @purple;
+@sub-font-color: lighten(@font-color, 19%);
+@label-font-color: lighten(@font-color, 30%);
+@inset-shadow: @purple;
 
-@welcome-button-bg: @nice-blue;
-@btn-info-override: @light-blue;
+@blue: #77A0FF;
+@prim-button: @blue;
+@link-color: darken(@blue, 15%);
 
-@bg-url: url('/static/img/bg-noise.png');
-@seventy-percent-grey: #898989;
-@light-orange: #ffcb63;
-@teal-as-crap: #3daa98;
-@chilax-grey: #79818a;
+@orange: #FFA216;
+@nav-bg: @orange;
+@hr-color: darken(@orange, 25%);
+@image-border: @orange;
+@link-hover: @orange;
 
-@white: #fff;
-@black: #000;
-@grey: #333;
-@pretty-grey: #5A6060;
-@light-grey: #A2AAAA;
+@red-orange: #FF8359;
+@btn-concerned: @red-orange;
+@border-color: @red-orange;
 
-@navbar-bg: @vivid-orange;
-@navbar-shadow: @chilax-grey;
-@navbar-border: darken(@navbar-bg, 20%);
-@navbar-fg: @white;
+@green: #8A509F;
+@btn-cta: @green;
 
-@secondary-navbar-bg: @nice-blue;
-@secondary-navbar-border: darken(@nice-blue, 15%);
-
-@body-bg: @off-white;
-
-@foot-banner-bg: @nice-blue;
-
-/* Login & Registration
- ***********************/
-@login-bg: @cool-white;
-
-/* Profile
- **********/
-@jumbotron-color: @grey;
-@profile-header-color: @black;
-@profile-header-fg: @white;
-@profile-header-active: @teal-as-crap;
-@profile-content-color: @light-orange;
-@profile-sidebar-bg: @black;
-@profile-sidebar-fg: @white;
-
-/* Dashboard
- ************/
-@user-dashboard-group-bg: @warm-white;
-@user-dashboard-group-border: @seventy-percent-grey;
-@text-color: @black;
-
-/* TOS & Privacy Policy
- ***********************/
-@tos-nav-bg: @nice-blue;
+@grey: #8C8A94;
+@caption-color: @grey;
 
 /* Flashes
  **********/
@@ -69,14 +39,6 @@
 
 @success: #89FFA3;
 @success-border: darken(@success, 15%);
-
-/* SERP
- *******/
-@serp-bg: @cool-white;
-
-/* Advert
- *********/
-@advert-bg: @cool-white;
 
 @import 'typography.less';
 @import 'mixins.less';
