@@ -23,8 +23,9 @@
 @btn-concerned: @red-orange;
 @border-color: @red-orange;
 
-@green: #8A509F;
-@btn-cta: @green;
+@light-purple: #8A509F;
+@btn-cta: @light-purple;
+@tos-nav-bg: @light-purple;
 
 @grey: #8C8A94;
 @caption-color: @grey;
@@ -78,10 +79,11 @@
     font-size: 16px;
     > li.active > a,
     > li.active > a:hover {
+        background-color: @tos-nav-bg;
     }
     > li > a,
     > li > a:hover {
-        background: transparent;
+        background-color: transparent;
     }
 }
 
