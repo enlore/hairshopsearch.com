@@ -1,34 +1,45 @@
+.hss-image {
+    img { border: 2px solid @image-border; }
+    .caption { color: @caption-color; text-align: center; }
+}
+
  hr {
     border-color: @hr-color;
     border-style: solid;
     border-width: ;
  }
 
-.image {
-    img { border: 2px solid @image-border; }
-    .caption { color: @caption-color; text-align: center; }
-}
-
-.btn.btn-hss {
-    color: #E1E5EF;
-    padding: 0.7em;
-    background: @welcome-button-bg;
-    border: 0;
+.btn(@button-color) {
+    background-color: @button-color;
+    border: none;
     border-radius: 4px;
-    box-shadow: inset 0 -3px 0 0 darken(@welcome-button-bg, 20%);
-    display: block;
-    &.btn.btn-hss:active {
-        background: darken(@welcome-button-bg, 25%);
-        box-shadow: inset 0 0 1px 2px darken(@welcome-button-bg, 30%);
+    box-shadow: inset 0 -3px 0 0 darken(@button-color, 20%);
+    color: lighten(@button-color, 50%);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    font-weight: normal;
+    line-height: 1.4em;
+    padding: 0.7em;
+    vertical-align: middle;
+    white-space: nowrap;
+    &:active {
+        background-color: darken(@button-color, 26%);
+        box-shadow: inset 0 0 2px 2px darken(@button-color, 20%);
+        color: lighten(@button-color, 35%);
     }
+    &:hover {
+        background-color: lighten(@button-color, 10%) !important;
+    }
+    span { color: inherit; }
 }
 
-.btn.btn-info {
-    background: @btn-info-override;
-    &:hover {
-        background: darken(@btn-info-override, 15%);
-    }
-}
+.btn.btn-primary { .btn(@prim-button); }
+.btn.btn-concerned { .btn(@btn-concerned); }
+.btn.btn-cta { .btn(@btn-cta); }
+
+.btn.signup-cta { font-size: 46px; margin-bottom: 2em; }
 
 .flashes {
     padding: 0;
@@ -51,4 +62,3 @@
         border: 2px solid @success-border;
     }
 }
-

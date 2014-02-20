@@ -1,0 +1,102 @@
+extends layouts/base.html
+block body
+  .container.provider
+    .row
+      .col-sm-12
+        .banner
+          img.img-responsive(src="http://placehold.it/1200x350&text=Banner")
+          -if provider.avatar
+            img.img-responsive.portrait(src="#{provider.avatar.lg_thumb}")
+          -else
+            img.img-responsive.portrait(src="http://placehold.it/165x165")
+
+    .row
+      .col-sm-6
+        h1= provider.business_name
+        address
+          p #{provider.address.street_1} #{provider.address.street_2}
+          p #{provider.address.city}, #{provider.address.state}
+
+        p.phone= provider.phone
+
+
+      .col-sm-6
+        table.table
+          thead
+            tr
+              th Today
+              th Open
+              th Close
+
+          tbody
+            tr
+              td Mon
+              td 8
+              td 9
+        .row
+          .col-sm-12
+            button.btn.btn-cta
+              span.glyphicon.glyphicon-star-empty  Fav Us!
+
+    .row.paper-bg
+      .col-sm-8.col-sm-offset-2
+        ul.payment-methods
+          li
+            img(src="/static/img/icons/visa-straight-32px.png")
+          li
+            img(src="/static/img/icons/mastercard-straight-32px.png")
+          li
+            img(src="/static/img/icons/american-express-straight-32px.png")
+          li
+            img(src="/static/img/icons/discover-straight-32px.png")
+          li
+            img(src="/static/img/icons/cash_payment_64.png")
+
+    .row
+      .col-sm-8
+        .row
+          .col-sm-12
+            h2 Our Work
+            .row.gallery
+            -each pic in provider.gallery.photos
+              .col-sm-3
+                img.img-responsive(src="#{pic.sm_thumb}")
+        .row
+          .col-sm-12
+            h2 Happy Customers
+            .row
+              .col-sm-12
+                h3 Suzy Q <span class="pull-right glyphicon glyphicon-star"> Fav'd!</span>
+                p.
+                  "loved the service, great work"
+            .row
+              .col-sm-12
+                h3 Jimmy Q <span class="pull-right glyphicon glyphicon-star-empty"> Fav me</span>
+                p.
+                  "Potato"
+            .row
+              .col-sm-12
+                h3 Samm Q
+                p.
+                  "I really think this internet thing is going to take off!"
+      .col-sm-4
+        h2 Menus
+        -each menu in provider.menus
+          .row
+            .col-sm-12
+              h3= menu.menu_type
+              table.table.salon-menu
+                thead
+                  tr
+                    th Name
+                    th Desc
+                    th Price
+
+                tbody
+                -each item in menu.menu_items
+                  tr
+                    td Hair Cut
+                    td We cut your hair with scissors
+                    td 15.00
+
+

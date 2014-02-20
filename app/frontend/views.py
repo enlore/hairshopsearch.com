@@ -17,6 +17,10 @@ if Config.DEV:
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
+@frontend.route('/about-us')
+def about_us():
+    return render_template('frontend/about_us.jade')
+
 @frontend.route('/<user_id>/gallery')
 def gallery(user_id):
     title = 'Gallery'
@@ -59,7 +63,7 @@ def add_to_favorites(photo_id):
 def provider_url(provider_url):
     p = Provider.query.filter(Provider._business_url==provider_url.lower()).first()
     if p:
-        return render_template('frontend/provider.html', provider=p)
+        return render_template('frontend/provider.jade', provider=p)
     else:
         abort(404)
 
@@ -107,7 +111,7 @@ def follow(consumer_id):
 
 @frontend.route('/provider_welcome')
 def provider_welcome():
-    return render_template('frontend/provider_marketing.html')
+    return render_template('frontend/provider_marketing.jade')
 
 @frontend.route('/consumer_welcome')
 def consumer_welcome():

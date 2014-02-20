@@ -46,191 +46,13 @@
 @import 'components.less';
 @import 'resets.less';
 @import 'scaffolding.less';
-
-/* Index
- ********/
-.search-form-container form {
-    .align-center;
-}
-
-.index.deck {
-    text-align: center;
-    margin: 1em auto 0;
-}
-
-.index.lead {
-    font-size: 18px;
-}
-
-.index .foot-banner {
-    display: none;
-}
-
-
-@media screen and (min-width: 768px) {
-    .index.deck {
-        width: 65%;
-    }
-
-    .index .foot-banner {
-        display: block;
-        background: @foot-banner-bg;
-        background: url('/static/img/skin_side_up.png') repeat-x;
-        padding: 1em 0 1em;
-        border-top: 1px solid lighten(@foot-banner-bg, 40%);
-        border-bottom: 1px solid lighten(@foot-banner-bg, 40%);
-        border-top: 1px solid #FFF;
-        border-bottom: 1px solid #FFF;
-        .row {
-            margin-top: 0;
-        }
-    }
-}
-
-
-/* Provider Profile
- *******************/
-.jumbotron {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    background: @jumbotron-color;
-    min-height: 300px;
-    .avatar {
-        margin-top: 10px;
-    }
-}
-
-.thumbnail-container {
-    width: 166px;
-    height: 166px;
-    border: 4px solid #fff;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 10px;
-}
-
-.jumbotron img {
-    margin: 0 auto;
-}
-
-@media screen and (min-width: 768px) {
-  .jumbotron > .container {
-    max-width: 1060px;
-  }
-}
-
-.profile-header {
-  color: @profile-header-fg;
-  background: @profile-header-color;
-  box-shadow: -2px 2px 7px -1px #1a1a1a;
-  margin-top: 1em;
-    h3 {
-        margin: 0;
-        padding: 15px;
-        font-size: 21px;
-        text-align: center;
-    }
-}
-
-.profile-header > h3.active {
-    background: @profile-header-active;
-}
-
-
-.profile-content > div, /* Boo... */
-.profile-content {
-    background: @profile-content-color;
-    font-size: 16px;
-    padding: 10px;
-    margin: 0 auto;
-    width: 98%;
-    z-index: -10;
-}
-
-.profile-sidebar {
-    background: @profile-sidebar-bg;
-    margin-top: 1em;
-    color: @profile-sidebar-fg;
-    font-family: 'HSSMinion', serif;
-    padding: 15px;
-    font-size: 16.8px;
-    text-align: center;
-    h3 {
-        margin: 0;
-        font-size: 25.2px;
-    }
-    table {
-        margin: 0 auto;
-    }
-}
-
-.profile-map {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-}
-
-.profile-menu {
-    margin-bottom: 10px;
-    caption {
-        caption-side: top;
-        text-align: left;
-        font-size: 22px;
-    }
-
-    td {
-        padding: 10px;
-    }
-}
-
-.lg-logo {
-    margin: 0 auto;
-}
-
-
-/* Dashboard
- ***********/
-.btn.dashboard {
-    margin: 0.5em;
-}
-
-.dash-group {
-    background: @white;
-    padding: 1em;
-}
-
-@media screen and (min-width: 992px) {
-    .dash-group {
-        border-radius: 4px;
-        border: 1px solid @cool-grey;
-        overflow: hidden;
-    }
-}
-
-/* SERP
-********/
-.search-result {
-    background: @serp-bg;
-    border-radius: 3px;
-    padding: 10px;
-    margin-bottom: 1em;
-}
-
-.serp.advert {
-    margin-bottom: 1em;
-    background: @advert-bg;
-    border-radius: 3px;
-    padding: 1em 0 1em;
-}
+@import 'provider.less';
 
 /* Consumer Profile
 ********************/
 .consumer-profile {
     padding: 2em;
     .profile-group {
-        background: @white;
         h2, h3, p, a {
             padding: 10px;
         }
@@ -241,81 +63,11 @@
     }
 }
 
-/* Welcome Page
-****************/
-.welcome .panel {
-    padding-bottom: 1em;
-    min-height: 9em;
-}
-
-.welcome .panel.right {
-    background: #eee;
-}
-
-.welcome .btn.btn-hss {
-    width: 33%;
-    left: 33%;
-    bottom: 10px;
-    position: absolute;
-}
-
-/* Welcome Marketing
-*********************/
-.marketing-welcome.container {
-    ul li { list-style-image: url('/static/img/scissor-bullet.png'); }
-    img {
-        padding: 1em;
-        background: @white;
-    }
-
-    background: #DEF9F9;
-    .answer, .question {
-        text-align: center;
-    }
-    .deck {
-        position: relative;
-        width: auto;
-        text-align: center;
-        font-size: 22px;
-        display: block;
-    }
-    .closer {
-        font-size: 22px;
-        button {
-            font-size: 32px; 
-        }
-    }
-}
-@media screen and (min-width: 768px) {
-    .marketing-welcome.container {
-        padding: 0;
-        .content {
-            padding: 0 2em 2em 2em;
-            .question { font-size: 28px;; text-align: left; }
-            .answer {   font-size: 22px;; text-align: left; }
-        }
-        .lead {
-            background: url('http://placehold.it/1260x300') center no-repeat;
-            height: 300px;
-            position: relative;
-            .deck {
-                position: absolute;
-                bottom: 20px;
-                left: 10px;
-                width: 45%;
-                text-align: left;
-                display: inline;
-            }
-        }
-    }
-}
-
 /* Login & Register
  *******************/
 .login.container,
 .register.container {
     max-width: 600px;
-    background: @login-bg;
     padding: 2em;
 }
 
@@ -324,7 +76,6 @@
     h1 { margin: 0; }
     p { margin: 0; }
     .row {
-        border-bottom: 1px solid @chilax-grey;
         padding-bottom: 2em;
         padding-top: 2em;
         &:last-child { border-bottom: none; }
@@ -362,7 +113,6 @@
     font-size: 16px;
     > li.active > a,
     > li.active > a:hover {
-        background: lighten(@tos-nav-bg, 5%);
     }
     > li > a,
     > li > a:hover {
@@ -434,7 +184,7 @@
     margin-top: 10px;
     position: relative;
     .thumb-controls {
-        background: #fff; 
+        background: #fff;
         z-index: 10000;
         position: absolute;
         bottom: 0;
@@ -445,9 +195,7 @@
 }
 
 .dash-group .gallery {
-    background: @cool-white;
     padding-bottom: 10px;
-    box-shadow: inset 0 0 3px 1px @light-grey;
 
     .thumb-container {
         margin: 10px auto 0; 
@@ -457,7 +205,6 @@
 }
 
 .gallery.container {
-    background: @cool-white;
     padding-bottom: 10px;
     ul li { position: relative; }
     .thumb-controls {
