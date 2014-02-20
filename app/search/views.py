@@ -54,14 +54,6 @@ def _search():
                                     "must": {
                                         "term": { "menus.menu_type": form.menu_type.data }
                                     },
-                                    "should": {
-                                        "nested": {
-                                            "path": "menus.menu_items",
-                                            "query": {
-                                                "match": { "name": form.service.data }
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
