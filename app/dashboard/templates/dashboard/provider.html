@@ -104,32 +104,6 @@
             </div>
         </div>
     </form>
-
-
-    <div class="dash-group">
-        <h2> Endorsements </h2>
-        <p.lead> We are endorsed by </p>
-        <ul>
-            {% for endorser in provider.endorsed_by %}
-            <li>
-            <a href="/{{ endorser.business_url }}">
-                {{ endorser.business_name }}
-            </a>
-            </li>
-            {% endfor %}
-        </ul>
-
-        <p.lead> We endorse </p>
-        <ul>
-            {% for endorsee in provider.endorses %}
-            <li>
-            <a href="/{{ endorsee.business_url }}">
-                {{ endorsee.business_name }}
-            </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
     {% endif %}
 
     <div class="dash-group">
