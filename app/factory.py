@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
+from flask.ext.funnel import Funnel
 from flask_wtf import CsrfProtect
 from .config import Config
 from .core import db, sec, mail, HSSError
@@ -80,6 +81,7 @@ def _register_extensions(app):
     mail.init_app(app)
     toolbar = DebugToolbarExtension(app)
     CsrfProtect(app)
+    Funnel(app)
 
 def _register_pre_stuff(app):
     @app.before_first_request
@@ -148,4 +150,3 @@ def _leverage_logging(app):
 
         """))
         app.logger.addHandler(smtph)
-

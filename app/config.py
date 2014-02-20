@@ -49,3 +49,19 @@ class Config(DevConfig):
     DEV = True
     GEOCODING_SERVICE_URI = 'http://www.mapquestapi.com/geocoding/v1/address'
     GEOCODING_SERVICE_KEY = 'Fmjtd|luur2162ng,aa=o5-90z05z'
+
+    LESS_BIN = 'lessc'
+    LESS_PREPROCESS = True
+    CSS_BUNDLES = {
+            'css': ('css/main.less','css/normalize.css','css/jquery.nailthumb.1.1.min.css')
+            }
+
+    JS_BUNDLES = {
+            'js': (
+                'js/main.js',
+                'js/vendor/jquery-1.9.1.min.js',
+                'js/vendor/jquery.nailthumb.1.1.min.js',
+            ),
+
+            'mod': ()
+        }
