@@ -115,7 +115,7 @@ def provider_welcome():
 
 @frontend.route('/consumer_welcome')
 def consumer_welcome():
-    return render_template('frontend/consumer_marketing.html')
+    return render_template('frontend/consumer_marketing.jade')
 
 @frontend.route('/tos')
 def tos():
