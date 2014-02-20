@@ -11,24 +11,9 @@
 
         <div class="col-md-7">
             <div class="register-cta">
-                <span> Don't have an account?</span>
-                <a type="button" class="btn btn-hss" href="{{ url_for('security.register') }}"> Sign Up For Free!</a>
+                <span> Don't have an account? </span>
+                <a type="button" class="pull-right btn btn-primary" href="{{ url_for('security.register') }}"> Sign Up For Free!</a>
             </div>
-        </div>
-    </div><!-- /.row -->
-
-    <div class="row login-alternatives">
-        <p> Or sign in with one of these services: </p>
-        <div class="col-sm-6 col-md-4">
-            <a> FACEBOOK </a>
-        </div>
-
-        <div class="col-sm-6 col-md-4">
-            <a> FACEBOOK </a>
-        </div>
-
-        <div class="col-sm-6 col-md-4">
-            <a> FACEBOOK </a>
         </div>
     </div><!-- /.row -->
 
@@ -41,7 +26,9 @@
 
                 {{ render_field_with_errors(login_user_form.remember) }}
                 {{ render_field(login_user_form.next) }}
-                {{ render_field(login_user_form.submit) }}
+                <div class="form-group">
+                    {{ login_user_form.submit(class_="btn btn-cta col-sm-2 col-sm-offset-2") }}
+                </div>
             </form>
         </div>
     </div>

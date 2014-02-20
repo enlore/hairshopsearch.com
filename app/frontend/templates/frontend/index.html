@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-12">
             <a href="{{ url_for('frontend.index') }}">
-                <img class="img-responsive lg-logo" src="{{ url_for('static', filename='img/logo-lg.png') }}">
+                <img class="img-responsive center-block" src="{{ url_for('static', filename='img/logo-lg.png') }}">
             </a>
         </div>
     </div><!-- /.row -->
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12 search-form-container">
             {% if index_search_form %}
-            <form class="form-inline" action="/search/" method="POST" role="form">
+            <form class="form-inline text-center" action="/search/" method="POST" role="form">
                 {{ index_search_form.csrf_token }}
                 <div class="form-group">
                     <label class="sr-only" for="menu_type">Type</label>
@@ -43,7 +43,7 @@
             </form>
             {% endif %}
 
-            <h2 class="index deck"> We're making it easier to find hair care
+            <h2 class="index deck text-center"> We're making it easier to find hair care
                 and beauty solutions for your glorious hair textures and
                 amazing skin!
             </h2>
@@ -51,7 +51,7 @@
     </div><!-- /.row -->
 
     <div class="row index lead">
-        <div class="col-md-12 align-center">
+        <div class="col-md-12 text-center">
             <p> As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
             HairShopSearch can help you attract new clients and earn more. </p>
             <p> As a <a href="{{ url_for('frontend.consumer_welcome') }}">consumer</a>,

@@ -7,13 +7,13 @@
 <div class="container dashboard">
     <div class="row dashboard-buttons">
         <div class="col-md-3">
-            <a class="btn btn-info dashboard" href="{{ url_for('frontend.provider_url',
+            <a class="btn btn-cta dashboard" href="{{ url_for('frontend.provider_url',
                 provider_url=provider.business_url) }}">
                 View Profile
             </a> </div>
 
         <div class="col-md-3">
-            <a class="btn btn-info dashboard" href="{{ url_for('security.change_password') }}">
+            <a class="btn btn-concerned dashboard" href="{{ url_for('security.change_password') }}">
                 Change Password
             </a>
         </div>
@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="thumb-container large">
-                    {% if provider.avatar.lg_thumb %}
-                    <img src="{{ provider.avatar.lg_thumb }}">
+                    {% if provider.avatar.sm_thumb %}
+                    <img src="{{ provider.avatar.sm_thumb }}">
                     {% else %}
                     <img src="http://placehold.it/200x225">
                     {% endif %}
@@ -36,7 +36,7 @@
                     {{ avatar_upload_form.csrf_token() }}
                     {{ render_field(avatar_upload_form.up_file) }}
                     <div class="form-group">
-                        {{ avatar_upload_form.submit(class_="col-sm-2 col-sm-offset-4 btn btn-success") }}
+                        {{ avatar_upload_form.submit(class_="col-sm-2 col-sm-offset-4 btn btn-cta") }}
                     </div>
                     </form>
                 </div>
@@ -58,7 +58,7 @@
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-4">
-                {{ form.submit(class_='btn btn-success') }}
+                {{ form.submit(class_='btn btn-cta') }}
             </div>
         </div>
     </form>
@@ -74,7 +74,7 @@
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-4">
-                {{ address_form.submit(class_='btn btn-success') }}
+                {{ address_form.submit(class_='btn btn-cta') }}
             </div>
         </div>
 
@@ -100,7 +100,7 @@
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-4">
-                {{ hours_form.submit(class_='btn btn-success') }}
+                {{ hours_form.submit(class_='btn btn-cta') }}
             </div>
         </div>
     </form>
@@ -164,7 +164,7 @@
 
                     <div class="row">
                         <div class="col-sm-2 col-sm-offset-4">
-                            {{ menu_form.submit(class_='btn btn-success') }}
+                            {{ menu_form.submit(class_='btn btn-cta') }}
                         </div>
                     </div>
                 </form>
@@ -186,7 +186,7 @@
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-2">
-                    <input type="submit" class="btn btn-success" value="Save Photo">
+                    <input type="submit" class="btn btn-cta" value="Save Photo">
                 </div>
             </div>
         </form>

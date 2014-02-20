@@ -10,6 +10,7 @@ p { margin-top: 1em; }
     margin-bottom: -14em;
     padding-top: 8em;
     padding-bottom: 2em;
+    background-color: @body-bg-color;
 }
 
 .page-wrap:after {
@@ -32,9 +33,23 @@ p { margin-top: 1em; }
 .navbar {
     z-index: 100;
 }
+.navbar.navbar-primary {
+    box-shadow: inset 0 -1px 0 0 darken(@nav-bg, 4%);
+    border-bottom: 1px solid darken(@nav-bg, 8%);
+    background-color: @nav-bg;
+    .navbar-brand { padding: 5px 0 0 10px; }
+    .nav {
+        li a { color: @paper; font-size: 18px; }
+        li a:hover {
+            background: darken(@nav-bg, 10%);
+            color: lighten(@red-orange, 64%);
+        }
+    }
+}
+
 
 .navbar.secondary {
-    background: url('/static/img/skin_side_up.png') repeat-x;
+    background-color: @blue;
     border-bottom: 1px solid #999;
     top: 50px;
     z-index: 10;

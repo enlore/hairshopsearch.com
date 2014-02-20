@@ -33,7 +33,9 @@
                     class="form-control"></input>
                 </div>
             </div>
-            {{ render_field(register_user_form.submit) }}
+            <div class="form-group">
+                {{ register_user_form.submit(class_="btn btn-cta col-sm-3 col-sm-offset-2") }}
+            </div>
         </form>
     </div><!-- /.row -->
 

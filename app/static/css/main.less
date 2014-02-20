@@ -1,5 +1,5 @@
 @paper: #FFF7EB;
-@bg-color: @paper;
+@body-bg-color: @paper;
 @form-login-bg: lighten(@paper, 25%);
 @profile-bg: lighten(@paper, 2%);
 
@@ -65,46 +65,11 @@
 
 /* Login & Register
  *******************/
-.login.container,
-.register.container {
+.register.container,
+.login.container {
+    background-color: @form-login-bg;
     max-width: 600px;
     padding: 2em;
-}
-
-.login,
-.register {
-    h1 { margin: 0; }
-    p { margin: 0; }
-    .row {
-        padding-bottom: 2em;
-        padding-top: 2em;
-        &:last-child { border-bottom: none; }
-    }
-    .register-cta {
-        .btn.btn-hss {
-            display: inline;
-        }
-        span { line-height: 36px; }
-    }
-    .login-alternatives {
-        a {
-            display: block;
-            text-align: center;
-            padding: 1em;
-        }
-    }
-}
-
-@media screen and (min-width: 360px) {
-    .login .register-cta .btn.btn-hss {
-        margin-left: 20px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .login .register-cta .btn.btn-hss {
-        width: 10em;
-    }
 }
 
 /* TOS & Privacy
