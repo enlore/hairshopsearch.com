@@ -46,14 +46,18 @@ class Config(DevConfig):
     MAIL_LOG_FROM = ['HSS_APP_ERROR@hairshopsearch.com']
     MAIL_LOG_ADMINS = ['oneofy@gmail.com']
 
-    DEV = True
+    DEBUG = True
     GEOCODING_SERVICE_URI = 'http://www.mapquestapi.com/geocoding/v1/address'
     GEOCODING_SERVICE_KEY = 'Fmjtd|luur2162ng,aa=o5-90z05z'
 
     LESS_BIN = 'lessc'
     LESS_PREPROCESS = True
     CSS_BUNDLES = {
-            'css': ('css/main.less','css/normalize.css','css/jquery.nailthumb.1.1.min.css')
+            'css': (
+                'css/normalize.css',
+                'css/jquery.nailthumb.1.1.min.css',
+                'css/main.less'
+                )
             }
 
     JS_BUNDLES = {

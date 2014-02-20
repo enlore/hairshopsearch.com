@@ -12,7 +12,7 @@ from ..models import User, Photo
 from ..config import Config
 from ..core import db
 
-if Config.DEV:
+if Config.DEBUG:
     from ..forms import TestForm
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -125,7 +125,7 @@ def tos():
 def privacy_policy():
     return render_template('frontend/privacy_policy.html')
 
-if Config.DEV == True:
+if Config.DEBUG == True:
     @frontend.route('/sandbox')
     def sandbox():
         form = TestForm()
