@@ -27,8 +27,12 @@ def reset_db():
     password = encrypt_password('password')
     p = Provider(user=ud.create_user(email="provider@test.com", password=password))
     p.business_name = 'Sparky\'s'
-    p.business_url = 'sparkys'
     p.user.confirmed_at = datetime.date.today()
+
+    p.address.street_1 = '403 South Second'
+    p.address.city = 'Clarksville'
+    p.address.state = 'TN'
+    p.address.zip_code = 37040
 
     p.menus[0].menu_items.append(MenuItem(name="Haircut", price="25", description="We cut your hair"))
     p.menus[0].menu_items.append(MenuItem(name="Line out", price="10", description="A quick line out"))
@@ -41,6 +45,7 @@ def reset_db():
 
     p.gallery = Gallery()
     p.save()
+    p.index()
 
     # Consumer
     c = Consumer(user=ud.create_user(email='consumer@test.com', password=password,
@@ -133,11 +138,10 @@ def mock_from_csv(filename):
     entities = _consume_csv(filename)
     for entity in entities:
         p = Provider(user=User())
+        print entity['business_name']
         p.business_name = entity.pop('business_name')
         p.location = Location(entity.pop('lat'), entity.pop('lon'))
         p.address = Address(**entity)
-        p.business_url = acceptable_url_string(p.business_name,
-                Config.ACCEPTABLE_URL_CHARS)
         p.menus = _build_menus()
         p.save()
         # TODO indexing it here

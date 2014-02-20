@@ -304,24 +304,6 @@ def new_provider():
 
         provider.business_name = form.business_name.data
 
-        dirty_name = provider.business_name
-        # lower dirty name
-        clean_name = acceptable_url_string(dirty_name.lower(),
-                current_app.config['ACCEPTABLE_URL_CHARS'])
-
-        pi = ProviderInstance.query.get(clean_name)
-
-        if pi:
-            provider.business_url = '{}.{}'.format(clean_name, pi.count)
-            pi.count += 1
-
-        else:
-            pi = ProviderInstance()
-            pi.name = clean_name
-            pi.count = 1
-            provider.business_url = clean_name
-
-        current_app.logger.info(clean_name)
         provider.save()
         provider.index()
 

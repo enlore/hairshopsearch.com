@@ -68,6 +68,10 @@ class Provider(db.Model, ProviderSerializer):
         """
         return index_one(self, self.id)
 
+    def _get_clean_name(self, dirty_name):
+        return acceptable_url_string(dirty_name.lower(),
+                current_app.config['ACCEPTABLE_URL_CHARS'])
+
     #TODO
     def update_index(self):
         return update_doc(self)
@@ -78,8 +82,28 @@ class Provider(db.Model, ProviderSerializer):
 
     avatar              = db.relationship('Photo', uselist=False)
 
-    business_name       = db.Column(db.String)
+    _business_name      = db.Column(db.String)
     _business_url       = db.Column(db.String)
+
+    @property
+    def business_name(self):
+        return self._business_name
+
+    @business_name.setter
+    def business_name(self, value):
+        # this assumes business name has  been set
+        clean_name = self._get_clean_name(value)
+        provider_instance = ProviderInstance.query.get(clean_name)
+
+        if provider_instance:
+            self.business_url = '{}.{}'.format(clean_name, pi.count)
+            pi.count += 1
+
+        else:
+            pi = ProviderInstance()
+            pi.name = clean_name
+            pi.count = 1
+            self.business_url = clean_name
 
     @property
     def business_url(self):
