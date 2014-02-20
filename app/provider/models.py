@@ -92,6 +92,7 @@ class Provider(db.Model, ProviderSerializer):
     @business_name.setter
     def business_name(self, value):
         # this assumes business name has  been set
+        self._business_name = value
         clean_name = self._get_clean_name(value)
         provider_instance = ProviderInstance.query.get(clean_name)
 

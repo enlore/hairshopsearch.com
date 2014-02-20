@@ -223,17 +223,11 @@ def profile():
                 flash(form.errors, 'error')
 
         else:
-            #acceptable_url_string()
             provider.business_name  = form.business_name.data
-            provider.business_url   = acceptable_url_string(
-                form.business_name.data,
-                current_app.config['ACCEPTABLE_URL_CHARS']
-                    )
             provider.email          = form.email.data
             provider.phone          = form.phone.data
 
             provider.payment_methods = ' '.join(form.payment_methods.data)
-            current_app.logger.info(provider.payment_methods)
 
             provider.bio            = form.bio.data
             provider.fb_url         = form.fb_url.data
