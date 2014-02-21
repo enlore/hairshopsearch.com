@@ -82,6 +82,20 @@ class HairRoutineSerializer(JSONSerializer):
 class HairRoutine(db.Model, HairRoutineSerializer):
     # Ready to be serialized for search purposes
     __tablename__       = 'hairroutine'
+
+    def __init__(self, **kwargs):
+        self.hair_condition      = kwargs.get('hair_condition', '')
+        self.chemical_treat      = kwargs.get('chemical_treat', '')
+        self.last_treatment      = kwargs.get('last_treatment', '')
+        self.fav_style           = kwargs.get('fav_style', '')
+        self.shampoo_type        = kwargs.get('shampoo_type', '')
+        self.shampoo_frequency   = kwargs.get('shampoo_frequency', '')
+        self.conditioner_type    = kwargs.get('conditioner_type', '')
+        self.condition_frequency = kwargs.get('condition_frequency', '')
+        self.scalp_condition     = kwargs.get('scalp_condition', '')
+        self.last_trim           = kwargs.get('last_trim', '')
+
+
     id                  = db.Column(db.Integer, primary_key=True)
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     hair_condition      = db.Column(db.String()) # text
