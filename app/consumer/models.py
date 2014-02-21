@@ -23,6 +23,13 @@ class ConsumerSerializer(JSONSerializer):
             ]
 
 class Consumer(db.Model, ConsumerSerializer):
+    _db = db
+
+    def save(self):
+        self._db.session.add(self)
+        self._db.session.commit()
+
+    # ready to be serialized, for great search
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
@@ -31,7 +38,6 @@ class Consumer(db.Model, ConsumerSerializer):
                             backref=db.backref('favorited_by', lazy='dynamic'),
                             secondary=consumers_providers)
     avatar              = db.relationship('Photo', uselist=False)
-    bio                 = db.Column(db.Text)
     hair_status         = db.Column(db.Text)
     hair_journey        = db.Column(db.Text)
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
