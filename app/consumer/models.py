@@ -25,6 +25,11 @@ class ConsumerSerializer(JSONSerializer):
 class Consumer(db.Model, ConsumerSerializer):
     _db = db
 
+    def __init__(self, **kwargs):
+        self.hair_routine       = HairRoutine()
+        self.hair_journey       = kwargs.get('hair_journey', '')
+        self.hair_status        = kwargs.get('hair_status', '')
+
     def save(self):
         self._db.session.add(self)
         self._db.session.commit()
@@ -42,7 +47,6 @@ class Consumer(db.Model, ConsumerSerializer):
     hair_journey        = db.Column(db.Text)
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
                             uselist=False)
-    gallery             = db.relationship('Gallery', uselist=False)
 
     @hybrid_property
     def consumer_url(self):
