@@ -5,6 +5,7 @@ from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 
 from ..user.forms import NewProviderForm, NewConsumerForm, RemoveItemForm
+from ..consumer.forms import ConsumerInfoForm
 from ..forms import (ConsumerDashForm, ProviderDashForm, MenuItemForm,
     FileUploadForm, AddressForm, HoursForm)
 
@@ -44,7 +45,7 @@ def delete_photo(id):
     return redirect(url_for('.profile'))
 
 
-@dashboard.route('/avatar/save', methods=['POST'])
+@dashboard.route('/avatar', methods=['POST'])
 @login_required
 def save_avatar():
     entity = current_user.provider or current_user.consumer
@@ -66,7 +67,7 @@ def save_avatar():
     return redirect(url_for('dashboard.profile'))
 
 
-@dashboard.route('/photo/save', methods=['POST'])
+@dashboard.route('/photo', methods=['POST'])
 @login_required
 def save_photo():
     entity = current_user.provider or current_user.consumer
@@ -91,7 +92,7 @@ def save_photo():
 
     return redirect(url_for('dashboard.profile'))
 
-@dashboard.route('/provider/menu/add', methods=['POST'])
+@dashboard.route('/provider/menu', methods=['POST'])
 @login_required
 def save_menu_item():
     p = current_user.provider
@@ -121,6 +122,43 @@ def save_menu_item():
 
     return redirect(url_for('.profile'))
 
+@dashboard.route('/consumer/hair_routine', methods=['POST'])
+def hair_routine():
+    pass
+
+@dashboard.route('/consumer/user', methods=['POST'])
+def user_info():
+    form = ConsumerInfoForm()
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+
+    else:
+        consumer.user.first_name    = form.first_name.data
+        consumer.user.last_name     = form.last_name.data
+        consumer.user.email         = form.email.data
+        consumer.save()
+        return redirect(url_for('dashboard.profile'))
+
+@dashboard.route('/consumer/avatar', methods=['POST'])
+def save_consumer_avatar():
+    form = FileUploadForm()
+
+    if form.validate_on_submit():
+        if form.errors:
+            flash(form.errors,'error')
+
+    else:
+        s3_keys = process_image(image)
+
+        consumer.avatar = Avatar(**s3_keys)
+
+        consumer.save()
+
+        return redirect(url_for('dashboard.profile'))
+
+
 @dashboard.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -133,6 +171,7 @@ def profile():
             consumer.hair_routine = HairRoutine()
 
         form = ConsumerDashForm()
+        consumer_info_form = ConsumerInfoForm()
 
         if not form.validate_on_submit():
             if form.errors:
@@ -173,13 +212,13 @@ def profile():
         if not consumer.hair_routine:
             consumer.hair_routine = HairRoutine()
 
-        form.first_name.data    = consumer.user.first_name
-        form.last_name.data     = consumer.user.last_name
-        form.email.data         = consumer.user.email
+        consumer_info_form.first_name.data    = consumer.user.first_name
+        consumer_info_form.last_name.data     = consumer.user.last_name
+        consumer_info_form.email.data         = consumer.user.email
         form.gender.data        = consumer.user.gender or 'rather_not'
         form.birth_day.data     = consumer.user.birth_day
 
-        form.location.data          = consumer.location
+        #form.location.data          = consumer.location
 
         if not consumer.hair_routine.hair_condition:
             consumer.hair_routine.hair_condition = 'none'
@@ -199,12 +238,9 @@ def profile():
         form.conditioner.data       = consumer.hair_routine.conditioner_type
         form.condition_freq.data    = consumer.hair_routine.condition_frequency
         form.trim_last.data         = consumer.hair_routine.last_trim
-        form.facebook_url.data      = consumer.fb_url
-        form.google_plus_url.data   = consumer.gplus_url
-        form.blog_url.data          = consumer.blog_url
-        form.youtube_url.data       = consumer.youtube_url
 
-        return render_template('dashboard/consumer.html',
+        return render_template('dashboard/consumer.jade',
+                consumer_info_form=consumer_info_form,
                 avatar_upload_form=FileUploadForm(),
                 gallery_upload_form=FileUploadForm(),
                 consumer=current_user.consumer,
@@ -307,7 +343,7 @@ def new_provider():
         return redirect(url_for('dashboard.new_address'))
     return render_template('dashboard/new_provider.jade', form=form)
 
-@dashboard.route('/provider/address/save', methods=['POST'])
+@dashboard.route('/provider/address', methods=['POST'])
 @login_required
 def save_provider_address():
     provider = current_user.provider
@@ -333,7 +369,7 @@ def save_provider_address():
 
     return redirect(url_for('dashboard.profile'))
 
-@dashboard.route('/provider/hours/new', methods=['GET', 'POST'])
+@dashboard.route('/provider/hours', methods=['GET', 'POST'])
 @login_required
 def new_hours():
     provider = current_user.provider
@@ -365,7 +401,7 @@ def new_hours():
         return redirect(url_for('dashboard.new_menus'))
     return render_template('dashboard/walkthrough/new_hours.jade', form=form)
 
-@dashboard.route('/provider/menus/new', methods=['GET', 'POST'])
+@dashboard.route('/provider/menus', methods=['GET', 'POST'])
 @login_required
 def new_menus():
     provider = current_user.provider
@@ -400,7 +436,7 @@ def new_menus():
     return render_template('dashboard/walkthrough/new_menus.jade',
             form=form, menus=menus)
 
-@dashboard.route('/provider/general/new', methods=['GET', 'POST'])
+@dashboard.route('/provider/general', methods=['GET', 'POST'])
 @login_required
 def new_general_info():
     provider = current_user.provider
@@ -425,11 +461,10 @@ def new_general_info():
             return redirect(url_for('dashboard.new_hours'))
     return render_template('dashboard/walkthrough/new_general_info.jade', form=form)
 
-@dashboard.route('/provider/address/new', methods=['GET', 'POST'])
+@dashboard.route('/provider/address', methods=['GET', 'POST'])
 @login_required
 def new_address():
     provider = current_user.provider
-    current_app.logger.info(provider.address)
 
     form = AddressForm(obj=provider.address)
 

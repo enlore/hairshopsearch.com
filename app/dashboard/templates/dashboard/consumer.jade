@@ -1,0 +1,43 @@
+extends layouts/base.html
+block body
+  .consumer.container
+    .row
+      .col-sm-12
+        ul
+          -if consumer.avatar
+            li
+              img(src="#{consumer.avatar.sm_thumb}")
+          li #{consumer.user.first_name} #{consumer.user.last_name}
+          li= consumer.hair_status
+          li= consumer.consumer_url
+          li= consumer.hair_journey
+          li= consumer.hair_routine
+          li
+            -if consumer.gallery
+              ul
+              -each photo in consumer.gallery
+                li
+                  -if photo.sm_thumb
+                    img(src="#{photo.sm_thumb}")
+                  -else
+                    img(src="http://placehold.it/165x165")
+
+    .row
+      .col-sm-8
+
+      .col-sm-4
+        img.img-responsive(src="http://placehold.it/165x165")
+        form.form-horizontal(action="{{ url_for('dashboard.user_info') }}", method="post", role="form")
+          = consumer_info_form.csrf_token()
+          .form-group
+            = consumer_info_form.first_name.label(class_="control-label col-sm-4")
+            = consumer_info_form.first_name(class_="form-control col-sm-8")
+          .form-group
+            = consumer_info_form.last_name.label(class_="control-label col-sm-4")
+            = consumer_info_form.last_name(class_="form-control col-sm-8")
+          .form-group
+            = consumer_info_form.email.label(class_="control-label col-sm-4")
+            = consumer_info_form.email(class_="form-control col-sm-8")
+          .form-group
+            = consumer_info_form.submit(class_="btn btn-cta col-sm-4 col-sm-offset-4")
+
