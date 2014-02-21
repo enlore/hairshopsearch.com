@@ -19,6 +19,10 @@ import datetime
 m = Manager(create_app)
 
 @m.command
+def dump_url_map():
+    print create_app().url_map
+
+@m.command
 def reset_db():
     db.drop_all()
     db.create_all()

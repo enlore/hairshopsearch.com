@@ -6,6 +6,9 @@ project = 'hairshopsearch'
 env.user = 'no'
 env.hosts = ['demo.hairshopsearch.com']
 
+def map():
+    local("python manage.py dump_url_map | column -t -s '()'")
+
 def t():
     """Run tha tests
     """
