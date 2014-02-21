@@ -3,17 +3,26 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from ..core import db
 from ..helpers import JSONSerializer, acceptable_url_string
 
-followers_followed = db.Table('followers_followed',
-            db.Column('follower', db.Integer, db.ForeignKey('consumer.id'), primary_key=True),
-            db.Column('followed', db.Integer, db.ForeignKey('consumer.id'), primary_key=True)
-        )
-
 consumers_providers = db.Table('consumers_providers',
         db.Column('consumer_id', db.Integer, db.ForeignKey('consumer.id')),
         db.Column('provider_id', db.Integer, db.ForeignKey('provider.id'))
         )
 
-class Consumer(db.Model, JSONSerializer):
+class ConsumerSerializer(JSONSerializer):
+    __json_hideen__ = [
+           'user',
+           'favorites',
+           '_consumer_url',
+           'avatar',
+           'bio',
+           'hair_status',
+           'hair_journey',
+           'hair_routine',
+           'gallery',
+           'consumer_url'
+            ]
+
+class Consumer(db.Model, ConsumerSerializer):
     id                  = db.Column(db.Integer, primary_key=True)
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
@@ -21,23 +30,12 @@ class Consumer(db.Model, JSONSerializer):
     favorites           = db.relationship('Provider',
                             backref=db.backref('favorited_by', lazy='dynamic'),
                             secondary=consumers_providers)
-    blog_url            = db.Column(db.String)
-    fb_url              = db.Column(db.String)
-    gplus_url           = db.Column(db.String)
-    youtube_url         = db.Column(db.String)
-    vimeo_url           = db.Column(db.String)
-    other_url           = db.Column(db.String)
     avatar              = db.relationship('Photo', uselist=False)
     bio                 = db.Column(db.Text)
-    location            = db.Column(db.String)
+    hair_status         = db.Column(db.Text)
     hair_journey        = db.Column(db.Text)
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
                             uselist=False)
-    follows             = db.relationship('Consumer',
-                            secondary=followers_followed,
-                            primaryjoin=id==followers_followed.c.follower,
-                            secondaryjoin=id==followers_followed.c.followed,
-                            backref='followers')
     gallery             = db.relationship('Gallery', uselist=False)
 
     @hybrid_property
@@ -72,6 +70,7 @@ class HairRoutineSerializer(JSONSerializer):
 
 
 class HairRoutine(db.Model, HairRoutineSerializer):
+    # Ready to be serialized for search purposes
     __tablename__       = 'hairroutine'
     id                  = db.Column(db.Integer, primary_key=True)
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
