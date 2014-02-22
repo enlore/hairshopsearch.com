@@ -209,14 +209,9 @@ def profile():
         consumer_info_form.first_name.data    = consumer.user.first_name
         consumer_info_form.last_name.data     = consumer.user.last_name
         consumer_info_form.email.data         = consumer.user.email
-        form.birth_day.data     = consumer.user.birth_day
 
-
-
-        form.hair_condition.data    = consumer.hair_routine.hair_condition.split(' ')
-
-        form.scalp_condition.data   = consumer.hair_routine.scalp_condition.split(' ')
-
+        hair_routine_form.hair_condition.data    = consumer.hair_routine.hair_condition.split(' ')
+        hair_routine_form.scalp_condition.data   = consumer.hair_routine.scalp_condition.split(' ')
         hair_routine_form.treat.data             = consumer.hair_routine.chemical_treat
         hair_routine_form.last_treat.data        = consumer.hair_routine.last_treatment
         hair_routine_form.fav_style.data         = consumer.hair_routine.fav_style
