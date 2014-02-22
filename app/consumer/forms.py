@@ -4,8 +4,8 @@ from wtforms import TextField, SubmitField, SelectMultipleField, SelectField, Te
 from markupsafe import Markup
 
 class HairJourneyForm(Form):
-    journey = TextAreaField()
-    submit  = SubmitField("Tell Your Story")
+    journey = TextAreaField("What's the story of your hair?")
+    submit  = SubmitField("Tell It")
 
 class HairStatusForm(Form):
     status = TextField("What's your hair status?")

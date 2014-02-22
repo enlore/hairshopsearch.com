@@ -21,6 +21,19 @@ block body
             = hair_status_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
     .row
       .col-sm-8
+        form.form-horizontal(action="{{ url_for('dashboard.hair_journey') }}", method="post", role="form")
+          = hair_journey_form.csrf_token()
+
+          .form-group
+            = hair_journey_form.journey.label(class_="col-sm-4 control-label")
+            .col-sm-8
+              = hair_journey_form.journey(class_="form-control")
+
+          .form-group
+            = hair_journey_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+
+    .row
+      .col-sm-8
         form.form-horizontal(action="{{ url_for('.hair_routine') }}", method="post", role="form")
           = hair_routine_form.csrf_token()
 
