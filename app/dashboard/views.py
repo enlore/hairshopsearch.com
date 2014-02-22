@@ -5,7 +5,7 @@ from flask.ext.security import current_user, login_required
 from sqlalchemy import or_
 
 from ..user.forms import NewProviderForm, NewConsumerForm, RemoveItemForm
-from ..consumer.forms import ConsumerInfoForm, HairRoutineForm
+from ..consumer.forms import ConsumerInfoForm, HairRoutineForm, HairJourneyForm, HairStatusForm
 from ..forms import (ConsumerDashForm, ProviderDashForm, MenuItemForm,
     FileUploadForm, AddressForm, HoursForm)
 
@@ -122,9 +122,18 @@ def save_menu_item():
 
     return redirect(url_for('.profile'))
 
+@dashboard.route('/consumer/hair-journey', methods=['POST'])
+def hair_journey():
+    pass
+
+@dashboard.route('/consumer/hair-status', methods=['POST'])
+def hair_status():
+    pass
+
 @dashboard.route('/consumer/hair_routine', methods=['POST'])
 def hair_routine():
     form = HairRoutineForm()
+    consumer = current_user.consumer
 
     if not form.validate_on_submit():
         if form.errors:
@@ -134,14 +143,14 @@ def hair_routine():
         consumer.hair_routine.hair_condition        = ' '.join(form.hair_condition.data)
         consumer.hair_routine.scalp_condition       = ' '.join(form.scalp_condition.data)
 
-        consumer.hair_routine.chemical_treat        = form.treat.data
-        consumer.hair_routine.last_treatment        = form.last_treat.data
+        consumer.hair_routine.chemical_treat        = form.chemical_treat.data
+        consumer.hair_routine.last_treatment        = form.last_treatment.data
         consumer.hair_routine.fav_style             = form.fav_style.data
-        consumer.hair_routine.shampoo_type          = form.shampoo.data
-        consumer.hair_routine.shampoo_frequency     = form.shampoo_freq.data
-        consumer.hair_routine.conditioner_type      = form.conditioner.data
-        consumer.hair_routine.condition_frequency   = form.condition_freq.data
-        consumer.hair_routine.last_trim             = form.trim_last.data
+        consumer.hair_routine.shampoo_type          = form.shampoo_type.data
+        consumer.hair_routine.shampoo_frequency     = form.shampoo_frequency.data
+        consumer.hair_routine.conditioner_type      = form.conditioner_type.data
+        consumer.hair_routine.condition_frequency   = form.condition_frequency.data
+        consumer.hair_routine.last_trim             = form.last_trim.data
 
         consumer.save()
 
@@ -192,6 +201,8 @@ def profile():
         form = ConsumerDashForm()
         consumer_info_form  = ConsumerInfoForm()
         hair_routine_form   = HairRoutineForm()
+        hair_status_form    = HairStatusForm()
+        hair_journey_form   = HairJourneyForm()
 
         if not form.validate_on_submit():
             if form.errors:
@@ -210,20 +221,22 @@ def profile():
         consumer_info_form.last_name.data     = consumer.user.last_name
         consumer_info_form.email.data         = consumer.user.email
 
-        hair_routine_form.hair_condition.data    = consumer.hair_routine.hair_condition.split(' ')
-        hair_routine_form.scalp_condition.data   = consumer.hair_routine.scalp_condition.split(' ')
-        hair_routine_form.treat.data             = consumer.hair_routine.chemical_treat
-        hair_routine_form.last_treat.data        = consumer.hair_routine.last_treatment
-        hair_routine_form.fav_style.data         = consumer.hair_routine.fav_style
-        hair_routine_form.shampoo.data           = consumer.hair_routine.shampoo_type
-        hair_routine_form.shampoo_freq.data      = consumer.hair_routine.shampoo_frequency
-        hair_routine_form.conditioner.data       = consumer.hair_routine.conditioner_type
-        hair_routine_form.condition_freq.data    = consumer.hair_routine.condition_frequency
-        hair_routine_form.trim_last.data         = consumer.hair_routine.last_trim
+        hair_routine_form.hair_condition.data        = consumer.hair_routine.hair_condition.split(' ')
+        hair_routine_form.scalp_condition.data       = consumer.hair_routine.scalp_condition.split(' ')
+        hair_routine_form.chemical_treat.data        = consumer.hair_routine.chemical_treat
+        hair_routine_form.last_treatment.data        = consumer.hair_routine.last_treatment
+        hair_routine_form.fav_style.data             = consumer.hair_routine.fav_style
+        hair_routine_form.shampoo_type.data          = consumer.hair_routine.shampoo_type
+        hair_routine_form.shampoo_frequency.data     = consumer.hair_routine.shampoo_frequency
+        hair_routine_form.conditioner_type.data      = consumer.hair_routine.conditioner_type
+        hair_routine_form.condition_frequency.data   = consumer.hair_routine.condition_frequency
+        hair_routine_form.last_trim.data             = consumer.hair_routine.last_trim
 
         return render_template('dashboard/consumer.jade',
                 consumer_info_form=consumer_info_form,
+                hair_status_form=hair_status_form,
                 hair_routine_form=hair_routine_form,
+                hair_journey_form=hair_journey_form,
                 avatar_upload_form=FileUploadForm(),
                 gallery_upload_form=FileUploadForm(),
                 consumer=current_user.consumer,
