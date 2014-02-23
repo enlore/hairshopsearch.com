@@ -5,11 +5,14 @@ block body
       .col-sm-4.col-sm-push-8
         .row.buttons
           .col-sm-6
-            .btn.btn-primary.
-              View Your Profile
+            a(href="{{ url_for('frontend.consumer_url', consumer_url=consumer.consumer_url) }}")
+              .btn.btn-primary.
+                View Your Profile
+
           .col-sm-6
-            .btn.btn-concerned.
-              Change Your Password
+            a(href="{{ url_for('security.change_password') }}")
+              .btn.btn-concerned.
+                Change Your Password
 
         .consumer.thumb-container.large
           img.img-responsive(src="http://placehold.it/165x165")
