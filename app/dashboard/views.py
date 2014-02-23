@@ -124,11 +124,31 @@ def save_menu_item():
 
 @dashboard.route('/consumer/hair-journey', methods=['POST'])
 def hair_journey():
-    pass
+    form = HairJourneyForm()
+    consumer = current_user.consumer
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+
+    else:
+        consumer.hair_journey = form.journey.data
+        consumer.save()
+        return redirect(url_for('.profile'))
 
 @dashboard.route('/consumer/hair-status', methods=['POST'])
 def hair_status():
-    pass
+    form = HairStatusForm()
+    consumer = current_user.consumer
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+
+    else:
+        consumer.hair_status = form.status.data
+        consumer.save()
+        return redirect(url_for('.profile'))
 
 @dashboard.route('/consumer/hair_routine', methods=['POST'])
 def hair_routine():
@@ -160,6 +180,7 @@ def hair_routine():
 @dashboard.route('/consumer/user', methods=['POST'])
 def user_info():
     form = ConsumerInfoForm()
+    consumer = current_user.consumer
 
     if not form.validate_on_submit():
         if form.errors:
@@ -175,6 +196,7 @@ def user_info():
 @dashboard.route('/consumer/avatar', methods=['POST'])
 def save_consumer_avatar():
     form = FileUploadForm()
+    consumer = current_user.consumer
 
     if form.validate_on_submit():
         if form.errors:
@@ -231,6 +253,9 @@ def profile():
         hair_routine_form.conditioner_type.data      = consumer.hair_routine.conditioner_type
         hair_routine_form.condition_frequency.data   = consumer.hair_routine.condition_frequency
         hair_routine_form.last_trim.data             = consumer.hair_routine.last_trim
+
+        hair_journey_form.journey.data               = consumer.hair_journey
+        hair_status_form.status.data                 = consumer.hair_status
 
         return render_template('dashboard/consumer.jade',
                 consumer_info_form=consumer_info_form,
