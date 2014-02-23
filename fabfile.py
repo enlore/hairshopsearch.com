@@ -13,7 +13,7 @@ def t():
     """Run tha tests
     """
 
-    local('nosetests')
+    local('py.test')
 
 def reset():
     """Reset local dev environment"""
