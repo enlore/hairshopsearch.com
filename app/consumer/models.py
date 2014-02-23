@@ -26,9 +26,18 @@ class Consumer(db.Model, ConsumerSerializer):
     _db = db
 
     def __init__(self, **kwargs):
+        self.user               = kwargs.get('user', '')
         self.hair_routine       = HairRoutine()
         self.hair_journey       = kwargs.get('hair_journey', '')
         self.hair_status        = kwargs.get('hair_status', '')
+
+    def __repr__(self):
+        return ('{} {} {} {}'.format(
+            self.id,
+            self.user.email,
+            self._consumer_url,
+            self.hair_status
+            ))
 
     def save(self):
         self._db.session.add(self)

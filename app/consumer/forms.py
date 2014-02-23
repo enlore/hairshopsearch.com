@@ -1,5 +1,15 @@
 from flask_wtf import Form
-from wtforms import TextField, SubmitField, SelectMultipleField, SelectField
+from wtforms import TextField, SubmitField, SelectMultipleField, SelectField, TextAreaField
+
+from markupsafe import Markup
+
+class HairJourneyForm(Form):
+    journey = TextAreaField("What's the story of your hair?")
+    submit  = SubmitField("Tell It")
+
+class HairStatusForm(Form):
+    status = TextField("What's your hair status?")
+    submit = SubmitField("Update Your Status")
 
 class ConsumerInfoForm(Form):
     first_name      = TextField('First Name')
@@ -77,35 +87,35 @@ def multi_checkboxes(field, ul_class=u'', **kwargs):
     return Markup('\n').join(html)
 
 class HairRoutineForm(Form):
-    hair_condition  = SelectMultipleField('What is your hair condition?',
-                        widget=multi_checkboxes,
-                        choices=hair_condition)
+    hair_condition      = SelectMultipleField('What is your hair condition?',
+                            widget=multi_checkboxes,
+                            choices=hair_condition)
 
-    scalp_condition = SelectMultipleField('What is your scalp condition?',
-                        widget=multi_checkboxes,
-                        choices=scalp_condition)
+    scalp_condition     = SelectMultipleField('What is your scalp condition?',
+                            widget=multi_checkboxes,
+                            choices=scalp_condition)
 
-    treat           = SelectField('Do you relax or chemically treat your hair?',
-                        choices=[
-                            ('none', 'No answer'),
-                            ('yes', 'Yes'),
-                            ('no', 'No')
-                            ])
+    chemical_treat      = SelectField('Do you relax or chemically treat your hair?',
+                            choices=[
+                                ('none', 'No answer'),
+                                ('yes', 'Yes'),
+                                ('no', 'No')
+                                ])
 
-    last_treat      = SelectField('When was your last treatment?',
-                        choices=treat_last)
+    last_treatment      = SelectField('When was your last treatment?',
+                            choices=treat_last)
 
-    fav_style       = TextField('What is your favorite cut or style?')
+    fav_style           = TextField('What is your favorite cut or style?')
 
-    shampoo         = TextField('What shampoo do you use?')
-    shampoo_freq    = SelectField('How often do you shampoo your hair?',
+    shampoo_type        = TextField('What shampoo do you use?')
+    shampoo_frequency   = SelectField('How often do you shampoo your hair?',
                         choices=maintenance_freq)
 
-    conditioner     = TextField('What conditioner do you use?')
-    condition_freq  = SelectField('How often do you condition your hair?',
-                        choices=maintenance_freq)
+    conditioner_type    = TextField('What conditioner do you use?')
+    condition_frequency = SelectField('How often do you condition your hair?',
+                            choices=maintenance_freq)
 
-    trim_last       = SelectField('When was your hair last trimmed?',
-                        choices=trim_last)
+    last_trim           = SelectField('When was your hair last trimmed?',
+                            choices=trim_last)
 
-    submit          = SubmitField('Save Changes')
+    submit              = SubmitField('Save Changes')

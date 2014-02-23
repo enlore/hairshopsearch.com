@@ -2,56 +2,6 @@ $(document).on('ready', function() {
     /* Nail thumb */
     $('.thumb-container').nailthumb()
 
-    /* Gallery init and config */
-    $.Elastislide.defaults = {
-        orientation: 'horizontal',
-        minItems: 3,
-        start: 0,
-        easing: 'ease-in-out',
-        onClick: function (el, position, evt) { return false },
-        onReady: function () { return false },
-        onBeforeSlide: function () { return false },
-        onAfterSlide: function () { return false }
-    }
-
-    $gallery = $('#elastigallery')
-    $gallery_view = $('#gallery-view')
-
-    $gallery.elastislide()
-
-    $gallery.on('click', function (e) {
-            console.log(e.target)
-            $gallery_view.find('img').attr({src: e.target.src})
-    })
-
-    // turn the profile section headers blue on hover and click
-    var $profile_header = $('.profile-header h3')
-        , mover_color = '#3DAA98'
-
-    $profile_header.mouseenter( function(e) {
-        $(this).css({'background-color': mover_color})
-    }).mouseleave(function(e) {
-        $(this).css({'background-color': ''})
-    })
-
-    $profile_header.click(function(e) {
-        console.log(e.target)
-        $(this).toggleClass('active')
-    })
-
-    // placeholder text on index search form
-    var selectors = [$('#service'), $('#zip_code')]
-
-    // on focus, set value to ''
-    for (var i = 0; i < selectors.length; i++) {
-        selectors[i].val(selectors[i].data('placeholder'))
-
-        selectors[i].focusin(function () {
-            $(this).val('')
-            console.log('focus in')
-        })    
-    }
-
     // register form confirm password validation
     var $pwd_confirm    = $('#password_confirm')
         , $pwd          = $('#password')
@@ -65,7 +15,7 @@ $(document).on('ready', function() {
               , container = $('<div/>', {'class': 'container'})
             flash_list.append($("<li/>", {'class': 'error', 'text': "Passwords don't match"}))
             flash_list.appendTo(container)
-             
+
             $('.page-wrap').prepend(container)
             return false
         }
