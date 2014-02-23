@@ -52,10 +52,11 @@ class ConsumerDashForm(Form):
 
 payment_methods = [
         ('cash', 'Cash'),
-        ('check', 'Check'),
+        ('discover', 'Discover'),
         ('visa', 'Visa'),
         ('mastercard', 'Mastercard'),
-        ('amex', 'Amex')
+        ('amex', 'Amex'),
+        ('paypal', 'Paypal')
         ]
 
 
