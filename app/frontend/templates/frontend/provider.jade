@@ -1,12 +1,17 @@
 extends layouts/base.html
 block body
-  .container.provider
+  .provider.dashboard.container
     .row
       .col-sm-12
         .banner
-          img.img-responsive(src="http://placehold.it/1200x350&text=Banner")
+          -if provider.banner
+            img.img-responsive.banner(src="#{provider.banner.url}")
+          -else
+            img.img-responsive.banner(src="http://placehold.it/1200x350&text=Banner")
+
           -if provider.avatar
-            img.img-responsive.portrait(src="#{provider.avatar.sm_thumb}")
+            .thumb-container.large.portrait
+              img.img-responsive(src="#{provider.avatar.sm_thumb}")
           -else
             img.img-responsive.portrait(src="http://placehold.it/165x165")
 
@@ -60,7 +65,8 @@ block body
             .row.gallery
             -each pic in provider.gallery.photos
               .col-sm-3
-                img.img-responsive(src="#{pic.sm_thumb}")
+                .thumb-container.small
+                  img.img-responsive(src="#{pic.sm_thumb}")
         .row
           .col-sm-12
             h2 Happy Customers
