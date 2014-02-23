@@ -225,6 +225,7 @@ def profile():
         hair_routine_form   = HairRoutineForm()
         hair_status_form    = HairStatusForm()
         hair_journey_form   = HairJourneyForm()
+        file_upload_form    = FileUploadForm()
 
         if not form.validate_on_submit():
             if form.errors:
@@ -259,6 +260,7 @@ def profile():
 
         return render_template('dashboard/consumer.jade',
                 consumer_info_form=consumer_info_form,
+                file_upload_form=file_upload_form,
                 hair_status_form=hair_status_form,
                 hair_routine_form=hair_routine_form,
                 hair_journey_form=hair_journey_form,

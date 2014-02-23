@@ -15,7 +15,19 @@ block body
                 Change Your Password
 
         .consumer.thumb-container.large
-          img.img-responsive(src="http://placehold.it/165x165")
+          img.img-responsive(src="#{consumer.avatar.sm_thumb}")
+
+        form.form-horizontal(action="{{ url_for('dashboard.save_avatar') }}", method="post", role="form", enctype="multipart/form-data")
+          = file_upload_form.csrf_token()
+
+          .form-group
+            = file_upload_form.up_file.label(class_="col-sm-4 control-label")
+            .col-sm-8
+              = file_upload_form.up_file(class_="form-control")
+
+          .form-group
+            .col-sm-4.col-sm-offset-4
+              input.btn.btn-cta(type="submit")
 
         form.form-horizontal(action="{{ url_for('dashboard.user_info') }}", method="post", role="form")
           = consumer_info_form.csrf_token()
