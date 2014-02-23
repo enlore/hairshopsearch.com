@@ -1,97 +1,20 @@
 extends layouts/base.html
 block body
-  .consumer.container
+  .consumer.dashboard.container
     .row
-      .col-sm-12
-        ul
-          li= consumer.hair_status
-          li= consumer.hair_journey
+      .col-sm-4.col-sm-push-8
+        .row
+          .col-sm-12
+            .buttons
+              .btn.btn-primary.
+                View Your Profile
 
-    .row
-      .col-sm-8
-        form.form-horizontal(action="{{ url_for('dashboard.hair_status') }}", method="post", role="form")
-          = hair_status_form.csrf_token()
+              .btn.btn-concerned.
+                Change Your Password
 
-          .form-group
-            = hair_status_form.status.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_status_form.status(class_="form-control")
+        .consumer.thumb-container.large
+          img.img-responsive(src="http://placehold.it/165x165")
 
-          .form-group
-            = hair_status_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
-    .row
-      .col-sm-8
-        form.form-horizontal(action="{{ url_for('dashboard.hair_journey') }}", method="post", role="form")
-          = hair_journey_form.csrf_token()
-
-          .form-group
-            = hair_journey_form.journey.label(class_="col-sm-4 control-label")
-            .col-sm-8
-              = hair_journey_form.journey(class_="form-control")
-
-          .form-group
-            = hair_journey_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
-
-    .row
-      .col-sm-8
-        form.form-horizontal(action="{{ url_for('.hair_routine') }}", method="post", role="form")
-          = hair_routine_form.csrf_token()
-
-          .form-group
-            = hair_routine_form.hair_condition.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.hair_condition(class_="form-control")
-
-          .form-group
-            = hair_routine_form.scalp_condition.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.scalp_condition(class_="form-control")
-
-          .form-group
-            = hair_routine_form.chemical_treat.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.chemical_treat(class_="form-control")
-
-          .form-group
-            = hair_routine_form.last_treatment.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.last_treatment(class_="form-control")
-
-          .form-group
-            = hair_routine_form.fav_style.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.fav_style(class_="form-control")
-
-          .form-group
-            = hair_routine_form.shampoo_type.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.shampoo_type(class_="form-control")
-
-          .form-group
-            = hair_routine_form.shampoo_frequency.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.shampoo_frequency(class_="form-control")
-
-          .form-group
-            = hair_routine_form.conditioner_type.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.conditioner_type(class_="form-control")
-
-          .form-group
-            = hair_routine_form.condition_frequency.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.condition_frequency(class_="form-control")
-
-          .form-group
-            = hair_routine_form.last_trim.label(class_="control-label col-sm-4")
-            .col-sm-8
-              = hair_routine_form.last_trim(class_="form-control")
-
-          .form-group
-            = hair_routine_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
-
-      .col-sm-4
-        img.img-responsive(src="http://placehold.it/165x165")
         form.form-horizontal(action="{{ url_for('dashboard.user_info') }}", method="post", role="form")
           = consumer_info_form.csrf_token()
 
@@ -112,4 +35,93 @@ block body
 
           .form-group
             = consumer_info_form.submit(class_="btn btn-cta col-sm-4 col-sm-offset-4")
+
+      .col-sm-8.col-sm-pull-4
+        .row
+          .col-sm-12
+            h2 Tell us about your hair.
+            form.form-horizontal(action="{{ url_for('dashboard.hair_status') }}", method="post", role="form")
+              = hair_status_form.csrf_token()
+
+              .form-group
+                = hair_status_form.status.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_status_form.status(class_="form-control")
+
+              .form-group
+                = hair_status_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+        .row
+          .col-sm-12
+            form.form-horizontal(action="{{ url_for('dashboard.hair_journey') }}", method="post", role="form")
+              = hair_journey_form.csrf_token()
+
+              .form-group
+                = hair_journey_form.journey.label(class_="col-sm-4 control-label")
+                .col-sm-8
+                  = hair_journey_form.journey(class_="form-control")
+
+              .form-group
+                = hair_journey_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+
+        .row
+          .col-sm-12
+            h2 Fill out your online hair consultation:
+            form.form-horizontal(action="{{ url_for('.hair_routine') }}", method="post", role="form")
+              = hair_routine_form.csrf_token()
+
+              .form-group
+                = hair_routine_form.hair_condition.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.hair_condition(class_="form-control")
+
+              .form-group
+                = hair_routine_form.scalp_condition.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.scalp_condition(class_="form-control")
+
+              .form-group
+                = hair_routine_form.chemical_treat.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.chemical_treat(class_="form-control")
+
+              .form-group
+                = hair_routine_form.last_treatment.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.last_treatment(class_="form-control")
+
+              .form-group
+                = hair_routine_form.fav_style.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.fav_style(class_="form-control")
+
+              .form-group
+                = hair_routine_form.shampoo_type.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.shampoo_type(class_="form-control")
+
+              .form-group
+                = hair_routine_form.shampoo_frequency.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.shampoo_frequency(class_="form-control")
+
+              .form-group
+                = hair_routine_form.conditioner_type.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.conditioner_type(class_="form-control")
+
+              .form-group
+                = hair_routine_form.condition_frequency.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.condition_frequency(class_="form-control")
+
+              .form-group
+                = hair_routine_form.last_trim.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.last_trim(class_="form-control")
+
+              .form-group
+                = hair_routine_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+
+
+
 
