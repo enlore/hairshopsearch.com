@@ -81,6 +81,7 @@ class Provider(db.Model, ProviderSerializer):
                             uselist=False)
 
     avatar              = db.relationship('Photo', uselist=False)
+    banner              = db.relationship('Photo', uselist=False)
 
     _business_name      = db.Column(db.String)
     _business_url       = db.Column(db.String)
@@ -122,9 +123,6 @@ class Provider(db.Model, ProviderSerializer):
     payment_methods     = db.Column(db.String, default='')
 
     bio                 = db.Column(db.Text)
-    fb_url              = db.Column(db.String)
-    twitter_url         = db.Column(db.String)
-    links               = db.Column(db.String)
 
     menus               = db.relationship('Menu',
                             backref=db.backref('provider'))

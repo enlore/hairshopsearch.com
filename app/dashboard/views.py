@@ -45,6 +45,21 @@ def delete_photo(id):
     return redirect(url_for('.profile'))
 
 
+@dashboard.route('/provider/banner', methods=['POST'])
+def save_banner():
+    provider = current_user.provider
+    form = FileUploadForm()
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors, 'error')
+
+    else:
+        s3_keys = process_img(form.up_file.data)
+        provider.banner = Photo(**s3_keys)
+        provider.save()
+        return redirect(url_for('.profile'))
+
 @dashboard.route('/avatar', methods=['POST'])
 @login_required
 def save_avatar():
@@ -289,8 +304,6 @@ def profile():
             provider.payment_methods = ' '.join(form.payment_methods.data)
 
             provider.bio            = form.bio.data
-            provider.fb_url         = form.fb_url.data
-            provider.twitter_url    = form.twitter_url.data
 
             provider.save()
 
@@ -302,14 +315,11 @@ def profile():
         form.phone.data           = provider.phone
         form.payment_methods.data = provider.payment_methods
 
-        form.bio.data             = provider.bio
-        form.fb_url.data          = provider.fb_url
-        form.twitter_url.data     = provider.twitter_url
-
         address_form = AddressForm(obj=provider.address)
         hours_form = HoursForm(obj=provider.hours)
         gallery_upload_form = FileUploadForm()
         avatar_upload_form = FileUploadForm()
+        banner_upload_form = FileUploadForm()
 
         return render_template('dashboard/provider.html',
                 provider=current_user.provider,
@@ -319,6 +329,7 @@ def profile():
                 address_form=address_form,
                 rm_menu_item_form=rm_menu_item_form,
                 avatar_upload_form=avatar_upload_form,
+                banner_upload_form=banner_upload_form,
                 gallery_upload_form=gallery_upload_form)
 
     return redirect(url_for('frontend.welcome'))
