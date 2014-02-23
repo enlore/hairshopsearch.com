@@ -72,7 +72,7 @@ def consumer_url(consumer_url):
     c = Consumer.query.filter(Consumer.consumer_url==consumer_url.lower()).first()
     current_app.logger.info(c)
     if c:
-        return render_template('frontend/consumer.html', consumer=c)
+        return render_template('frontend/consumer.jade', consumer=c)
     else:
         abort(404)
 
