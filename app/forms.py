@@ -47,7 +47,6 @@ class ConsumerDashForm(Form):
     last_name       = TextField('Last Name', [Required()])
     email           = TextField('Email', [Required()])
     birth_day       = TextField('Birthday')
-
     submit          = SubmitField('Save Changes')
 
 
