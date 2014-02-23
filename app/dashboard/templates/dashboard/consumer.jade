@@ -3,14 +3,13 @@ block body
   .consumer.dashboard.container
     .row
       .col-sm-4.col-sm-push-8
-        .row
-          .col-sm-12
-            .buttons
-              .btn.btn-primary.
-                View Your Profile
-
-              .btn.btn-concerned.
-                Change Your Password
+        .row.buttons
+          .col-sm-6
+            .btn.btn-primary.
+              View Your Profile
+          .col-sm-6
+            .btn.btn-concerned.
+              Change Your Password
 
         .consumer.thumb-container.large
           img.img-responsive(src="http://placehold.it/165x165")
@@ -34,7 +33,8 @@ block body
               = consumer_info_form.email(class_="form-control")
 
           .form-group
-            = consumer_info_form.submit(class_="btn btn-cta col-sm-4 col-sm-offset-4")
+            .col-sm-4.col-sm-offset-4
+              = consumer_info_form.submit(class_="btn btn-cta")
 
       .col-sm-8.col-sm-pull-4
         .row
@@ -49,7 +49,8 @@ block body
                   = hair_status_form.status(class_="form-control")
 
               .form-group
-                = hair_status_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+                .col-sm-4.col-sm-offset-4
+                  = hair_status_form.submit(class_="btn btn-cta")
         .row
           .col-sm-12
             form.form-horizontal(action="{{ url_for('dashboard.hair_journey') }}", method="post", role="form")
@@ -61,7 +62,8 @@ block body
                   = hair_journey_form.journey(class_="form-control")
 
               .form-group
-                = hair_journey_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+                .col-sm-4.col-sm-offset-4
+                  = hair_journey_form.submit(class_="btn btn-cta")
 
         .row
           .col-sm-12
@@ -120,7 +122,8 @@ block body
                   = hair_routine_form.last_trim(class_="form-control")
 
               .form-group
-                = hair_routine_form.submit(class_="col-sm-4 col-sm-offset-4 btn btn-cta")
+                .col-sm-4.col-sm-offset-4
+                  = hair_routine_form.submit(class_="btn btn-cta")
 
 
 
