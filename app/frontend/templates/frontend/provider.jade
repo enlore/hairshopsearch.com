@@ -46,16 +46,9 @@ block body
     .row.paper-bg
       .col-sm-8.col-sm-offset-2
         ul.payment-methods
-          li
-            img(src="/static/img/icons/visa-straight-32px.png")
-          li
-            img(src="/static/img/icons/mastercard-straight-32px.png")
-          li
-            img(src="/static/img/icons/american-express-straight-32px.png")
-          li
-            img(src="/static/img/icons/discover-straight-32px.png")
-          li
-            img(src="/static/img/icons/cash_payment_64.png")
+          -each method in provider.payment_methods.split(' ')
+            li
+              img(src="/static/img/icons/#{method}.png")
 
     .row
       .col-sm-8
