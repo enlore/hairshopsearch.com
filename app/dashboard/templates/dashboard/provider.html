@@ -46,7 +46,7 @@
 
         <div class="row">
             <div class="col-sm-9 col-sm-offset-3">
-                <form class="" action="{{ url_for('dashboard.save_banner') }}" method="post" role="form">
+                <form class="form-horizontal" action="{{ url_for('dashboard.save_banner') }}" method="post" role="form" enctype="multipart/form-data">
                     {{ banner_upload_form.csrf_token() }}
                     <div class="form-group">
                         <label for="" class="control-label col-sm-4">Upload your banner image</label>
