@@ -15,7 +15,10 @@ block body
                 Change Your Password
 
         .consumer.thumb-container.large
-          img.img-responsive(src="#{consumer.avatar.sm_thumb}")
+          -if consumer.avatar
+            img.img-responsive(src="#{consumer.avatar.sm_thumb}")
+          -else
+            img.img-resonsive(src="http://placehold.it/200x200")
 
         form.form-horizontal(action="{{ url_for('dashboard.save_avatar') }}", method="post", role="form", enctype="multipart/form-data")
           = file_upload_form.csrf_token()
