@@ -17,6 +17,10 @@ if Config.DEBUG:
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
+@frontend.route('/contact-us')
+def contact_us():
+    return render_template('frontend/contact-us.jade')
+
 @frontend.route('/about-us')
 def about_us():
     return render_template('frontend/about_us.jade')
