@@ -29,6 +29,9 @@
                 {{ render_field(login_user_form.next) }}
                 <div class="form-group">
                     {{ login_user_form.submit(class_="btn btn-cta col-sm-2 col-sm-offset-2") }}
+                    <div class="col-sm-2">
+                        <a href="{{ url_for('security.forgot_password') }}" class="btn btn-concerned"> Forgot Password? </a>
+                    </div>
                 </div>
             </form>
         </div>
