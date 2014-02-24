@@ -56,7 +56,11 @@ def save_banner():
 
     else:
         s3_keys = process_img(form.up_file.data)
-        provider.banner = Photo(**s3_keys)
+        provider.banner = Photo(
+            url=s3_keys['original'],
+            sm_thumb=s3_keys['sm_thumb'],
+            lg_thumb=s3_keys['lg_thumb']
+            )
         provider.save()
         return redirect(url_for('.profile'))
 
