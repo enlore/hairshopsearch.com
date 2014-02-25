@@ -9,28 +9,32 @@
     </div><!-- /.row -->
 
     <div class="row">
-        <div class="col-md-6 panel">
-            <h1>
-                I am a provider.
-            </h1>
-            <p>
-                I own or work at a salon, barbershop, or small business that offers
-                hair care and beauty products.  I want to create a provider profile
-                listing to market my business.
-            </p>
+        <div class="col-md-6">
+            <div class="panel">
+                <h1>
+                    I am a provider.
+                </h1>
+                <p>
+                    I own or work at a salon, barbershop, or small business that offers
+                    hair care and beauty products.  I want to create a provider profile
+                    listing to market my business.
+                </p>
 
-            <a class="btn btn-hss" href="{{ url_for('dashboard.new_provider') }}">Click Here</a>
+                <a class="btn btn-cta center-block" href="{{ url_for('dashboard.new_provider') }}">Click Here</a>
+            </div>
         </div><!-- /.row -->
 
-        <div class="col-md-6 panel right">
-            <h1>
-                I am a customer.
-            </h1>
-            <p>
-                I am looking for hair care and beauty solutions.  I want to create
-                a consumer profile and find solutions.
-            </p>
-            <a class="btn btn-hss" href="{{ url_for('dashboard.new_consumer') }}">Click Here</a>
+        <div class="col-md-6">
+            <div class="panel right">
+                <h1>
+                    I am a customer.
+                </h1>
+                <p>
+                    I am looking for hair care and beauty solutions.  I want to create
+                    a consumer profile and find solutions.
+                </p>
+                <a class="btn btn-cta center-block" href="{{ url_for('dashboard.new_consumer') }}">Click Here</a>
+            </div>
         </div><!-- /.row -->
     </div>
 </div>
