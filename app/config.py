@@ -48,7 +48,6 @@ class Config(DevConfig):
 
     DEBUG = True
     GEOCODING_SERVICE_URI = 'http://www.mapquestapi.com/geocoding/v1/address'
-    GEOCODING_SERVICE_KEY = 'Fmjtd|luur2162ng,aa=o5-90z05z'
 
     LESS_BIN = 'lessc'
     LESS_PREPROCESS = True
