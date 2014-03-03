@@ -5,9 +5,9 @@ block body
       .col-sm-12
         .banner
           -if provider.banner
-            img.img-responsive.banner(src="#{provider.banner.url}")
+            img.img-responsive(src="#{provider.banner.url}")
           -else
-            img.img-responsive.banner(src="http://placehold.it/1200x350&text=Banner")
+            img.img-responsive(src="http://placehold.it/1200x350&text=Banner")
 
           -if provider.avatar
             .thumb-container.large.portrait
