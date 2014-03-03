@@ -87,6 +87,7 @@ def _register_pre_stuff(app):
     @app.before_first_request
     def check_for_uploads_dir():
         if not os.path.isdir(app.config['UPLOAD_DIR']):
+            print('~~~~~> Making uploads dir at {}'.format(app.config['UPLOAD_DIR']))
             os.makedirs(app.config['UPLOAD_DIR'])
 
 def _bootstrap_blueprints(app, pkg_name, pkg_path):
