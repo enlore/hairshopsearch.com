@@ -14,7 +14,11 @@
 
     }
     .gallery img { margin-bottom: 10px; }
-    .banner { position: relative; }
+    .banner {
+        position: relative;
+        max-height: 325px;
+        overflow: hidden;
+    }
     .portrait {
         position: absolute;
         left: 15px;
@@ -22,6 +26,7 @@
         border: 3px solid @orange;
         width: 225px;
         height: 225px;
+        margin: 0;
     }
 }
 
