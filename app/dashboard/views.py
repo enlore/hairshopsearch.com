@@ -9,7 +9,7 @@ from ..consumer.forms import ConsumerInfoForm, HairRoutineForm, HairJourneyForm,
 from ..forms import (ConsumerDashForm, ProviderDashForm, MenuItemForm,
     FileUploadForm, AddressForm, HoursForm)
 
-from ..models import (Gallery, Photo, Product)
+from ..models import (Gallery, Photo, Banner, Product)
 from ..provider.models import (Provider, Menu, MenuItem, ProviderInstance,
     Address, Hours, Location)
 from ..consumer.models import (Consumer, ConsumerInstance, HairRoutine)
@@ -56,7 +56,7 @@ def save_banner():
 
     else:
         s3_keys = process_img(form.up_file.data)
-        provider.banner = Photo(
+        provider.banner = Banner(
             url=s3_keys['original'],
             sm_thumb=s3_keys['sm_thumb'],
             lg_thumb=s3_keys['lg_thumb']
@@ -375,8 +375,8 @@ def new_provider():
         provider.save()
         provider.index()
 
-        db.session.add(pi)
-        db.session.commit()
+        #db.session.add(pi)
+        #db.session.commit()
 
         return redirect(url_for('dashboard.new_address'))
     return render_template('dashboard/new_provider.jade', form=form)

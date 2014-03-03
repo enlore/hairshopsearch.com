@@ -8,7 +8,7 @@ import requests
 
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
-            'gallery', 'avatar', 'products',
+            'gallery', 'avatar', 'products', 'banner',
             'hours', 'user', 'favorited_by',
             'reviews', 'fb_url', 'links', 'twitter_url', 'phone',
             '_business_url', 'email', 'bio', 'address', 'payment_methods',
@@ -81,7 +81,7 @@ class Provider(db.Model, ProviderSerializer):
                             uselist=False)
 
     avatar              = db.relationship('Photo', uselist=False)
-    banner              = db.relationship('Photo', uselist=False)
+    banner              = db.relationship('Banner', uselist=False)
 
     _business_name      = db.Column(db.String)
     _business_url       = db.Column(db.String)

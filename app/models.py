@@ -54,6 +54,12 @@ class Photo(db.Model):
     gallery_id          = db.Column(db.Integer, db.ForeignKey('gallery.id'))
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
 
+class Banner(db.Model):
+    id                  = db.Column(db.Integer, primary_key=True)
+    url                 = db.Column(db.Text)
+    sm_thumb            = db.Column(db.Text)
+    lg_thumb            = db.Column(db.Text)
+    provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
 
 class Gallery(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
