@@ -26,8 +26,6 @@ class DevConfig(Default):
     MAIL_SERVER = 'smtp.mailgun.org'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'postmaster@hairshopsearch.com'
-    MAIL_PASSWORD = '4potz4gocm60'
 
     SECURITY_REGISTERABLE = True
     SECURITY_SEND_REGISTER_EMAIL = True
