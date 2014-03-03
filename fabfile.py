@@ -18,7 +18,8 @@ def t():
 def reset():
     """Reset local dev environment"""
 
-    local('python manage.py reset_db')
+    instance = os.path.join(os.getcwd(), 'instance')
+    local('python manage.py -i {} reset_db'.format(instance))
 
 def rebuild_index(filename):
     local('python manage.py reset_index provider')
@@ -39,7 +40,7 @@ def r():
     local('python manage.py -i {} run'.format(instance))
 
 def sh():
-    """Gimme that fancy script Shell
+    """Gimme that fancy shell
     """
 
     local('python manage.py --config dev.cfg shell')
@@ -67,11 +68,12 @@ def deploy():
     with cd('/tmp'):
         run('tar xzf /tmp/%s.tar.gz' % dist)
         with cd('%s' % dist):
-            run('/var/www/hss-proto/venv/bin/python setup.py install')
+            run('/home/no/.virtualenvs/hss-app/bin/python setup.py install')
 
     run('rm -rf /tmp/%s.tar.gz /tmp/%s' % (dist, dist))
 
-    local('tar czvf static.tar.gz app/static/')
-    put('static.tar.gz', '/tmp/static.tar.gz')
-    with cd('/var/www/hss-proto'):
-        run('tar xzvf /tmp/static.tar.gz')
+    # create instance folder
+    # push production conf
+    put('dist/config.py', '/var/www/hss-proto/instance')
+    put('fabfile.py', '/var/www/hss-proto')
+    put('manage.py', '/var/www/hss-proto')
