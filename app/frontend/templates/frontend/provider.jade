@@ -56,9 +56,17 @@ block body
         h4 We Accept:
       .col-sm-9
         ul.payment-methods
-          -each method in provider.payment_methods.split(' ')
+          -if provider.payment_methods == ''
             li
-              img(src="/static/img/icons/#{method}.png")
+              p Nothing? 
+              p.
+                This provider probably wants to take your money, but they need to list a payment
+                method to do it!
+          -else
+            -each method in provider.payment_methods.split(' ')
+              li
+                img(src="/static/img/icons/#{method}.png", title="#{method}")
+                p= method | capitalize
 
     .row
       .col-sm-8
