@@ -14,6 +14,15 @@ from ..core import db
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
+@frontend.route('/favorite/<int:provider_id>')
+def favorite(provider_id):
+    if current_user.consumer:
+        consumer = current_user.consumer
+        provider = Provider.get(provider_id)
+        consumer.favorites.append(provider)
+        consumer.save()
+        return redirect(url_for('.provider_url', provider_url=provider.business_url))
+
 @frontend.route('/contact-us')
 def contact_us():
     return render_template('frontend/contact-us.jade')
