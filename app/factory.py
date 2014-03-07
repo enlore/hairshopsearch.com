@@ -11,13 +11,11 @@ import pkgutil
 import importlib
 import locale
 import os
+import pyjade
 from logging import Formatter, ERROR, INFO
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 locale.setlocale(locale.LC_ALL, 'en_CA.UTF-8')
-
-def pretty_cash(amount):
-    return locale.currency(amount)
 
 def _create_app(pkg_name, pkg_path, instance_path, config):
     """Internal app factory.
@@ -35,6 +33,10 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
             static_url_path='/static',
             template_folder='templates'
             )
+
+    @pyjade.register_filter('cash')
+    def pretty_cash(amount):
+        return locale.currency(amount)
 
     # a little jinja config - whitespace control
     app.jinja_env.lstrip_blocks = True
@@ -64,6 +66,7 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
     _register_pre_stuff(app)
     _bootstrap_blueprints(app, pkg_name, pkg_path)
     _leverage_logging(app)
+
     return app
 
 def _config_app(app, config):

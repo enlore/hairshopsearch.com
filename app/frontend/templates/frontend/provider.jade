@@ -18,7 +18,8 @@ block body
     .row
       .col-sm-6
         h1= provider.business_name
-        h4 15 consider us a favorite
+
+        h4 #{provider.favorited_by.all() | count} consider us a favorite
         p.phone= provider.phone
 
         -if current_user.consumer
