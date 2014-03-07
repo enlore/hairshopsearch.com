@@ -18,11 +18,15 @@ block body
     .row
       .col-sm-6
         h1= provider.business_name
-        address
-          p #{provider.address.street_1} #{provider.address.street_2}
-          p #{provider.address.city}, #{provider.address.state}
-
+        h4 15 consider us a favorite
         p.phone= provider.phone
+
+        -if current_user.consumer
+          .row 
+            .col-sm-12
+              a.btn.btn-cta(href="#{ url_for('frontend.favorite', provider_id=provider.id) }")
+                span.glyphicon.glyphicon-star-empty  Favorite Us!
+
 
 
       .col-sm-6
@@ -38,10 +42,13 @@ block body
               td Mon
               td 8
               td 9
-        .row
-          .col-sm-12
-            button.btn.btn-cta
-              span.glyphicon.glyphicon-star-empty  Favorite Us!
+
+        a(data-toggle="modal", data-target="#hours-modal") View More Hours
+
+        address
+          p #{provider.address.street_1} #{provider.address.street_2}
+          p #{provider.address.city}, #{provider.address.state}
+
 
     .row.paper-bg
       .col-sm-8.col-sm-offset-2
@@ -99,3 +106,53 @@ block body
                     td 15.00
 
 
+  #hours-modal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h1 The Hours
+        .modal-body
+          table.table.hours
+            thead
+              tr
+                th Day
+                th Open
+                th Close
+
+            tbody
+              tr
+                td Monday
+                td= provider.hours.monday_open
+                td= provider.hours.monday_close
+
+              tr
+                td Tuesday
+                td= provider.hours.tuesday_open
+                td= provider.hours.tuesday_close
+
+              tr
+                td Wednesday
+                td= provider.hours.wednesday_open
+                td= provider.hours.wednesday_close
+
+              tr
+                td Thursday
+                td= provider.hours.thursday_open
+                td= provider.hours.thursday_close
+
+              tr
+                td Friday
+                td= provider.hours.friday_open
+                td= provider.hours.friday_close
+
+              tr
+                td Saturday
+                td= provider.hours.saturday_open
+                td= provider.hours.saturday_close
+
+              tr
+                td Sunday
+                td= provider.hours.sunday_open
+                td= provider.hours.sunday_close
+
+        .modal-footer
