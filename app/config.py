@@ -51,7 +51,6 @@ class Config(DevConfig):
     LESS_PREPROCESS = True
     CSS_BUNDLES = {
             'css': (
-                'css/normalize.css',
                 'css/jquery.nailthumb.1.1.min.css',
                 'css/main.less'
                 )
