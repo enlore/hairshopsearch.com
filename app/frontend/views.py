@@ -12,9 +12,6 @@ from ..models import User, Photo
 from ..config import Config
 from ..core import db
 
-if Config.DEBUG:
-    from ..forms import TestForm
-
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
 @frontend.route('/contact-us')
@@ -32,14 +29,6 @@ def gallery(user_id):
     entity = user.provider or user.consumer
     gallery = entity.gallery
     return render_template('frontend/gallery.html', title=title, gallery=gallery)
-
-
-@frontend.route('/test_flash')
-def test_flash():
-    flash('An error, oh noes!', 'error')
-    flash('Some helpful info.', 'info')
-    flash('To drive your enemies before you', 'success')
-    return redirect(url_for('frontend.index'))
 
 @frontend.route('/')
 def index():
@@ -128,22 +117,3 @@ def tos():
 @frontend.route('/privacy_policy')
 def privacy_policy():
     return render_template('frontend/privacy_policy.html')
-
-if Config.DEBUG == True:
-    @frontend.route('/sandbox')
-    def sandbox():
-        form = TestForm()
-        return render_template('frontend/sandbox.html', form=form)
-
-    @frontend.route('/test_provider')
-    def test_provider():
-        provider = Provider.query.first()
-        current_app.logger.info(provider.business_url)
-        if not provider.business_url:
-            provider.business_url = provider.business_name
-        return render_template('frontend/provider.html', provider=provider)
-
-    @frontend.route('/test_consumer')
-    def test_consumer():
-        consumer = Consumer.query.first()
-        return render_template('frontend/consumer.html', consumer=consumer)
