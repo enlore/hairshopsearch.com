@@ -14,15 +14,22 @@ block body
       .col-sm-8.col-sm-pull-4
         .row
           .col-sm-12
-            h2= consumer.hair_status
+            -if consumer.hair_status == ''
+              h2 Default
+            -else
+              h2= consumer.hair_status
 
         .row
           .col-sm-12
             h3 This is my hair story:
-            p= consumer.hair_journey
+            -if consumer.hair_journey == ''
+              p My story is still in the works!
+            -else
+              p= consumer.hair_journey
 
         .row
           .col-sm-12
+            h3 My Hair Consultation:
             p= consumer.hair_routine.hair_condition
             p= consumer.hair_routine.chemical_treat
             p= consumer.hair_routine.last_treatment
@@ -31,3 +38,9 @@ block body
             p= consumer.hair_routine.shampoo_frequency
             p= consumer.hair_routine.scalp_condition
             p= consumer.hair_routine.last_trim
+
+        .row
+          .col-sm-12
+            h3 My Favorite HairShops:
+            -each fav in consumer.favorites
+              fav.business_name 

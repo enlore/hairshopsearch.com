@@ -82,20 +82,18 @@ block body
           .col-sm-12
             h2 Happy Customers
             .row
-              .col-sm-12
-                h3 Suzy Q <span class="pull-right glyphicon glyphicon-star"> Fav'd!</span>
-                p.
-                  "loved the service, great work"
-            .row
-              .col-sm-12
-                h3 Jimmy Q <span class="pull-right glyphicon glyphicon-star-empty"> Fav me</span>
-                p.
-                  "Potato"
-            .row
-              .col-sm-12
-                h3 Samm Q
-                p.
-                  "I really think this internet thing is going to take off!"
+              -if provider.favorited_by.all() | count == 0
+                .col-sm-12
+                  h2 Be the first to make this a favorite!
+
+              -else
+                -each fav in provided.favorited_by.all()
+                  .col-sm-3
+                    a(href="butts")
+                      div
+                        .thumb-container.small
+                          img(src="#{fav.avatar.sm_thumb}")
+                        p.caption #{fav.user.first_name}
       .col-sm-4
         h2 Menus
         -each menu in provider.menus
