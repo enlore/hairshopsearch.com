@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label class="sr-only" for="zip_code">Zip</label>
                     <input class="form-control" id="zip_code" name="zip_code"
-                    type="text" placeholder="near this ZIP code">
+                    type="text" placeholder="near this ZIP code (Ex.75243)">
                 </div>
 
                 <div class="form-group">
@@ -38,22 +38,25 @@
             </form>
             {% endif %}
 
-            <h2 class="index deck text-center"> We're making it easier to find hair care
-                and beauty solutions for your glorious hair textures and
-                amazing skin!
-            </h2>
-            <p class="text-center"> Use the 2-step search above to start finding salons, barbershops, and products. </p>
+             <p class="text-center"> Customers, you can use the 2-step search above to start finding stylists, barbers, and other providers in your local area. </p>
+            <h1 class="index deck text-center"> Introducing the black and brown hair care search made easy!
+            </h1>
+           
         </div>
     </div><!-- /.row -->
 
     <div class="row index lead">
         <div class="col-md-12 text-center">
-            <p> As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
-            HairShopSearch can help you attract new clients and earn more. </p>
-            <p> As a <a href="{{ url_for('frontend.consumer_welcome') }}">consumer</a>,
-            HairShopSearch can help you find hair care and beauty
-            solutions offered by providers.
-            </p>
+          <p> As a <a href="{{ url_for('frontend.consumer_welcome') }}">consumer</a>,
+            HairShopSearch helps you find hair care and beauty solutions offered by providers. We’ve got you covered. 
+            Search businesses that offer services and products specific to your hair textures and beauty needs. And 
+            let providers connect to you! Register to complete your online customer hair consultation. 
+          </p>  
+          <p> As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
+            HairShopSearch helps you get in front of thousands of new customers specifically looking for the services 
+            and products you provide. Advertise your skills and potentially earn more money. Register to complete your 
+            provider profile listing and upload a gallery of your work. View customer hair consultations when they 
+            favorite your provider profile listing!  </p>
         </div>
     </div><!-- /.row -->
 </div><!-- /.container -->

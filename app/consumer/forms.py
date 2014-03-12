@@ -8,7 +8,7 @@ class HairJourneyForm(Form):
     submit  = SubmitField("Tell It")
 
 class HairStatusForm(Form):
-    status = TextField("What's your hair status?")
+    status = TextField("Tell us about your hair. What is your current hair status?")
     submit = SubmitField("Update Your Status")
 
 class ConsumerInfoForm(Form):
