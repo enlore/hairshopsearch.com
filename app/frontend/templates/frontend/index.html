@@ -3,83 +3,98 @@
 {% from "macros/_form.html" import render_form %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <a href="{{ url_for('frontend.index') }}">
-                <img class="img-responsive center-block" src="{{ url_for('static', filename='img/logo-lg.png') }}">
-            </a>
-        </div>
-    </div><!-- /.row -->
+<div class="logo-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ url_for('frontend.index') }}">
+                    <img class="img-responsive center-block" src="{{ url_for('static', filename='img/logo-lg.png') }}">
+                </a>
+            </div>
+        </div><!-- /.row -->
+    </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-12 search-form-container">
-            {% if index_search_form %}
-            <form class="form-inline text-center" action="/search/" method="POST" role="form">
-                {{ index_search_form.csrf_token }}
-                <div class="form-group">
-                    <label class="sr-only" for="menu_type">Type</label>
-                    <select class="form-control" id="menu_type" name="menu_type">
-                        <option value="none">I'm looking for:</option>
-                        <option value="salon">Salons</option>
-                        <option value="barbershop">Barbershops</option>
-                        <option value="product">Products</option>
-                    </select>
-                </div>
+<div class="search-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% if index_search_form %}
+                <form class="form-inline" action="/search/" method="POST" role="form">
+                    {{ index_search_form.csrf_token }}
+                    <div class="form-group">
+                        <label class="sr-only" for="menu_type">Type</label>
+                        <select class="form-control" id="menu_type" name="menu_type">
+                            <option value="none">I'm looking for:</option>
+                            <option value="salon">Salons</option>
+                            <option value="barbershop">Barbershops</option>
+                            <option value="product">Products</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label class="sr-only" for="zip_code">Zip</label>
+                        <input class="form-control" id="zip_code" name="zip_code"
+                        type="text" placeholder="near this ZIP code (Ex.75243)">
+                    </div>
+    
+                    <div class="form-group">
+                        <input class="btn btn-default" id="submit" name="submit" type="submit" value="Search">
+                    </div>
+                </form><!-- /form -->
+                {% endif %}
+    
+                 <p> 
+                     Customers, use the 2-step search above to 
+                     start finding stylists, barbers, and other providers in your local area. 
+                 </p>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
 
-                <div class="form-group">
-                    <label class="sr-only" for="zip_code">Zip</label>
-                    <input class="form-control" id="zip_code" name="zip_code"
-                    type="text" placeholder="near this ZIP code (Ex.75243)">
-                </div>
-
-                <div class="form-group">
-                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Search">
-                </div>
-            </form><!-- /form -->
-            {% endif %}
-
-             <p class="text-center"> Customers, use the 2-step search above to start finding stylists, barbers, and other providers in your local area. </p>
-            <h1 class="index deck text-center"> Introducing the black and brown hair care search made easy!
-            </h1>
-           
-        </div>
-    </div><!-- /.row -->
-
-    <div class="row">
-        <div class="col-md-6">
-            <h2 class="text-center"> Grow your business </h2>
-            <p> 
-                As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
-                HairShopSearch helps you get in front of thousands of new customers specifically looking for the services 
-                and products you provide. Advertise your skills and potentially earn more money. Register to complete your 
-                provider profile listing and upload a gallery of your work. Let customers favorite your listing and share their hair and beauty needs with you! 
-            </p>
-         
-            <p> 
-                Follow our simple guide to complete your provider profile listing.  
-                Include business details, a gallery of images, and more.  
-                It's fast and free.
-            </p>
-            <a href="" class="btn btn-cta col-md-4 col-md-offset-4"> Get Listed </a>
-        </div>
-
-        <div class="col-md-6">
-            <h2 class="text-center"> Build hair status </h2>
-            <p> 
-                As a <a href="{{ url_for('frontend.consumer_welcome') }}">customer</a>,
-                HairShopSearch helps you find hair care and beauty solutions offered by providers. We’ve got you covered. 
-                Search businesses that offer services and products specific to your hair textures and beauty needs. And 
-                let providers connect to you! Register to complete your online customer hair consultation. <a href="">What is a hair consultation?</a>
-            </p>
-            
-            <p>
-                Introduce your hair and beauty needs to local providers when you share your free online customer hair consultation.  
-            </p>
-            <a href="" class="btn btn-cta col-md-4 col-md-offset-4"> Get Started </a>  
-        </div>
-    </div><!-- /.row -->
-</div><!-- /.container -->
+<div class="introduction-wrapper">
+    <div class="container">    
+        <div class="row">
+            <h1 class="index deck text-center"> Introducing the black and brown hair care search made easy! </h1>
+            <div class="col-md-6">
+                <div class="customer-intro">
+                    <h2 class="text-center"> Grow your business </h2>
+                    <p> 
+                        As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
+                        HairShopSearch helps you get in front of thousands of new customers specifically looking for the services 
+                        and products you provide. Advertise your skills and potentially earn more money. Register to complete your 
+                        provider profile listing and upload a gallery of your work. Let customers favorite your listing and share their hair and beauty needs with you! 
+                    </p>
+                 
+                    <p> 
+                        Follow our simple guide to complete your provider profile listing.  
+                        Include business details, a gallery of images, and more.  
+                        It's fast and free.
+                    </p>
+                    <a href="" class="btn btn-cta cta"> Get Listed </a>
+                </div><!-- end /.customer-intro -->
+           </div>
+    
+            <div class="col-md-6">
+                <div class="provider-intro">
+                    <h2 class="text-center"> Build hair status </h2>
+                    <p> 
+                        As a <a href="{{ url_for('frontend.consumer_welcome') }}">customer</a>,
+                        HairShopSearch helps you find hair care and beauty solutions offered by providers. We’ve got you covered. 
+                        Search businesses that offer services and products specific to your hair textures and beauty needs. And 
+                        let providers connect to you! Register to complete your online customer hair consultation. <a href="">What is a hair consultation?</a>
+                    </p>
+                    
+                    <p>
+                        Introduce your hair and beauty needs to local providers when you share your free online customer hair consultation.  
+                    </p>
+                    <a href="" class="btn btn-cta cta"> Get Started </a>  
+                </div><!-- /.provider-intro-->
+            </div> 
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.introduction -->
 
 <div class="foot-banner">
     <div class="container">

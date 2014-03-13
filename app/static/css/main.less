@@ -21,6 +21,8 @@
 
 @dark-green: rgba(73, 139, 38, 0.6);
 @secondary-nav-bg: @dark-green;
+@search-form-bg: @dark-green;
+@customer-intro-border: @dark-green;
 
 @red-orange: #000000;
 
@@ -28,11 +30,14 @@
 @portait-border-color: @orange;
 @hr-color: darken(@orange, 25%);
 @image-border: @orange;
-@link-hover: @orange;
+
 
 @yellow-orange: #F8C800;
+@logo-bg: @yellow-orange;
 @btn-concerned: @yellow-orange;
 @border-color: @yellow-orange;
+@link-hover: @yellow-orange;
+@provider-intro-border: @yellow-orange;
 
 @light-purple: #8A509F;
 @btn-cta: @light-purple;
@@ -190,11 +195,70 @@
     }
 }
 
+/* Index
+ ****************************************/
+.logo-wrapper {
+    background-color: @logo-bg;
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+
+.search-wrapper {
+    form {
+        display: inline-block;
+        margin-top: -26px;
+        padding: 20px;
+        background: @search-form-bg;
+    }
+}
+
+.introduction-wrapper {
+    .cta {
+        display: block;
+        position: static;
+        margin: 0 auto;
+        width: 8em;
+        font-size: 24px;
+    }
+        
+    .customer-intro {
+        border: 1px solid @customer-intro-border;
+        padding: 20px;
+        position: relative;
+    }
+    
+    .provider-intro {
+        border: 1px solid @provider-intro-border;
+        padding: 20px;
+        position: relative;
+    }
+    
+    @media screen and (min-width: 992px) {
+        .provider-intro,
+        .customer-intro {
+            min-height: 479px;
+        }
+        
+        .cta {
+            position: absolute;
+            bottom: 20px;
+            left: 5.5em;
+        }
+    }
+    
+    @media screen and (min-width: 1200px) {
+        .cta {
+            left: 7.5em;
+        }
+    }
+}
+
 .index .last-cta {
     padding-top: 2em;
     padding-bottom: 2em;
     background-color: white;
     a { margin-top: 2em; font-size: 2em; }
+    
 }
 
 .welcome.container {
