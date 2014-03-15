@@ -74,10 +74,10 @@ block body
           .col-sm-12
             h2 Our Work
             .row.gallery
-            -each pic in provider.gallery.photos
-              .col-sm-3
-                .thumb-container.small
-                  img.img-responsive(src="#{pic.sm_thumb}")
+              -each pic in provider.gallery.photos
+                .col-sm-3
+                  .thumb-container.small
+                    img.img-responsive(src="#{pic.sm_thumb}")
         .row
           .col-sm-12
             h2 Happy Customers
@@ -87,12 +87,15 @@ block body
                   h2 Be the first to make this a favorite!
 
               -else
-                -each fav in provided.favorited_by.all()
+                -each fav in provider.favorited_by.all()
                   .col-sm-3
-                    a(href="butts")
+                    a(href="")
                       div
                         .thumb-container.small
-                          img(src="#{fav.avatar.sm_thumb}")
+                          -if fav.avatar.sm_thumb
+                            img(src="#{fav.avatar.sm_thumb}")
+                          -else
+                            img(src="http://placehold.it/250x250")
                         p.caption #{fav.user.first_name}
       .col-sm-4
         h2 Menus
@@ -165,3 +168,14 @@ block body
                 td= provider.hours.sunday_close
 
         .modal-footer
+
+  #gallery-modal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h2.modal-title
+        .modal-body
+          img#gallery-image(src="", title="")
+        .modal-footer
+          button.btn.btn-default(type="button", data-next="") Next
+          button.btn.btn-default(type="button", data-prev="") Prev

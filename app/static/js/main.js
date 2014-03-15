@@ -2,6 +2,18 @@ $(document).on('ready', function() {
     /* Nail thumb */
     $('.thumb-container').nailthumb()
 
+    /* Modal gallery view */
+    var $gallery        = $('.gallery')
+        , $galleryModal = $('#gallery-modal')
+        , $galleryImg   = $('#gallery-image')
+
+
+    $gallery.on('click', 'img', function (e) {
+        console.log($(this).attr('src')) 
+        $galleryImg.attr('src', $(this)[0].src)
+        $galleryModal.modal()
+    })
+
     // register form confirm password validation
     var $pwd_confirm    = $('#password_confirm')
         , $pwd          = $('#password')
