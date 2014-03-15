@@ -61,8 +61,6 @@ class Config(DevConfig):
     JS_BUNDLES = {
             'js': (
                 'js/main.js',
-                'js/vendor/jquery-1.9.1.min.js',
-                'js/vendor/jquery.nailthumb.1.1.min.js',
             ),
 
             'mod': ()
