@@ -12,6 +12,8 @@
 @blue: #77A0FF;
 @prim-button: @blue;
 @link-color: darken(@blue, 15%);
+@instruction-wrapper: @blue;
+@school-intro-border: @blue;
 
 @white: #fff;
 @body-bg-color: white;
@@ -23,6 +25,7 @@
 @secondary-nav-bg: @dark-green;
 @search-form-bg: @dark-green;
 @customer-intro-border: @dark-green;
+@last-cta-border: @dark-green;
 
 @red-orange: #000000;
 
@@ -93,7 +96,13 @@
     background-color: @form-login-bg;
     max-width: 600px;
     padding: 2em;
+    margin-top: 3em;
     border: 1px solid #992;
+
+    .btn-cta {
+        margin-left: 16px;
+        margin-bottom: 1em;
+    }
 }
 
 /* TOS & Privacy
@@ -198,21 +207,39 @@
 /* Index
  ****************************************/
 .logo-wrapper {
+    background-image: url('/static/img/salonshot.png');
+    background-repeat:no-repeat;
+    background-size: 100%;
     background-color: @logo-bg;
     padding-top: 3em;
     padding-bottom: 3em;
+    -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+}
+
+.logo-back {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .search-wrapper {
     form {
-        display: inline-block;
+        display: inline-block; 
         margin-top: -26px;
         padding: 20px;
         background: @search-form-bg;
     }
 }
 
+.instruction-wrapper {
+        border: 1px solid @instruction-wrapper;
+        padding: 20px;
+        margin-top: 10px;
+}
+
 .introduction-wrapper {
+    margin-bottom: 1em;
     .cta {
         display: block;
         position: static;
@@ -235,14 +262,15 @@
     
     @media screen and (min-width: 992px) {
         .provider-intro,
-        .customer-intro {
+        .customer-intro,
+        .school-intro {
             min-height: 479px;
         }
         
         .cta {
             position: absolute;
             bottom: 20px;
-            left: 5.5em;
+            left: 3.5em;
         }
     }
     
@@ -253,12 +281,101 @@
     }
 }
 
-.index .last-cta {
-    padding-top: 2em;
-    padding-bottom: 2em;
-    background-color: white;
-    a { margin-top: 2em; font-size: 2em; }
-    
+.school-wrapper {
+    margin-top: 1em;
+}
+
+.school-promo {
+    border: 1px solid @school-intro-border;
+    padding: 20px; 
+    position: relative;
+    .cta {
+        display: block;
+        position: static;
+        margin: 0 auto;
+        width: 10em;
+        font-size: 24px;
+    } 
+}
+
+.interaction-set{}
+
+.edit {
+    width: 400px;
+    height: 250px;
+    -webkit-box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+}
+
+.school-edit {
+    width: 500px;
+    height: 350px;
+    -webkit-box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 10px 12px 0px rgba(209,209,209,1);
+}
+
+.last-cta {
+    margin-top: 1em;
+}
+
+.last-cta-call {
+    border: 1px solid @last-cta-border;
+    padding: 20px;
+    .cta {
+        display: block;
+        position: static;
+        margin: 0 auto;
+        width: 11em;
+        font-size: 24px;
+    }
+}
+
+/* About us
+ ****************************************/
+ .about-us {
+    background-image: url('/static/img/amazedhss.jpg');
+    background-repeat:no-repeat;
+    background-size: 100%;
+    background-color: @logo-bg;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    min-height: 300px;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+}
+
+ .provider-img {
+    background-image: url('/static/img/amazedhss.jpg');
+    background-repeat:no-repeat;
+    background-size: 100%;
+    background-color: @logo-bg;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    min-height: 300px;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+}
+
+ .customer-img {
+    background-image: url('/static/img/amazedhss.jpg');
+    background-repeat:no-repeat;
+    background-size: 100%;
+    background-color: @logo-bg;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    min-height: 300px;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+}
+
+.condense{
+    border: 1px solid transparent;
+    padding: 20px; 
 }
 
 .welcome.container {
@@ -271,10 +388,10 @@
 .provider-marketing.container {
     .btn-cta {
         font-size: 2em; 
-    }
+        }
 }
 .consumer-marketing.container {
     .btn-cta {
         font-size: 2em; 
-    }
+        }
 }
