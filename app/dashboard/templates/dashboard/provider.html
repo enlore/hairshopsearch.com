@@ -173,21 +173,21 @@
         <div class="favorites">
             <div class="container">
                 <div class="row">
-                    <h2> Your Connections </h2>
-                    {% if provider.favorited_by.all() | count == 0 %}
+                    <h2> Shared With You </h2>
+                    {% if provider.shared | count == 0 %}
                         <div class="col-sm-12">
-                            <h4> You've got no connections yet. Time to 
-                                get marketing! </h4>
+                            <h4> None of your customers have shared with you yet.  Tell them they should! </h4>
                         </div>
                     {% else %}
-                        {% for fav in provider.favorited_by.all() %}
+                        {% for share in provider.shared %}
                         <div class="col-sm-3">
-                            <a href="{{ url_for('frontend.consumer_url', consumer_url=fav.consumer_url) }}">
-                                <div class="">
+                            <a href="{{ url_for('frontend.consumer_url', consumer_url=share.consumer_url) }}">
+                                <div class="shared-consumer-wrap">
                                     <div class="thumb-container small">
-                                        <img src="{{ fav.avatar.sm_thumb }}">
+                                        <img src="{{ share.avatar.sm_thumb }}">
                                     </div>
-                                    <p class="caption">{{ fav.user.first_name }} {{ fav.user.last_name }}</p>
+
+                                    <p class="caption">{{ share.user.first_name }} {{ share.user.last_name }}</p>
                                 </div>
                             </a>
                         </div>
@@ -197,6 +197,7 @@
             </div>
         </div>
     </div>
+
     <div class="dash-group">
         <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data" action="{{ url_for('dashboard.save_photo') }}" method="post">
             {{ gallery_upload_form.csrf_token() }}

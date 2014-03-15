@@ -30,6 +30,17 @@ dashboard = Blueprint('dashboard', __name__,
         url_prefix='/dashboard', template_folder='templates')
 
 
+@dashboard.route('/consumer/share/<int:provider_id>')
+def share(provider_id):
+    # TODO
+    # add consumer to shared collection on provider X
+    # send provider email notifying
+    provider = Provider.get(provider_id)
+    provider.shared.append(current_user.consumer)
+    provider.save()
+
+    return redirect(url_for('.profile'))
+
 @dashboard.route('/photo/<int:id>/delete')
 @login_required
 def delete_photo(id):

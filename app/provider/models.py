@@ -129,6 +129,8 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
+    # TODO different backref name
+    shared              = db.relationship('Consumer', backref='shared')
     endorses            = db.relationship('Provider',
                             secondary=endorsers_endorsees,
                             primaryjoin=id==endorsers_endorsees.c.endorser,

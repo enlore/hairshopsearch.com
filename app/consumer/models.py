@@ -45,6 +45,7 @@ class Consumer(db.Model, ConsumerSerializer):
 
     # ready to be serialized, for great search
     id                  = db.Column(db.Integer, primary_key=True)
+    provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     user                = db.relationship('User', backref='consumer',
                             uselist=False)
     _consumer_url       = db.Column(db.String)

@@ -143,6 +143,18 @@ block body
                 .col-sm-4.col-sm-offset-4
                   = hair_routine_form.submit(class_="btn btn-cta")
 
-
-
-
+  .consumer.dashboard.container
+    .row
+      .col-sm-12
+        h2 Favs
+        table.table
+          thead
+            tr
+              td Business
+              td
+          tbody
+          -each fav in consumer.favorites
+            tr
+              td= fav.business_name
+              td
+                a.btn.btn-cta(href="#{url_for('dashboard.share', provider_id=fav.id)}") Share
