@@ -23,10 +23,7 @@ def dump_url_map():
     print create_app().url_map
 
 @m.command
-def reset_db():
-    db.drop_all()
-    db.create_all()
-
+def populate_db():
     # Provider
     password = encrypt_password('password')
     p = Provider(user=ud.create_user(email="provider@test.com", password=password))
@@ -56,8 +53,17 @@ def reset_db():
             first_name='Bob', last_name='Johnson'))
     c.user.confirmed_at = datetime.date.today()
     c.consumer_url = 'bob.johnson'
+    c.favorites.append(Provider.get(10))
+    c.favorites.append(Provider.get(15))
+    c.favorites.append(Provider.get(94))
     db.session.add(c)
     db.session.commit()
+
+@m.command
+def reset_db():
+    db.drop_all()
+    db.create_all()
+
 
 @m.command
 def create_index(doc_type):

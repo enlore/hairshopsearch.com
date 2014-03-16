@@ -25,6 +25,7 @@ def rebuild_index(filename):
     local('python manage.py reset_index provider')
     local('python manage.py reset_db')
     local('python manage.py mock_from_csv {}'.format(filename))
+    local('python manage.py populate_db')
 
 def d(filename):
     """Run app in dev"""
