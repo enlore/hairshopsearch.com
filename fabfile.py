@@ -25,8 +25,11 @@ def rebuild_index(filename):
     local('python manage.py reset_index provider')
     local('python manage.py reset_db')
     local('python manage.py mock_from_csv {}'.format(filename))
+<<<<<<< HEAD
     local('python manage.py populate_db')
 
+=======
+>>>>>>> fd620a4233836b188a76e7330ecd38a96d76dba0
 def d(filename):
     """Run app in dev"""
 
@@ -52,13 +55,6 @@ def css():
 
     local('node_modules/recess/bin/recess app/static/css/main.less --compile\
         > app/static/css/main.css')
-
-def tiny_css():
-    """Compile and compress less
-    """
-
-    local('node_modules/recess/bin/recess app/static/css/main.less --compile\
-        --compress > app/static/css/main.css')
 
 def pack():
     local('python setup.py sdist --formats=gztar')
