@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head> <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{% block title %}HairShopSearch{% endblock %}</title>
     <meta name="description" content="HairShopSearch is a directory of products and services for black hair care in your area!">
     <meta name="viewport" content="initial-scale=1.0">
@@ -71,7 +71,7 @@
                         <div class="form-group">
                             {{ search_form().csrf_token }}
                             <label class="sr-only" for="menu_type">Service Type</label>
-                            <select class="form-control input-sm" id="menu_type" name="menu_type">
+                            <select class="form-control" id="menu_type" name="menu_type">
                                 <option value="none">I'm looking for:</option>
                                 <option value="salon">Salons</option>
                                 <option value="barbershop">Barbershops</option>
@@ -81,11 +81,11 @@
 
                         <div class="form-group">
                             <label class="sr-only" for="zip_code">Zip</label>
-                            <input class="form-control input-sm" id="zip_code" name="zip_code" type="text" placeholder="near this ZIP code (Ex. 75243)">
+                            <input class="form-control" id="zip_code" name="zip_code" type="text" placeholder="near this ZIP code (Ex. 75243)">
                         </div>
 
                         <div class="form-group">
-                            <input class="btn btn-default input-sm" id="submit" name="submit" type="submit" value="Search">
+                            <input class="btn btn-default" id="submit" name="submit" type="submit" value="Search">
                         </div>
                     </form>
                 {% endif %}
