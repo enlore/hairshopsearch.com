@@ -1,17 +1,31 @@
-$(document).on('ready', function() {
+$(document).on('ready', function () {
     /* Nail thumb */
     $('.thumb-container').nailthumb()
+
 
     /* Modal gallery view */
     var $gallery        = $('.gallery')
         , $galleryModal = $('#gallery-modal')
         , $galleryImg   = $('#gallery-image')
-
+        , $galleryNext  = $('#gallery-next')
+        , $galleryPrev  = $('#gallery-prev')
 
     $gallery.on('click', 'img', function (e) {
-        console.log($(this).attr('src')) 
-        $galleryImg.attr('src', $(this)[0].src)
+        $nextImg = $(this).parents('.col-sm-3').next().find('img')
+        $galleryNext.data('next', $nextImg.attr('src'))
+
+        $galleryPrev.data('prev', $(this).parents('.col-sm-3').prev().find('img').attr('src'))
+        $galleryImg.attr('src', $(this).attr('src'))
+
         $galleryModal.modal()
+    })
+
+    $galleryNext.on('click', function (e) {
+        console.log(e)
+    })
+
+    $galleryPrev.on('click', function (e) {
+        console.log(e) 
     })
 
     // register form confirm password validation
