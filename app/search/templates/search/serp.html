@@ -22,18 +22,17 @@
                     {% if providers %}
                         {% for provider in providers %}
                         <div class="row serp-box">
-                            <div class="col-md-2">
-                                <img class="img-responsive serp-img" src="http://placehold.it/60x60" />
+                            <div class="col-xs-3">
+                                <img class="img-responsive serp-img" src="http://placehold.it/100x100" />
                             </div>
 
-                            <div class="col-md-10">
+                            <div class="col-xs-9">
                                 <div class="serp-format">
-                                    <a href="/{{ provider.business_url }}">{{ provider.business_name }}</a>
-                                        {{ provider.address.street_1 }}
-
+                                    <h2><a href="/{{ provider.business_url }}">{{ provider.business_name }}</a></h2>
+                                        <p>{{ provider.address.street_1 }}
                                         {{ provider.address.city }},
-                                        {{provider.address.state }}
-                                        {{ provider.address.zip_code }}
+                                        {{ provider.address.state }}
+                                        {{ provider.address.zip_code }}</p>
 
 
                                     <div class="favs">
