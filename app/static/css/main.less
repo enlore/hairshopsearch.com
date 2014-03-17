@@ -1,7 +1,8 @@
 @paper: #FFF7EB;
-@form-login-bg: lighten(@paper, 2%);
 @profile-bg: lighten(@paper, 2%);
 @dash-group-bg: lighten(@paper, 2%);
+@serp-bg: lighten(@paper, 2%);
+
 
 @purple: #1E1D24;
 @font-color: @purple;
@@ -10,14 +11,13 @@
 @inset-shadow: @purple;
 
 @blue: #77A0FF;
-@body-bg-color: lighten(@blue, 25%);
 @prim-button: @blue;
 @link-color: darken(@blue, 15%);
-@instruction-wrapper: @blue;
-@school-intro-border: @blue;
+
 
 @white: #fff;
-@body-bg-color: white;
+@body-bg-color: @white;
+@form-login-bg: @white;
 
 @green: #88d400;
 @nav-bg: @green;
@@ -27,6 +27,8 @@
 @search-form-bg: @dark-green;
 @customer-intro-border: @dark-green;
 @last-cta-border: @dark-green;
+@school-intro-border: @dark-green;
+@instruction-wrapper: @dark-green;
 
 @red-orange: #000000;
 
@@ -43,6 +45,8 @@
 @border-color: @yellow-orange;
 @provider-intro-border: @yellow-orange;
 @shared-wrap-border: @yellow-orange;
+
+
 
 @light-purple: #8A509F;
 @btn-cta: @light-purple;
@@ -74,9 +78,17 @@
 
 /* Consumer Profile
 ********************/
+.consumer.profile,
+.consumer.dashboard {
+    margin-top: 3em;
+    background-color: @white;
+    -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+}
+
 .consumer.profile {
     padding-top: 2em;
-    background-color: lighten(@paper, 2%);
 }
 
 .consumer.dashboard {
@@ -90,6 +102,7 @@
 .consumer.thumb-container {
     margin: 0 auto 10px;
 }
+
 
 /* Login & Register
  *******************/
@@ -227,7 +240,7 @@
 
 .search-wrapper {
     form {
-        display: inline-block; 
+        display: inline-block;
         margin-top: -26px;
         padding: 20px;
         background: @search-form-bg;
@@ -249,38 +262,42 @@
         width: 8em;
         font-size: 24px;
     }
-        
+
     .customer-intro {
         border: 1px solid @customer-intro-border;
         padding: 20px;
         position: relative;
     }
-    
+
     .provider-intro {
         border: 1px solid @provider-intro-border;
         padding: 20px;
         position: relative;
     }
-    
+
     @media screen and (min-width: 992px) {
         .provider-intro,
         .customer-intro,
         .school-intro {
             min-height: 479px;
         }
-        
+
         .cta {
             position: absolute;
             bottom: 20px;
             left: 3.5em;
         }
     }
-    
+
     @media screen and (min-width: 1200px) {
         .cta {
             left: 7.5em;
         }
     }
+}
+
+.mid-banner img {
+    margin-top: 10px;
 }
 
 .school-wrapper {
@@ -289,7 +306,7 @@
 
 .school-promo {
     border: 1px solid @school-intro-border;
-    padding: 20px; 
+    padding: 20px;
     position: relative;
     .cta {
         display: block;
@@ -297,7 +314,7 @@
         margin: 0 auto;
         width: 10em;
         font-size: 24px;
-    } 
+    }
 }
 
 .interaction-set{}
@@ -336,7 +353,7 @@
 
 /* About us
  ****************************************/
- .about-us {
+.about-us {
     background-image: url('/static/img/amazedhss.jpg');
     background-repeat:no-repeat;
     background-size: 100%;
@@ -344,10 +361,8 @@
     padding-top: 3em;
     padding-bottom: 3em;
     min-height: 300px;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
-    -moz-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
-    box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
 }
+
 
  .provider-img {
     background-image: url('/static/img/amazedhss.jpg');
@@ -377,24 +392,24 @@
 
 .condense{
     border: 1px solid transparent;
-    padding: 20px; 
+    padding: 20px;
 }
 
 .welcome.container {
     .panel {
-        min-height: 275px; 
+        min-height: 275px;
         padding: 15px;
     }
 }
 
 .provider-marketing.container {
     .btn-cta {
-        font-size: 2em; 
+        font-size: 2em;
         }
 }
 .consumer-marketing.container {
     .btn-cta {
-        font-size: 2em; 
+        font-size: 2em;
         }
 }
 
@@ -402,3 +417,50 @@
     border: 1px solid @shared-wrap-border;
 }
 
+/* Search Result
+ ****************************************/
+.serp-offset {
+    margin: 3px;
+}
+
+.serp-wrapper {
+    background-color: @white;
+    -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+}
+
+.serp-res-left {}
+
+.serp-goog {
+    background-color: @white;
+    padding: 10px;
+}
+
+.serp-box {
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
+    p {
+        font-size: 10px;
+        margin-bottom: 3px;
+    }
+
+    h2 {
+        font-size: 12px;
+        margin-top: 0px;
+    }
+}
+
+.serp-promo-right {
+    background-color: @white;
+}
+
+.serp-advert {
+    padding: 20px;
+}
+
+.serp-format {}
