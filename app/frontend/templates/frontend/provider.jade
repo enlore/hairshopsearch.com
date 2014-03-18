@@ -21,7 +21,11 @@ block body
 
         h4 #{provider.favorited_by.all() | count} consider us a favorite
         p.phone= provider.phone
-        a(target="_blank", href="#{provider.external_site | url }") Our Website
+
+        -if provider.external_site
+          a(target="_blank", href="#{provider.external_site | url }") Our Website
+        -else
+          a Our Website
 
         -if current_user.consumer
           .row 
@@ -35,15 +39,87 @@ block body
         table.table
           thead
             tr
-              th Today
+              th Hours
               th Open
               th Close
 
           tbody
+          -if d.getDay() == 0
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
             tr
               td Mon
-              td 8
-              td 9
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+          -if d.getDay() == 1
+            tr
+              td Mon
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+          -if d.getDay() == 2
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+          -if d.getDay() == 3
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+          -if d.getDay() == 4
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+          -if d.getDay() == 5
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+          -if d.getDay() == 6
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
 
         a(data-toggle="modal", data-target="#hours-modal") View More Hours
 

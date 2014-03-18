@@ -13,6 +13,8 @@ from ..models import User, Photo
 from ..config import Config
 from ..core import db, mail
 
+import datetime
+
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
 @frontend.route('/favorite/<int:provider_id>')
@@ -85,8 +87,15 @@ def add_to_favorites(photo_id):
 @frontend.route('/<provider_url>')
 def provider_url(provider_url):
     p = Provider.query.filter(Provider._business_url==provider_url.lower()).first()
+
+    # TODO wtf
+    class d:
+        def getDay(self):
+            return datetime.date.today().isoweekday() 
+    d = d() 
+
     if p:
-        return render_template('frontend/provider.jade', provider=p)
+        return render_template('frontend/provider.jade', provider=p, d=d)
     else:
         abort(404)
 
