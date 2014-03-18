@@ -60,7 +60,7 @@ def _search():
                     }, # /query
                     "filter": {
                         "geo_distance": {
-                            "distance": "100mi",
+                            "distance": "15mi",
                             "location": {
                                 "lat": lat,
                                 "lon": lon
