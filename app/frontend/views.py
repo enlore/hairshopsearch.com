@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
-    flash, abort, jsonify)
+    flash, abort, jsonify, request)
 from flask.ext.security import login_required, roles_required, current_user
+from flask_mail import Message
 
 from ..search.forms import SearchForm
 
@@ -10,7 +11,7 @@ from ..consumer.models import Consumer
 from ..models import User, Photo
 
 from ..config import Config
-from ..core import db
+from ..core import db, mail
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -23,8 +24,28 @@ def favorite(provider_id):
         consumer.save()
         return redirect(url_for('.provider_url', provider_url=provider.business_url))
 
-@frontend.route('/contact-us')
+@frontend.route('/contact-us', methods=['GET', 'POST'])
 def contact_us():
+    if request.method == 'POST':
+        if request.form['honeypot']:
+            # if we've got a bot on our hands, just redirect to the contact page
+            current_app.logger.info('it\'s a trap')
+            current_app.logger.info(request.host)
+            return redirect(url_for('.contact_us'))
+
+        # otherwise, process the form
+        current_app.logger.info(request.form)
+
+        body = "{}\n{}\n{}\n".format(request.form['name'],
+                request.form['message'],
+                request.form['number'])
+
+        msg = Message('FORM',
+                body=body,
+                sender="hss-app", recipients=["oneofy@gmail.com"])
+
+        mail.send(msg)
+
     return render_template('frontend/contact-us.jade')
 
 @frontend.route('/about-us')
