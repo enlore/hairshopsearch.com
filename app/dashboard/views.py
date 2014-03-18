@@ -331,6 +331,7 @@ def profile():
         provider_dash_form.external_site.data   = provider.external_site
         provider_dash_form.phone.data           = provider.phone
         provider_dash_form.payment_methods.data = provider.payment_methods
+        provider_dash_form.bio.data             = provider.bio
 
         address_form = AddressForm(obj=provider.address)
         hours_form = HoursForm(obj=provider.hours)

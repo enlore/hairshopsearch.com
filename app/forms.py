@@ -144,7 +144,7 @@ class ProviderDashForm(Form):
                             widget=multi_checkboxes,
                             choices=payment_methods)
 
-    bio             = TextField('About Us')
+    bio             = TextAreaField('About Us')
     fb_url          = TextField('Facebook Page')
     twitter_url     = TextField('Twitter')
 
