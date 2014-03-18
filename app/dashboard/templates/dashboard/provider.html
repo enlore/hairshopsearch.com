@@ -6,6 +6,7 @@
 {% if provider %}
 <div class="container dashboard">
     <div class="row dashboard-buttons">
+        {{ provider.external_site }}
         <div class="col-md-2">
             <a class="btn btn-cta dashboard" href="{{ url_for('frontend.provider_url',
                 provider_url=provider.business_url) }}">
@@ -65,22 +66,23 @@
         </div>
     </div><!-- /.dash-group -->
 
-    {% if form %}
+    {% if provider_dash_form %}
     <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
-        {{ form.csrf_token() }}
-        <h2> General Information </h2>
+        {{ provider_dash_form.csrf_token() }}
+        <h2> General Inprovider_dash_formation </h2>
 
 
-        {{ render_field(form.business_name) }}
-        {{ render_field(form.phone) }}
-        {{ render_field(form.email) }}
+        {{ render_field(provider_dash_form.business_name) }}
+        {{ render_field(provider_dash_form.external_site) }}
+        {{ render_field(provider_dash_form.phone) }}
+        {{ render_field(provider_dash_form.email) }}
 
         <h2> Payment Methods </h2>
-        {{ render_field(form.payment_methods) }}
+        {{ render_field(provider_dash_form.payment_methods) }}
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-4">
-                {{ form.submit(class_='btn btn-cta') }}
+                {{ provider_dash_form.submit(class_='btn btn-cta') }}
             </div>
         </div>
     </form>

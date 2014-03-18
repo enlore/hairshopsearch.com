@@ -136,6 +136,7 @@ class HoursForm(Form):
 class ProviderDashForm(Form):
     avatar          = TextField('Avatar')
     business_name   = TextField('Business Name')
+    external_site   = TextField('External Site')
     phone           = TextField('Phone Number')
     email           = TextField('Business Email')
 

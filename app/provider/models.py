@@ -123,6 +123,7 @@ class Provider(db.Model, ProviderSerializer):
     payment_methods     = db.Column(db.String, default='')
 
     bio                 = db.Column(db.Text)
+    external_site       = db.Column(db.Text)
 
     menus               = db.relationship('Menu',
                             backref=db.backref('provider'))
