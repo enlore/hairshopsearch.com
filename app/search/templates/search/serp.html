@@ -1,59 +1,82 @@
 {% extends "layouts/base.html" %}
 {% block body %}
-<div class="container">
-    <div class="row">
-        <h1> Search Results </h1>
-    </div>
-    <div class="row">
-        <div class="col-md-7">
-            {% if providers %}
-                {% for provider in providers %}
-                <div class="row search-result">
-                    <div class="col-md-2">
-                        <img class="img-responsive serp-img" src="http://placehold.it/125x125" />
+<div class="serp-offset">
+    <div class="container">
+
+       <div class="row">
+           <div class="col-sm-10 col-sm-offset-1 serp-wrapper">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h1> Search Results </h1>
+                    <div class="serp-res-left">
+                        <div class="row serp-goog">
+                            <div class="col-md-12">
+                                <p>Google Adsense search results</p>
+                                Result Plug Google Adsense here
+                                Result
+                                Result
+                            </div>
+                        </div>
+
+                    {% if providers %}
+                        {% for provider in providers %}
+                        <div class="row serp-box">
+                            <div class="col-xs-3">
+                                <img class="img-responsive serp-img" src="http://placehold.it/100x100" />
+                            </div>
+
+                            <div class="col-xs-9">
+                                <div class="serp-format">
+                                    <h2><a href="/{{ provider.business_url }}">{{ provider.business_name }}</a></h2>
+                                        <p>{{ provider.address.street_1 }}
+                                        {{ provider.address.city }},
+                                        {{ provider.address.state }}
+                                        {{ provider.address.zip_code }}</p>
+
+
+                                    <div class="favs">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span> 15 </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-                    <div class="col-md-10">
-                        <a href="/{{ provider.business_url }}"><h2>{{ provider.business_name }}</h2></a>
-                            <p>{{ provider.address.street_1 }}
 
-                            {{ provider.address.city }},
-                            {{provider.address.state }}
-                            {{ provider.address.zip_code }}
-                            </p>
-
-                        <div class="favs">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span> 15 </span>
+                <div class="col-md-5">
+                    <div class="serp-promo-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="serp-advert">
+                                    <p>Local advertisment</p>
+                                    <img class="img-responsive center" src="http://placehold.it/400x200">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="serp-advert">
+                                    <img class="img-responsive center" src="http://placehold.it/400x200">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="serp-advert">
+                                    <img class="img-responsive center" src="http://placehold.it/400x200">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="serp advert">
-                        <img class="img-responsive center" src="http://placehold.it/400x400">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="serp advert">
-                        <img class="img-responsive center" src="http://placehold.it/400x200">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="serp advert">
-                        <img class="img-responsive center" src="http://placehold.it/400x200">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+               </div><!-- /.row -->
+           </div><!-- /offset cols -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div> <!-- /.serp-wrapper -->
 {% endblock %}
