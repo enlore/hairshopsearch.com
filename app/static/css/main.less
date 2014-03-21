@@ -423,7 +423,6 @@
 }
 
 .serp-wrapper {
-    background-color: @white;
     -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
     -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
     box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
@@ -432,7 +431,6 @@
 .serp-res-left {}
 
 .serp-goog {
-    background-color: @white;
     padding: 10px;
 }
 
@@ -440,6 +438,7 @@
     padding: 10px;
     margin-bottom: 5px;
     font-size: 12px;
+    border: 1px solid @dark-green;
     -webkit-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
     -moz-box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
     box-shadow: 0px 5px 12px 0px rgba(209,209,209,1);
@@ -452,14 +451,24 @@
         font-size: 12px;
         margin-top: 0px;
     }
+
+    @media screen and (min-width: 1200px) {
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
 }
 
-.serp-promo-right {
-    background-color: @white;
-}
+.serp-promo-right {}
 
 .serp-advert {
-    padding: 20px;
+    padding: 10px;
 }
 
-.serp-format {}
+.serp-specs {
+    border-left: 1px dashed @dark-green;
+}
