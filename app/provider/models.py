@@ -20,6 +20,16 @@ endorsers_endorsees = db.Table('endorsers_endorsees',
             db.Column('endorsee', db.Integer, db.ForeignKey('provider.id'), primary_key=True)
         )
 
+providers_happy_customers = db.Table('providers_happy_customers',
+        db.Column('provider', db.Integer, db.ForeignKey('provider.id'), primary_key=True),
+        db.Column('happy_customer', db.Integer, db.ForeignKey('consumer.id'), primary_key=True)
+        )
+
+providers_unhappy_customers = db.Table('providers_unhappy_customers',
+        db.Column('provider', db.Integer, db.ForeignKey('provider.id'), primary_key=True),
+        db.Column('unhappy_customer', db.Integer, db.ForeignKey('consumer.id'), primary_key=True)
+        )
+
 
 class Provider(db.Model, ProviderSerializer):
     _db = db
@@ -72,7 +82,7 @@ class Provider(db.Model, ProviderSerializer):
         return acceptable_url_string(dirty_name.lower(),
                 current_app.config['ACCEPTABLE_URL_CHARS'])
 
-    #TODO
+    #TODO update index method
     def update_index(self):
         return update_doc(self)
 
@@ -130,8 +140,18 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
+
     # TODO different backref name
     shared              = db.relationship('Consumer', backref='shared')
+
+    happy_customers     = db.relationship('Consumer',
+                            secondary=providers_happy_customers,
+                            backref='happy')
+
+    unhappy_customers   = db.relationship('Consumer',
+                            secondary=providers_unhappy_customers,
+                            backref='unhappy')
+
     endorses            = db.relationship('Provider',
                             secondary=endorsers_endorsees,
                             primaryjoin=id==endorsers_endorsees.c.endorser,

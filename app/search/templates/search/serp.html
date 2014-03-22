@@ -2,10 +2,8 @@
 {% block body %}
 <div class="serp-offset">
     <div class="container">
-
        <div class="row">
            <div class="col-sm-10 col-sm-offset-1 serp-wrapper">
-
             <div class="row">
                 <div class="col-md-7">
                     <h1> Search Results </h1>
@@ -19,33 +17,59 @@
                             </div>
                         </div>
 
-                    {% if providers %}
-                        {% for provider in providers %}
-                        <div class="row serp-box">
-                            <div class="col-xs-3">
-                                <img class="img-responsive serp-img" src="http://placehold.it/100x100" />
-                            </div>
+                    <div class="pagination">
+                        <ul>
+                            {% if providers.has_prev %}
+                                <li><a href="{{ url_for('search.test', page=providers.prev_num) }}">&lt;</a></li>
+                            {% endif %}
 
-                            <div class="col-xs-9">
-                                <div class="serp-format">
-                                    <h2><a href="/{{ provider.business_url }}">{{ provider.business_name }}</a></h2>
-                                        <p>{{ provider.address.street_1 }}
-                                        {{ provider.address.city }},
-                                        {{ provider.address.state }}
-                                        {{ provider.address.zip_code }}</p>
+                            {% for num in providers.iter_pages() %}
+                                {% if num %}
+                                    {% if num != providers.page %}
+                                        <li><a href="{{ url_for('search.test', page=num) }}"> {{ num }}</a></li> 
+                                    {% else %}
+                                        <li>
+                                            {{ num }}
+                                        </li>
+                                    {% endif %}
+                                    {% else %}
+                                    <li> ... </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if providers.has_next %}
+                                <li><a href="{{ url_for('search.test', page=providers.next_num) }}">&gt;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                        {% if providers %}
+                        {% for provider in providers.items %}
+                            <div class="row serp-box">
+                                <div class="col-xs-3">
+                                    <img class="img-responsive serp-img" src="http://placehold.it/100x100" />
+                                </div>
+
+                                <div class="col-xs-9">
+                                    <div class="serp-format">
+                                        <h2><a href="/{{ provider.business_url }}">{{ provider.business_name }}</a></h2>
+                                            <p>{{ provider.address.street_1 }}
+                                            {{ provider.address.city }},
+                                            {{ provider.address.state }}
+                                            {{ provider.address.zip_code }}</p>
 
 
-                                    <div class="favs">
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span> 15 </span>
+                                        <div class="favs">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span> 15 </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div><!-- /.serp-box /.row -->
+                        {% endfor %}
+                        {% endif %}
                     </div>
-                    {% endfor %}
                 </div>
-                {% endif %}
 
 
                 <div class="col-md-5">
