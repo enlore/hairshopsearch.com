@@ -18,6 +18,7 @@
 @white: #fff;
 @body-bg-color: @white;
 @form-login-bg: @white;
+@contact-form-bg: darken(@white, 1%);
 
 @green: #88d400;
 @nav-bg: @green;
@@ -29,6 +30,8 @@
 @last-cta-border: @dark-green;
 @school-intro-border: @dark-green;
 @instruction-wrapper: @dark-green;
+
+@gold-green: #992;
 
 @red-orange: #000000;
 
@@ -111,7 +114,7 @@
     max-width: 600px;
     padding: 2em;
     margin-top: 3em;
-    border: 1px solid #992;
+    border: 1px solid @gold-green;
 
     .btn-cta {
         margin-left: 16px;
@@ -472,3 +475,18 @@
 .serp-specs {
     border-left: 1px dashed @dark-green;
 }
+
+/* Contact us
+ ****************************************/
+.well-sm {
+padding: 20px;
+border-radius: 0px;
+}
+
+.well {
+border: 1px solid @gold-green;
+background-color: @contact-form-bg;
+}
+
+
+

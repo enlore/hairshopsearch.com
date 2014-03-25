@@ -2,10 +2,43 @@ extends layouts/base.html
 block body
   .container
     .row
-      .col-sm-12
-        h1 Talk to Us!
-
+      .col-sm-12.col-lg-12
+        h1
+          | Talk to Us!
     .row
-      .col-sm-6
-        
-      .col-sm-6
+      .col-md-2
+      .col-md-8
+        .well.well-sm
+          form
+            .row
+              .col-md-6
+                .form-group
+                  label(for='name')
+                    | Name
+                  input#name.form-control(type='text', placeholder='Enter name', required='required')
+                .form-group
+                  label(for='email')
+                    | Email Address
+                  .input-group
+                    span.input-group-addon
+                      span.glyphicon.glyphicon-envelope
+                    input#email.form-control(type='email', placeholder='Enter email', required='required')
+                .form-group
+                  label(for='subject')
+                    | Subject
+                  select#subject.form-control(name='subject', required='required')
+                    option(value='na', selected='') Choose One:
+                    option(value='service') I have questions about my account.
+                    option(value='partnerships') I've got skills. I want to help you make your site better.
+                    option(value='advertise') Let's do business. I want to advertise or sponsor your site.
+                    option(value='other') Other
+              .col-md-6
+                .form-group
+                  label(for='name')
+                    | Message
+                  textarea#message.form-control(name='message', rows='9', cols='25', required='required', placeholder='Message')
+              .col-md-12
+                button#btnContactUs.btn.btn-cta.pull-right(type='submit')
+                  | Send Message
+      .col-md-2
+
