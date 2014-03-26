@@ -151,7 +151,7 @@ block body
                 p= method | capitalize
 
     .row
-      .col-sm-8
+      .col-sm-7
         .row
           .col-sm-12
             h2 Our Work
@@ -163,23 +163,51 @@ block body
         .row
           .col-sm-12
             h2 Happy Customers
-            .row
-              -if provider.favorited_by.all() | count == 0
-                .col-sm-12
-                  h2 Be the first to make this a favorite!
 
-              -else
-                -each fav in provider.favorited_by.all()
-                  .col-sm-3
-                    a(href="")
-                      div
-                        .thumb-container.small
-                          -if fav.avatar.sm_thumb
-                            img(src="#{fav.avatar.sm_thumb}")
-                          -else
-                            img(src="http://placehold.it/250x250")
-                        p.caption #{fav.user.first_name}
-      .col-sm-4
+            -if current_user.consumer
+              .row
+                .col-sm-12
+                  h3 Leave A Review!
+                  form.form-horizontal(action="#{url_for('frontend.comment', provider_id=provider.id)}", method="post")
+                    input(type="hidden", name="csrf_token",  value="#{csrf_token()}")
+
+                    .form-group
+                      .col-sm-9.col-sm-offset-3
+                        .btn-group(data-toggle="buttons")
+                          label.btn.btn-default
+                            input(type="radio", name="happy", value="true")
+                            | Happy
+
+                          label.btn.btn-default
+                            input(type="radio", name="happy", value="false")
+                            | Unhappy
+
+                    .form-group
+                      label.control-label.col-sm-3(for="body") Your Comment
+                      .col-sm-9
+                        textarea.form-control(name="body", rows=4)
+
+                    .form-group
+                      .col-sm-9.col-sm-offset-3
+                        button.btn.btn-cta(type="submit") Let Us Know!
+
+            .row
+              -each comment in provider.comments
+                .col-sm-12
+
+                  .row.comment
+                    .col-sm-2
+                      -if comment.consumer.avatar
+                        img.img-responsive(src="#{comment.consumer.avatar.sm_thumb}")
+                      -else
+                        img.img-responsive(src="http://placehold.it/125x125")
+
+                    .col-sm-10
+                      h4= comment.consumer.user.first_name
+                      p= comment.body
+
+
+      .col-sm-5
         h2 Menus
         -each menu in provider.menus
           .row

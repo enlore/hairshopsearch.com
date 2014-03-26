@@ -5,6 +5,7 @@ from ..core import db
 from ..indexer.indexer import index_one, update_doc
 
 import requests
+import datetime
 
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
@@ -140,6 +141,7 @@ class Provider(db.Model, ProviderSerializer):
     gallery             = db.relationship('Gallery', uselist=False)
     products            = db.relationship('Product', backref='provider')
     location            = db.relationship('Location', uselist=False)
+    comments            = db.relationship('Comment', backref='provider')
 
     # TODO different backref name
     shared              = db.relationship('Consumer', backref='shared')
@@ -293,4 +295,14 @@ class Location(db.Model, LocationSerializer):
     lon             = db.Column(db.Float)
 
 
+class Comment(db.Model):
+    def __init__(self, body):
+        self.body = body
+        self.date = datetime.date()
 
+
+    id              = db.Column(db.Integer, primary_key=True)
+    provider_id     = db.Column(db.Integer, db.ForeignKey('provider.id'))
+    consumer_id     = db.Column(db.Integer, db.ForeignKey('consumer.id'))
+    body            = db.Column(db.Text)
+    date            = db.Column(db.Date)

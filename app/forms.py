@@ -10,6 +10,10 @@ class TestForm(Form):
     submit      = SubmitField()
 
 
+class CommentForm(Form):
+    body        = TextAreaField('Comment')
+
+
 class FileUploadForm(Form):
     up_file     = FileField(u'Upload a File')
     submit      = SubmitField(u'Save Photo')

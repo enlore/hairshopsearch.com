@@ -6,9 +6,11 @@ from flask_mail import Message
 
 from ..search.forms import SearchForm
 
-from ..provider.models import Provider
+from ..provider.models import Provider, Comment
 from ..consumer.models import Consumer
 from ..models import User, Photo
+
+from ..forms import CommentForm
 
 from ..config import Config
 from ..core import db, mail
@@ -98,6 +100,27 @@ def provider_url(provider_url):
         return render_template('frontend/provider.jade', provider=p, d=d)
     else:
         abort(404)
+
+@frontend.route('/<provider_id>/comment', methods=['POST'])
+def comment(provider_id):
+    provider = Provider.get(provider_id)
+
+    form = CommentForm()
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors)
+            current_app.logger.info(errors)
+    else:
+        comment = Comment(body=form.body.data)
+
+        current_user.consumer.comments.append(comment)
+        current_user.consumer.save()
+
+        provider.comments.append(comment)
+        provider.save()
+
+        return redirect(url_for('.provider_url', provider_url=provider.business_url))
 
 @frontend.route('/consumer/<consumer_url>')
 def consumer_url(consumer_url):
