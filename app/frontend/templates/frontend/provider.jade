@@ -156,7 +156,7 @@ block body
           .col-sm-12
             h2 Our Work
             .row.gallery
-              -each pic in provider.gallery.photos
+              -each pic in provider.gallery.photos[0:12]
                 .col-sm-3
                   .thumb-container.small
                     img.img-responsive(src="#{pic.sm_thumb}")
@@ -164,10 +164,12 @@ block body
           .col-sm-12
             h2 Happy Customers
 
+            -unless current_user.consumer
+              h3 Login to leave a comment!
             -if current_user.consumer
               .row
                 .col-sm-12
-                  h3 Leave A Review!
+                  h3 Leave a comment!
                   form.form-horizontal(action="#{url_for('frontend.comment', provider_id=provider.id)}", method="post")
                     input(type="hidden", name="csrf_token",  value="#{csrf_token()}")
 
