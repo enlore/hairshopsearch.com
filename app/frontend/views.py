@@ -117,6 +117,11 @@ def comment(provider_id):
         current_user.consumer.comments.append(comment)
         current_user.consumer.save()
 
+        if form.happy.data:
+            provider.happy_customers.append(current_user.consumer)
+        else:
+            provider.unhappy_customers.append(current_user.consumer)
+
         provider.comments.append(comment)
         provider.save()
 
