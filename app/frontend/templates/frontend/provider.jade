@@ -22,6 +22,11 @@ block body
         h4 #{provider.favorited_by.all() | count} consider us a favorite
         p.phone= provider.phone
 
+        -if provider.external_site
+          a(target="_blank", href="#{provider.external_site | url }") Our Website
+        -else
+          a Our Website
+
         -if current_user.consumer
           .row 
             .col-sm-12
@@ -34,15 +39,87 @@ block body
         table.table
           thead
             tr
-              th Today
+              th Hours
               th Open
               th Close
 
           tbody
+          -if d.getDay() == 0
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
             tr
               td Mon
-              td 8
-              td 9
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+          -if d.getDay() == 1
+            tr
+              td Mon
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+          -if d.getDay() == 2
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+          -if d.getDay() == 3
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+          -if d.getDay() == 4
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+          -if d.getDay() == 5
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+          -if d.getDay() == 6
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
 
         a(data-toggle="modal", data-target="#hours-modal") View More Hours
 
@@ -50,6 +127,11 @@ block body
           p #{provider.address.street_1} #{provider.address.street_2}
           p #{provider.address.city}, #{provider.address.state}
 
+
+    .row.bio
+      .col-sm-8
+        h4 About Us
+        p= provider.bio
 
     .row.paper-bg
       .col-sm-3
@@ -69,35 +151,67 @@ block body
                 p= method | capitalize
 
     .row
-      .col-sm-8
+      .col-sm-7
         .row
           .col-sm-12
             h2 Our Work
+            -unless provider.gallery.photos | count > 0
+              h4 We will be uploading photos soon.
             .row.gallery
-              -each pic in provider.gallery.photos
+              -each pic in provider.gallery.photos[0:12]
                 .col-sm-3
                   .thumb-container.small
                     img.img-responsive(src="#{pic.sm_thumb}")
         .row
           .col-sm-12
+
+            -unless current_user.consumer
+              h3 Login to leave a comment!
+            -if current_user.consumer
+              .row
+                .col-sm-12
+                  h3 Leave a comment!
+                  form.form-horizontal(action="#{url_for('frontend.comment', provider_id=provider.id)}", method="post")
+                    input(type="hidden", name="csrf_token",  value="#{csrf_token()}")
+
+                    .form-group
+                      .col-sm-9.col-sm-offset-3
+                        .btn-group(data-toggle="buttons")
+                          label.btn.btn-default
+                            input(type="radio", name="happy", value="true")
+                            | Happy
+
+                          label.btn.btn-default
+                            input(type="radio", name="happy", value="false")
+                            | Unhappy
+
+                    .form-group
+                      label.control-label.col-sm-3(for="body") Your Comment
+                      .col-sm-9
+                        textarea.form-control(name="body", rows=4)
+
+                    .form-group
+                      .col-sm-9.col-sm-offset-3
+                        button.btn.btn-cta(type="submit") Let Us Know!
+
             h2 Happy Customers
             .row
-              -if provider.favorited_by.all() | count == 0
+              -each comment in provider.comments
                 .col-sm-12
-                  h2 Be the first to make this a favorite!
 
-              -else
-                -each fav in provider.favorited_by.all()
-                  .col-sm-3
-                    a(href="")
-                      div
-                        .thumb-container.small
-                          -if fav.avatar.sm_thumb
-                            img(src="#{fav.avatar.sm_thumb}")
-                          -else
-                            img(src="http://placehold.it/250x250")
-                        p.caption #{fav.user.first_name}
-      .col-sm-4
+                  .row.comment
+                    .col-sm-2
+                      -if comment.consumer.avatar
+                        img.img-responsive(src="#{comment.consumer.avatar.sm_thumb}")
+                      -else
+                        img.img-responsive(src="http://placehold.it/125x125")
+
+                    .col-sm-10
+                      h4= comment.consumer.user.first_name
+                      p= comment.body
+
+
+      .col-sm-5
         h2 Menus
         -each menu in provider.menus
           .row

@@ -1,16 +1,21 @@
 # -*- encoding: utf-8 -*-
 from flask import (Blueprint, render_template, current_app, redirect, url_for,
-    flash, abort, jsonify)
+    flash, abort, jsonify, request)
 from flask.ext.security import login_required, roles_required, current_user
+from flask_mail import Message
 
 from ..search.forms import SearchForm
 
-from ..provider.models import Provider
+from ..provider.models import Provider, Comment
 from ..consumer.models import Consumer
 from ..models import User, Photo
 
+from ..forms import CommentForm
+
 from ..config import Config
-from ..core import db
+from ..core import db, mail
+
+import datetime
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -23,8 +28,28 @@ def favorite(provider_id):
         consumer.save()
         return redirect(url_for('.provider_url', provider_url=provider.business_url))
 
-@frontend.route('/contact-us')
+@frontend.route('/contact-us', methods=['GET', 'POST'])
 def contact_us():
+    if request.method == 'POST':
+        if request.form['honeypot']:
+            # if we've got a bot on our hands, just redirect to the contact page
+            current_app.logger.info('it\'s a trap')
+            current_app.logger.info(request.host)
+            return redirect(url_for('.contact_us'))
+
+        # otherwise, process the form
+        current_app.logger.info(request.form)
+
+        body = "{}\n{}\n{}\n".format(request.form['name'],
+                request.form['message'],
+                request.form['number'])
+
+        msg = Message('FORM',
+                body=body,
+                sender="hss-app", recipients=["oneofy@gmail.com"])
+
+        mail.send(msg)
+
     return render_template('frontend/contact-us.jade')
 
 @frontend.route('/about-us')
@@ -64,10 +89,43 @@ def add_to_favorites(photo_id):
 @frontend.route('/<provider_url>')
 def provider_url(provider_url):
     p = Provider.query.filter(Provider._business_url==provider_url.lower()).first()
+
+    # TODO wtf
+    class d:
+        def getDay(self):
+            return datetime.date.today().isoweekday() 
+    d = d() 
+
     if p:
-        return render_template('frontend/provider.jade', provider=p)
+        return render_template('frontend/provider.jade', provider=p, d=d)
     else:
         abort(404)
+
+@frontend.route('/<provider_id>/comment', methods=['POST'])
+def comment(provider_id):
+    provider = Provider.get(provider_id)
+
+    form = CommentForm()
+
+    if not form.validate_on_submit():
+        if form.errors:
+            flash(form.errors)
+            current_app.logger.info(errors)
+    else:
+        comment = Comment(body=form.body.data)
+
+        current_user.consumer.comments.append(comment)
+        current_user.consumer.save()
+
+        if form.happy.data:
+            provider.happy_customers.append(current_user.consumer)
+        else:
+            provider.unhappy_customers.append(current_user.consumer)
+
+        provider.comments.append(comment)
+        provider.save()
+
+        return redirect(url_for('.provider_url', provider_url=provider.business_url))
 
 @frontend.route('/consumer/<consumer_url>')
 def consumer_url(consumer_url):

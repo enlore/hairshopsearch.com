@@ -55,6 +55,7 @@ class Consumer(db.Model, ConsumerSerializer):
     avatar              = db.relationship('Photo', uselist=False)
     hair_status         = db.Column(db.Text)
     hair_journey        = db.Column(db.Text)
+    comments            = db.relationship('Comment', backref='consumer')
     hair_routine        = db.relationship('HairRoutine', backref= 'consumer',
                             uselist=False)
 

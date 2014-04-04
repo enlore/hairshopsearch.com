@@ -15,10 +15,12 @@ def searched_out_objects(ids):
 
     return objects
 
-@search.route('/test')
-def _search_test():
-    p = Provider.query.first()
-    return render_template('search/serp.html', providers=[p])
+@search.route('/test', defaults={'page': 1})
+@search.route('/test/page/<int:page>')
+def test(page):
+    # 10 per page
+    paged_providers = Provider.query.paginate(page, 10)
+    return render_template('search/serp.html', providers=paged_providers)
 
 @search.route('/', methods=['POST'])
 def _search():
@@ -60,7 +62,7 @@ def _search():
                     }, # /query
                     "filter": {
                         "geo_distance": {
-                            "distance": "100mi",
+                            "distance": "15mi",
                             "location": {
                                 "lat": lat,
                                 "lon": lon

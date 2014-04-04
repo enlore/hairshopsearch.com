@@ -10,6 +10,10 @@ class TestForm(Form):
     submit      = SubmitField()
 
 
+class CommentForm(Form):
+    body        = TextAreaField('Comment')
+
+
 class FileUploadForm(Form):
     up_file     = FileField(u'Upload a File')
     submit      = SubmitField(u'Save Photo')
@@ -136,6 +140,7 @@ class HoursForm(Form):
 class ProviderDashForm(Form):
     avatar          = TextField('Avatar')
     business_name   = TextField('Business Name')
+    external_site   = TextField('External Site')
     phone           = TextField('Phone Number')
     email           = TextField('Business Email')
 
@@ -143,7 +148,7 @@ class ProviderDashForm(Form):
                             widget=multi_checkboxes,
                             choices=payment_methods)
 
-    bio             = TextField('About Us')
+    bio             = TextAreaField('About Us')
     fb_url          = TextField('Facebook Page')
     twitter_url     = TextField('Twitter')
 

@@ -304,31 +304,34 @@ def profile():
     if current_user.provider:
         provider = current_user.provider
 
-        form = ProviderDashForm()
+        provider_dash_form = ProviderDashForm()
         menu_form = MenuItemForm()
 
-        if not form.validate_on_submit():
-            if form.errors:
+        if not provider_dash_form.validate_on_submit():
+            if provider_dash_form.errors:
                 flash(form.errors, 'error')
 
         else:
-            provider.business_name  = form.business_name.data
-            provider.email          = form.email.data
-            provider.phone          = form.phone.data
+            provider.business_name  = provider_dash_form.business_name.data
+            provider.external_site  = provider_dash_form.external_site.data
+            provider.email          = provider_dash_form.email.data
+            provider.phone          = provider_dash_form.phone.data
 
-            provider.payment_methods = ' '.join(form.payment_methods.data)
+            provider.payment_methods = ' '.join(provider_dash_form.payment_methods.data)
 
-            provider.bio            = form.bio.data
+            provider.bio            = provider_dash_form.bio.data
 
             provider.save()
 
             return redirect(url_for('dashboard.profile'))
 
 
-        form.email.data           = provider.email
-        form.business_name.data   = provider.business_name
-        form.phone.data           = provider.phone
-        form.payment_methods.data = provider.payment_methods
+        provider_dash_form.email.data           = provider.email
+        provider_dash_form.business_name.data   = provider.business_name
+        provider_dash_form.external_site.data   = provider.external_site
+        provider_dash_form.phone.data           = provider.phone
+        provider_dash_form.payment_methods.data = provider.payment_methods
+        provider_dash_form.bio.data             = provider.bio
 
         address_form = AddressForm(obj=provider.address)
         hours_form = HoursForm(obj=provider.hours)
@@ -338,7 +341,7 @@ def profile():
 
         return render_template('dashboard/provider.html',
                 provider=current_user.provider,
-                form=form,
+                provider_dash_form=provider_dash_form,
                 hours_form=hours_form,
                 menu_form=menu_form,
                 address_form=address_form,

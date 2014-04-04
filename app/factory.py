@@ -34,6 +34,12 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
             template_folder='templates'
             )
 
+    @pyjade.register_filter('url')
+    def url(url):
+        if url.startswith('http://'):
+            return url
+        return 'http://' + url
+
     @pyjade.register_filter('cash')
     def pretty_cash(amount):
         return locale.currency(amount)
@@ -44,6 +50,7 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
 
     app.jinja_env.filters['cash'] = pretty_cash
     app.jinja_env.filters['ellipsize'] = ellipsize
+    app.jinja_env.filters['url'] = url
 
     app.jinja_env.globals['search_form'] = SearchForm
 
