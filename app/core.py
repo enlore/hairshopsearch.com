@@ -1,3 +1,5 @@
+import config
+
 from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
@@ -9,7 +11,7 @@ from flask.ext.mail import Mail
 mail = Mail()
 
 from pyelasticsearch import ElasticSearch
-es = ElasticSearch('http://localhost:9200')
+es = ElasticSearch(config.ELASTICSEARCH_SERVER)
 
 from flask_security import Security
 sec = Security()

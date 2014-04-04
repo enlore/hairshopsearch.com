@@ -11,8 +11,6 @@ from ..consumer.models import Consumer
 from ..models import User, Photo
 
 from ..forms import CommentForm
-
-from ..config import Config
 from ..core import db, mail
 
 import datetime

@@ -1,10 +1,10 @@
-from ..config import Config
+import app.config
 from pyelasticsearch import ElasticSearch
 from ..helpers import JSONEncoder
 from .mappings import MAPPINGS
+from ..core import es
 
 # need mappings storage
-es = ElasticSearch(Config.ELASTICSEARCH_SERVER)
 es.json_encoder = JSONEncoder
 
 def index_one(entity, id):

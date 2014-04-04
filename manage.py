@@ -9,7 +9,7 @@ from app.consumer.models import Consumer
 from app.models import Gallery, Photo
 from app.helpers import JSONEncoder, acceptable_url_string
 from app.indexer import indexer
-from app.config import Config
+import app.config
 from pprint import pprint
 
 import csv

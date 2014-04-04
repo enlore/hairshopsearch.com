@@ -3,7 +3,6 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security
 from flask.ext.funnel import Funnel
 from flask_wtf import CsrfProtect
-from .config import Config
 from .core import db, sec, mail, HSSError
 from .helpers import ellipsize
 from .search.forms import SearchForm
@@ -77,7 +76,9 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
     return app
 
 def _config_app(app, config):
-    app.config.from_object(Config)
+    # from_object('app.config')
+    # from_envvar('')
+    app.config.from_object('app.config')
 
     if config and type(config) == dict:
         for key, val in config.items():
