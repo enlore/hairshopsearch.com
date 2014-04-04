@@ -306,3 +306,4 @@ class Comment(db.Model):
     consumer_id     = db.Column(db.Integer, db.ForeignKey('consumer.id'))
     body            = db.Column(db.Text)
     date            = db.Column(db.Date)
+    happy           = db.Column(db.Boolean)

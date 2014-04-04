@@ -155,6 +155,8 @@ block body
         .row
           .col-sm-12
             h2 Our Work
+            -unless provider.gallery.photos | count > 0
+              h4 We will be uploading photos soon.
             .row.gallery
               -each pic in provider.gallery.photos[0:12]
                 .col-sm-3
@@ -162,7 +164,6 @@ block body
                     img.img-responsive(src="#{pic.sm_thumb}")
         .row
           .col-sm-12
-            h2 Happy Customers
 
             -unless current_user.consumer
               h3 Login to leave a comment!
@@ -193,6 +194,7 @@ block body
                       .col-sm-9.col-sm-offset-3
                         button.btn.btn-cta(type="submit") Let Us Know!
 
+            h2 Happy Customers
             .row
               -each comment in provider.comments
                 .col-sm-12

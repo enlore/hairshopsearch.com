@@ -61,7 +61,11 @@
 
                                         <div class="favs">
                                             <span class="glyphicon glyphicon-star"></span>
-                                            <span> 15 </span>
+                                            {% if provider.favorited_by %}
+                                                <span> {{ provider.favorited_by.all() | count }} </span>
+                                            {% else %}
+                                                <span> 0 </span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
