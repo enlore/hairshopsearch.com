@@ -46,27 +46,12 @@ def populate_db():
 
     p.gallery = Gallery()
 
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
-    p.gallery.photos.append(Photo(url="http://placehold.it/600x900", sm_thumb="http://placehold.it/450x450", lg_thumb="http://placehold.it/550x550"))
+    for num in range(1, 40):
+        p.gallery.photos.append(Photo(
+            url="http://placehold.it/600x900&text={}".format(num),
+            sm_thumb="http://placehold.it/450x450&text={}".format(num),
+            lg_thumb="http://placehold.it/550x550&text={}".format(num))
+            )
     p.save()
     p.index()
 
