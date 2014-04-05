@@ -17,34 +17,18 @@
                             </div>
                         </div>
 
+                    {% if pagination_links %}
                     <div class="pagination">
                         <ul>
-                            {% if providers.has_prev %}
-                                <li><a href="{{ url_for('search.test', page=providers.prev_num) }}">&lt;</a></li>
-                            {% endif %}
-
-                            {% for num in providers.iter_pages() %}
-                                {% if num %}
-                                    {% if num != providers.page %}
-                                        <li><a href="{{ url_for('search.test', page=num) }}"> {{ num }}</a></li> 
-                                    {% else %}
-                                        <li>
-                                            {{ num }}
-                                        </li>
-                                    {% endif %}
-                                    {% else %}
-                                    <li> ... </li>
-                                {% endif %}
+                            {% for link in pagination_links %}
+                                <li><a href="{{ link['url'] }}">{{ link['page_number'] }}</a></li>
                             {% endfor %}
-
-                            {% if providers.has_next %}
-                                <li><a href="{{ url_for('search.test', page=providers.next_num) }}">&gt;</a></li>
-                            {% endif %}
                         </ul>
                     </div>
+                    {% endif %}
 
-                        {% if providers %}
-                        {% for provider in providers.items %}
+                    {% if providers %}
+                        {% for provider in providers %}
                             <div class="row serp-box">
                                 <div class="col-xs-3">
                                     <img class="img-responsive serp-img" src="http://placehold.it/100x100" />
@@ -71,7 +55,7 @@
                                 </div>
                             </div><!-- /.serp-box /.row -->
                         {% endfor %}
-                        {% endif %}
+                    {% endif %}
                     </div>
                 </div>
 
