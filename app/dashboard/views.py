@@ -575,5 +575,5 @@ def new_consumer():
 @dashboard.route('/gallery/page/<int:page>')
 def gallery(page):
     provider = current_user.provider
-    photos = provider.gallery.photos.paginate(page, 10)
+    photos = provider.gallery.photos.paginate(page, 12)
     return render_template('dashboard/gallery.jade', photos=photos)

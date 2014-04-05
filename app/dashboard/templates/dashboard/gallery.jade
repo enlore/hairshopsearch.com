@@ -1,16 +1,21 @@
 extends layouts/base.html
+{% from 'includes/pagination.jade' import pagination %}
+
 block body
   .dashboard-gallery.container
     h1 Gallery innit
 
     -if photos
       .gallery
-        {% from 'includes/pagination.jade' import pagination %}
         +pagination(photos)
 
         .links
           -each photo in photos.items
-            a(href="#{photo.url}", data-gallery)
-              img(src="#{photo.sm_thumb}")
+            .col-sm-4
+              .thumb-container.large
+                a(href="#{photo.url}", data-gallery)
+                  img(src="#{photo.lg_thumb}")
 
-    include includes/blueimp-gallery.jade
+        +pagination(photos)
+
+  include includes/blueimp-gallery.jade
