@@ -102,9 +102,6 @@ def save_avatar():
 def save_photo():
     entity = current_user.provider or current_user.consumer
 
-    if not entity.gallery:
-        entity.gallery = Gallery()
-
     form = FileUploadForm()
 
     if form.validate_on_submit():
@@ -242,7 +239,7 @@ def save_consumer_avatar():
         return redirect(url_for('dashboard.profile'))
 
 
-@dashboard.route('/profile', methods=['GET', 'POST'])
+@dashboard.route('/', methods=['GET', 'POST'])
 @login_required
 def profile():
     rm_menu_item_form = RemoveItemForm()
