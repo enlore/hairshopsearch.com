@@ -222,31 +222,24 @@
         <div class="gallery">
             <div class="row">
                 <div class="col-sm-12">
-                    <h2> Gallery </h2> 
+                    <h2> Gallery </h2>
+                    <a href="{{ url_for('dashboard.gallery') }}">See the rest</a>
                 </div>
             </div><!-- /.row-->
 
             <div class="row">
-                {% set count = 0 %}
-                {% for photo in provider.gallery.photos %}
-                    {% set count = count + 1 %}
-                    <div class="col-xs-6 col-sm-3">
-                        <div class="thumb-container small overlay">
-                            <div class="thumb-controls">
-                                <a class="del-button" href="{{ url_for('dashboard.delete_photo', id=photo.id) }}">Delete</a>
-                            </div>
-
-                            <a href="{{ photo.url }}">
-                                <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
-                            </a>
+                {% for photo in provider.gallery.photos[0:8] %}
+                <div class="col-sm-3">
+                    <div class="thumb-container small overlay">
+                        <div class="thumb-controls">
+                            <a class="del-button" href="{{ url_for('dashboard.delete_photo', id=photo.id) }}">Delete</a>
                         </div>
-                    </div>
-                    {% if count == 4 %}
-            </div><!-- /.row -->
 
-            <div class="row">
-                        {% set count = 0 %}
-                    {% endif %}
+                        <a href="{{ photo.url }}">
+                            <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
+                        </a>
+                    </div>
+                </div>
                 {% endfor %}
             </div><!-- /.row -->
 
