@@ -54,6 +54,12 @@ class Photo(db.Model):
     gallery_id          = db.Column(db.Integer, db.ForeignKey('gallery.id'))
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
 
+    def __init__(self, **kwargs):
+        self.url = kwargs.get('url', '')
+        self.sm_thumb = kwargs.get('sm_thumb', '')
+        self.lg_thumb = kwargs.get('lg_thumb', '')
+
+
 class Banner(db.Model):
     id                  = db.Column(db.Integer, primary_key=True)
     url                 = db.Column(db.Text)
