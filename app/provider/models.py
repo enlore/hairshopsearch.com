@@ -173,6 +173,17 @@ class AddressSerializer(JSONSerializer):
 
 
 class Address(db.Model, AddressSerializer):
+    """ Class rep'ing a street address
+
+    :param street_1: Street address
+    :param street_2: Street address 2
+    :param apartment: Apt number
+    :param city: City
+    :param state: State (as abbrev "TN")
+    :param zip_code: Five digit zip
+
+    """
+
     id                  = db.Column(db.Integer, primary_key=True)
     provider_id         = db.Column(db.Integer, db.ForeignKey('provider.id'))
     street_1            = db.Column(db.String)
@@ -181,6 +192,14 @@ class Address(db.Model, AddressSerializer):
     city                = db.Column(db.String)
     state               = db.Column(db.String)
     zip_code            = db.Column(db.Integer)
+
+    def __init__(self, **kwargs):
+        self.street_1 		= kwargs.get('street_1', '')
+        self.street_2 		= kwargs.get('street_2', '')
+        self.apartment 		= kwargs.get('apartment', '')
+        self.city 		    = kwargs.get('city', '')
+        self.state 		    = kwargs.get('state', '')
+        self.zip_code 		= kwargs.get('zip_code', 0)
 
     def geocode(self):
         """Access the Mapquest Geocoding API to return lat and lon given
