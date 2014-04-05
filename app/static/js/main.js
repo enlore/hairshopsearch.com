@@ -1,47 +1,6 @@
 $(document).on('ready', function () {
-    /* Display today and tomorrow's hours */
-
-    days = {
-        0: 'Sunday',
-        1: 'Monday',
-        2: 'Tuesday',
-        3: 'Wednesday',
-        4: 'Thursday',
-        5: 'Friday',
-        6: 'Saturday'
-    }
-
-    dateObj = new Date()
-    console.log('Today is %s', days[dateObj.getDay()])
-
     /* Nail thumb */
     $('.thumb-container').nailthumb()
-
-
-    /* Modal gallery view */
-    var $gallery        = $('.gallery')
-        , $galleryModal = $('#gallery-modal')
-        , $galleryImg   = $('#gallery-image')
-        , $galleryNext  = $('#gallery-next')
-        , $galleryPrev  = $('#gallery-prev')
-
-    $gallery.on('click', 'img', function (e) {
-        $nextImg = $(this).parents('.col-sm-3').next().find('img')
-        $galleryNext.data('next', $nextImg.attr('src'))
-
-        $galleryPrev.data('prev', $(this).parents('.col-sm-3').prev().find('img').attr('src'))
-        $galleryImg.attr('src', $(this).attr('src'))
-
-        $galleryModal.modal()
-    })
-
-    $galleryNext.on('click', function (e) {
-        console.log(e)
-    })
-
-    $galleryPrev.on('click', function (e) {
-        console.log(e)
-    })
 
     // register form confirm password validation
     var $pwd_confirm    = $('#password_confirm')
