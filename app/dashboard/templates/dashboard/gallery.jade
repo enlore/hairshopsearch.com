@@ -6,16 +6,20 @@ block body
     h1 Gallery innit
 
     -if photos
-      .gallery
-        +pagination(photos)
+      .row
+        .col-sm-12
+          +pagination(photos)
 
+      .gallery.row
         .links
           -each photo in photos.items
             .col-sm-4
               .thumb-container.large
                 a(href="#{photo.url}", data-gallery)
-                  img(src="#{photo.lg_thumb}")
+                  img.img-responsive(src="#{photo.lg_thumb}")
 
-        +pagination(photos)
+      .row
+        .col-sm-12
+          +pagination(photos)
 
   include includes/blueimp-gallery.jade
