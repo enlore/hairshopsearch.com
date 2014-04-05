@@ -157,11 +157,12 @@ block body
             h2 Our Work
             -unless provider.gallery.photos | count > 0
               h4 We will be uploading photos soon.
-            .row.gallery
+            .row.gallery.links
               -each pic in provider.gallery.photos[0:12]
                 .col-sm-3
                   .thumb-container.small
-                    img.img-responsive(src="#{pic.sm_thumb}")
+                    a(href="#{pic.url}", data-gallery)
+                      img.img-responsive(src="#{pic.sm_thumb}")
         .row
           .col-sm-12
 
@@ -283,13 +284,29 @@ block body
 
         .modal-footer
 
-  #gallery-modal.modal.fade
-    .modal-dialog
-      .modal-content
-        .modal-header
-          h2.modal-title
-        .modal-body
-          img#gallery-image(src="", title="")
-        .modal-footer
-          button#gallery-next.btn.btn-default(type="button", data-next="") Next
-          button#gallery-prev.btn.btn-default(type="button", data-prev="") Prev
+  #blueimp-gallery.blueimp-gallery
+    .slides
+    h3.title
+    a.prev
+    a.next
+    a.close
+    a.play-pause
+    ol.indicator
+
+    .modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type="button", aria-hidden="true") &times;
+            h4.modal-title
+
+          .modal-body.next
+
+          .modal-footer
+            button.btn.btn-default.pull-left.prev(type="button")
+              i.glyphicon.glyphicon-chevron-left
+              Prev
+            button.btn.btn-primary.next(type="button")
+              i.glyphicon.glyphicon-chevron-right
+              Next
+
