@@ -1,34 +1,16 @@
 extends layouts/base.html
 block body
   .dashboard-gallery.container
-  h1 Gallery innit
-  -if photos
-    .gallery
-      ul.gallery-pages.pagination
-        -if photos.has_prev
-          li
-            a(href="#{url_for('dashboard.gallery', page=photos.prev_num)}")
-              span.glyphicon.glyphicon-chevron-left
+    h1 Gallery innit
 
-        -each num in photos.iter_pages()
-          -if num
-            -if num == photos.page
-              li
-                strong= num
-            -else
-              li
-                a(href="#{url_for('dashboard.gallery', page=num)}")= num
-          -else
-            ...
+    -if photos
+      .gallery
+        {% from 'includes/pagination.jade' import pagination %}
+        +pagination(photos)
 
-        -if photos.has_next
-          li
-            a(href="#{url_for('dashboard.gallery', page=photos.next_num)}")
-              span.glyphicon.glyphicon-chevron-right
+        .links
+          -each photo in photos.items
+            a(href="#{photo.url}", data-gallery)
+              img(src="#{photo.sm_thumb}")
 
-      .links
-        -each photo in photos.items
-          a(href="#{photo.url}", data-gallery)
-            img(src="#{photo.sm_thumb}")
-
-  include includes/blueimp-gallery.jade
+    include includes/blueimp-gallery.jade
