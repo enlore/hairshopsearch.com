@@ -571,7 +571,6 @@ def new_consumer():
         return redirect(url_for('dashboard.profile'))
     return render_template('dashboard/new_consumer.html', form=form)
 
-@dashboard.route('/gallery', defaults={'page': 2})
 @dashboard.route('/gallery/page/<int:page>')
 def gallery(page):
     provider = current_user.provider
