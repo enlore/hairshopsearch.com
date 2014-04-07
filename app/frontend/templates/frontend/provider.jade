@@ -140,7 +140,7 @@ block body
         ul.payment-methods
           -if provider.payment_methods == ''
             li
-              p Nothing? 
+              p Nothing?
               p.
                 This provider probably wants to take your money, but they need to list a payment
                 method to do it!
@@ -155,7 +155,7 @@ block body
         .row
           .col-sm-12
             h2 Our Work
-            -unless provider.gallery.photos | count > 0
+            -unless provider.gallery.photos.all() | count > 0
               h4 We will be uploading photos soon.
             .row.gallery.links
               -each pic in provider.gallery.photos[0:12]
