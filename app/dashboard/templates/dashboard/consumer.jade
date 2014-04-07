@@ -115,6 +115,11 @@ block body
                   = hair_routine_form.fav_style(class_="form-control")
 
               .form-group
+                = hair_routine_form.fav_products.label(class_="control-label col-sm-4")
+                .col-sm-8
+                  = hair_routine_form.fav_products(class_="form-control")
+
+              .form-group
                 = hair_routine_form.shampoo_type.label(class_="control-label col-sm-4")
                 .col-sm-8
                   = hair_routine_form.shampoo_type(class_="form-control")

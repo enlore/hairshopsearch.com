@@ -31,16 +31,19 @@ block body
           .col-sm-12
             h3 My Hair Consultation:
             p= consumer.hair_routine.hair_condition
+            p= consumer.hair_routine.scalp_condition
             p= consumer.hair_routine.chemical_treat
             p= consumer.hair_routine.last_treatment
             p= consumer.hair_routine.fav_style
+            p= consumer.hair_routine.fav_products
             p= consumer.hair_routine.shampoo_style
             p= consumer.hair_routine.shampoo_frequency
-            p= consumer.hair_routine.scalp_condition
+            p= consumer.hair_routine.conditioner_style
+            p= consumer.hair_routine.condition_frequency
             p= consumer.hair_routine.last_trim
 
         .row
           .col-sm-12
             h3 My Favorite HairShops:
             -each fav in consumer.favorites
-              fav.business_name 
+              fav.business_name

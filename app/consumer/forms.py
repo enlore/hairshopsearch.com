@@ -107,6 +107,8 @@ class HairRoutineForm(Form):
 
     fav_style           = TextField('What is your favorite cut or style?')
 
+    fav_products        = TextField('Name up to five (5) of your favorite hair and scalp products? (Separate products with a comma[,])')
+
     shampoo_type        = TextField('What shampoo do you use?')
     shampoo_frequency   = SelectField('How often do you shampoo your hair?',
                         choices=maintenance_freq)
