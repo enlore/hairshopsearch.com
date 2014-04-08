@@ -80,7 +80,7 @@ html.no-js
 
             #secondary-collapse.collapse.navbar-collapse
               form.navbar-form(action="#{ url_for('search._search') }", method="get", role="form")
-                = csrf_token
+                input(type="hidden", value="#{ csrf_token() }")
                 .form-group
                   label.sr-only(for="menu_type") Service Type
                   select#menu_type.form-control(name="menu_type")
