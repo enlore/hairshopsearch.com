@@ -1,4 +1,4 @@
-extends layouts/base.html
+extends layouts/base.jade
 block body
   .provider.dashboard.container
     .row
@@ -155,7 +155,7 @@ block body
         .row
           .col-sm-12
             h2 Our Work
-            -unless provider.gallery.photos | count > 0
+            -unless provider.gallery.photos.all() | count > 0
               h4 We will be uploading photos soon.
             .row.gallery.links
               -each pic in provider.gallery.photos[0:12]
