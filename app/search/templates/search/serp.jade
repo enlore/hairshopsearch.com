@@ -22,14 +22,13 @@ block body
                 -each provider in providers
                   .row.serp-box
                     .col-xs-3
-                      img.img-responsive.serp-img(src="")
+                      img.img-responsive.serp-img(src="http://placehold.it/65x65")
 
                     .col-xs-9
                       .serp-format
                         h2
                           a(href="")
-                        p.
-                          = provider.address.street_1 provider.address.city, p.address.state p.address.zip_code
+                            p #{provider.address.street_1}#{ provider.address.city}, #{provider.address.state} #{provider.address.zip_code}
 
                         .favs
                           span.glyphicon.glyphicon-star
