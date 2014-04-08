@@ -22,7 +22,7 @@ def searched_out_objects(ids):
 def test(page):
     # 10 per page
     paged_providers = Provider.query.paginate(page, 10)
-    return render_template('search/serp.html', providers=paged_providers)
+    return render_template('search/serp.jade', providers=paged_providers)
 
 @search.route('/', defaults={'page': 1}, methods=['POST', 'GET'])
 @search.route('/page/<int:page>', methods=['POST', 'GET'])
@@ -107,14 +107,14 @@ def _search(page):
 
         providers = searched_out_objects(ids)
 
-        return render_template('search/serp.html', providers=providers, pagination_links=pagination_links)
+        return render_template('search/serp.jade', providers=providers, pagination_links=pagination_links)
 
     else:
         current_app.logger.info('No results found!')
         flash('No results found!', 'error')
         current_app.logger.info('2nd')
-        return render_template('search/serp.html')
+        return render_template('search/serp.jade')
 
     # TODO flash errors and get them rendered
     current_app.logger.info('last')
-    return render_template('search/serp.html')
+    return render_template('search/serp.jade')
