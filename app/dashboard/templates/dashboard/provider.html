@@ -69,7 +69,7 @@
     {% if provider_dash_form %}
     <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
         {{ provider_dash_form.csrf_token() }}
-        <h2> General Inprovider_dash_formation </h2>
+        <h2> General Information </h2>
 
 
         {{ render_field(provider_dash_form.business_name) }}
