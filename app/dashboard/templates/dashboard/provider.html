@@ -30,9 +30,7 @@
                     <img src="http://placehold.it/200x225">
                     {% endif %}
                 </div>
-            </div>
 
-            <div class="col-sm-9">
                 <form method="POST" action="{{ url_for('dashboard.save_avatar') }}" class="form-horizontal" enctype="multipart/form-data">
                     {{ avatar_upload_form.csrf_token() }}
                     {{ render_field(avatar_upload_form.up_file) }}
@@ -43,10 +41,16 @@
                     </div>
                 </form>
             </div>
-        </div><!-- /.row -->
 
-        <div class="row">
-            <div class="col-sm-9 col-sm-offset-3">
+            <div class="col-sm-9">
+                <div class="thumb container large">
+                    {% if provider.banner %}
+                        <img src="{{ provider.banner.url }}">
+                     {% else %}
+                        <img src="http://placehold.it/800x300">
+                    {% endif %}
+                </div>
+
                 <form class="form-horizontal" action="{{ url_for('dashboard.save_banner') }}" method="post" role="form" enctype="multipart/form-data">
                     {{ banner_upload_form.csrf_token() }}
                     <div class="form-group">
@@ -63,7 +67,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div><!-- /.row -->
     </div><!-- /.dash-group -->
 
     {% if provider_dash_form %}
