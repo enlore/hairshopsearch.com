@@ -399,8 +399,10 @@ def save_provider_address():
     address_form = AddressForm()
     if not address_form.validate_on_submit():
         if address_form.errors:
-            flash(form.errors, 'error')
-            current_app.logger.info(form.errors)
+            flash(address_form.errors, 'error')
+            current_app.logger.info(address_form.errors)
+        
+        return redirect(url_for('.new_address'))
 
     else:
         provider.address.street_1   = address_form.street_1.data

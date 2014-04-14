@@ -111,9 +111,9 @@ class AddressForm(Form):
     street_1        = TextField('Street')
     street_2        = TextField('Street 2')
     apartment       = TextField('Number')
-    city            = TextField('City')
-    state           = TextField('State')
-    zip_code        = TextField('Zip')
+    city            = TextField('City', [Required('Please enter your city')])
+    state           = TextField('State', [Required('Please provide your state')])
+    zip_code        = TextField('Zip', [Required('Please tell us your zip code')])
 
     submit          = SubmitField('Save Changes')
 
