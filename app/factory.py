@@ -61,11 +61,11 @@ def _create_app(pkg_name, pkg_path, instance_path, config):
 
     @app.errorhandler(403)
     def four_oh_three(msg):
-        return render_template('errors/403.html')
+        return render_template('errors/403.jade')
 
     @app.errorhandler(404)
     def four_oh_four(msg):
-        return render_template('errors/404.html')
+        return render_template('errors/404.jade')
 
     _config_app(app, config)
     _register_extensions(app)
