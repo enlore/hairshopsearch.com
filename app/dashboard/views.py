@@ -571,7 +571,7 @@ def new_consumer():
         db.session.add(consumer)
         db.session.commit()
         return redirect(url_for('dashboard.profile'))
-    return render_template('dashboard/new_consumer.html', form=form)
+    return render_template('dashboard/new_consumer.jade', form=form)
 
 @dashboard.route('/gallery/page/<int:page>')
 def gallery(page):
