@@ -82,8 +82,10 @@
         {{ render_field(provider_dash_form.email) }}
         {{ render_field(provider_dash_form.bio) }}
 
-        <h2> Payment Methods </h2>
-        {{ render_field(provider_dash_form.payment_methods) }}
+        <div class="payment-methods">
+            <h2> Payment Methods </h2>
+            {{ render_field(provider_dash_form.payment_methods) }}
+        </div>
 
         <div class="row">
             <div class="col-sm-2 col-sm-offset-4">
