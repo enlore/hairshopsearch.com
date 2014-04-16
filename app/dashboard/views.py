@@ -336,7 +336,7 @@ def profile():
         avatar_upload_form = FileUploadForm()
         banner_upload_form = FileUploadForm()
 
-        return render_template('dashboard/provider.html',
+        return render_template('dashboard/provider.jade',
                 provider=current_user.provider,
                 provider_dash_form=provider_dash_form,
                 hours_form=hours_form,
