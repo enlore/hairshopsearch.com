@@ -18,7 +18,7 @@ block body
             -else
               img.img-responsive(src="http://placehold.it/450x450&text=Avatar")
 
-          form.upload-avatar(action="", method="post")
+          form.upload-avatar(action="", method="post", enctype="multipart/form-data")
             input(type="hidden", value="#{csrf_token()}")
             .form-group
               = avatar_upload_form.up_file.label()
@@ -35,7 +35,7 @@ block body
               img.img-responsive(src="http://placehold.it/800x300")
 
 
-          form(action="", method="post")
+          form(action="", method="post", enctype="multipart/form-data")
             input(type="hidden", value="#{csrf_token()}")
             .form-group.row
               .col-sm-6
