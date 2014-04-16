@@ -235,7 +235,20 @@ block body
       .row.dash-group
         .col-sm-12
           h2 Your Gallery
-          a(href="#{url_for('dashboard.gallery', page='1')}") See the rest
+            span.label.label-cta.label-gallery
+              a(href="#{url_for('dashboard.gallery', page='1')}") See the rest
+
+          .row
+            .col-sm-4
+              form(enctype="multipart/form-data", action="", method="")
+                input(type="hidden", value="#{csrf_token()}")
+
+                .form-group
+                  = gallery_upload_form.up_file.label(class_="control-label")
+                  = gallery_upload_form.up_file(class_="form-control")
+
+                .form-group
+                  = gallery_upload_form.submit(class_="btn btn-cta")
 
           .row
             -if provider.gallery.photos.count() == 0
