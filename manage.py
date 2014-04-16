@@ -9,12 +9,14 @@ from app.consumer.models import Consumer
 from app.models import Gallery, Photo
 from app.helpers import JSONEncoder, acceptable_url_string
 from app.indexer import indexer
-import app.config
-from pprint import pprint
 
+import app.config
+
+import os
 import csv
 import random
 import datetime
+from pprint import pprint
 
 m = Manager(create_app)
 
@@ -187,9 +189,11 @@ def _make_context():
             es=indexer.es
             )
 
+port = os.environ.get('PORT', '3000')
+host = os.environ.get('HOST', '127.0.0.1')
 m.add_option('-c', '--config', dest='config', required=False)
 m.add_option('-i', '--instance', dest='instance_path', required=False)
-m.add_command('run', Server(port='3000', host='192.168.1.148'))
+m.add_command('run', Server(port=port, host=host))
 m.add_command('shell', Shell(make_context=_make_context))
 
 

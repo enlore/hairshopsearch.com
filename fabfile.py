@@ -6,6 +6,11 @@ project = 'hairshopsearch'
 env.user = 'no'
 env.hosts = ['demo.hairshopsearch.com']
 
+# the manage script provides the defaults
+# these are just used to pass the envars called on the fabric invocation
+run_host = os.environ.get('HOST', '127.0.0.1')
+run_port = os.environ.get('PORT', 3000)
+
 def map():
     local("python manage.py dump_url_map | column -t -s '()'")
 
@@ -32,13 +37,13 @@ def d(filename):
 
     rebuild_index(filename)
     instance = os.path.join(os.getcwd(), 'instance')
-    local('python manage.py -i {} run'.format(instance))
+    local('HOST={} PORT={} python manage.py -i {} run'.format(run_host, run_port, instance))
 
 def r():
     """Run app as is"""
 
     instance = os.path.join(os.getcwd(), 'instance')
-    local('python manage.py -i {} run'.format(instance))
+    local('HOST={} PORT={} python manage.py -i {} run'.format(run_host, run_port, instance))
 
 def sh():
     """Gimme that fancy shell
