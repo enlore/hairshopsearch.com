@@ -6,6 +6,7 @@ from ..indexer.indexer import index_one, update_doc
 
 import requests
 import datetime
+import time
 
 class ProviderSerializer(JSONSerializer):
     __json_hidden__ = [
@@ -345,7 +346,8 @@ class Location(db.Model, LocationSerializer):
 class Comment(db.Model):
     def __init__(self, body):
         self.body = body
-        self.date = datetime.date()
+        self.timestamp = time.time()
+        self.date = datetime.datetime.fromtimestamp(self.timestamp)
 
 
     id              = db.Column(db.Integer, primary_key=True)
