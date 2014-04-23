@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField, SelectMultipleField, DecimalField
+from wtforms import TextField, TextAreaField, FileField, SelectField, SubmitField, SelectMultipleField, DecimalField, BooleanField
 from wtforms.validators import Required
 
 from markupsafe import Markup
@@ -12,6 +12,7 @@ class TestForm(Form):
 
 class CommentForm(Form):
     body        = TextAreaField('Comment')
+    happy       = BooleanField()
 
 
 class FileUploadForm(Form):
