@@ -35,8 +35,9 @@ SECURITY_PASSWORD_HASH = 'bcrypt'
 SECURITY_PASSWORD_SALT = 'salty'
 SECURITY_RECOVERABLE = True
 SECURITY_CHANGEABLE = True
-SECURITY_POST_LOGIN_VIEW = '/profile'
-SECURITY_POST_REGISTER_VIEW = '/welcome'
+SECURITY_POST_LOGIN_VIEW = '/dashboard'
+SECURITY_POST_REGISTER_VIEW = '/login'
+SECURITY_POST_CONFIRM_VIEW = '/welcome'
 
 MAIL_LOGGING = True
 MAIL_LOG_FROM = ['HSS_APP_ERROR@hairshopsearch.com']
@@ -56,7 +57,7 @@ CSS_BUNDLES = {
 
 JS_BUNDLES = {
         'js': (
-            'js/main.js',
+            'js/main.js'
         ),
 
         'mod': ()
