@@ -194,12 +194,12 @@ class Address(db.Model, AddressSerializer):
     zip_code            = db.Column(db.Integer)
 
     def __init__(self, **kwargs):
-        self.street_1 		= kwargs.get('street_1', '')
-        self.street_2 		= kwargs.get('street_2', '')
-        self.apartment 		= kwargs.get('apartment', '')
-        self.city 		    = kwargs.get('city', '')
-        self.state 		    = kwargs.get('state', '')
-        self.zip_code 		= kwargs.get('zip_code', 0)
+        self.street_1       = kwargs.get('street_1', '')
+        self.street_2       = kwargs.get('street_2', '')
+        self.apartment      = kwargs.get('apartment', '')
+        self.city           = kwargs.get('city', '')
+        self.state          = kwargs.get('state', '')
+        self.zip_code       = kwargs.get('zip_code', 0)
 
     def geocode(self):
         """Access the Mapquest Geocoding API to return lat and lon given
@@ -284,20 +284,48 @@ class Hours(db.Model, HoursSerializer):
     id                      = db.Column(db.Integer, primary_key=True)
     provider_id             = db.Column(db.Integer,
                                 db.ForeignKey('provider.id'))
-    monday_open             = db.Column(db.String)
-    monday_close            = db.Column(db.String)
-    tuesday_open            = db.Column(db.String)
-    tuesday_close           = db.Column(db.String)
-    wednesday_open          = db.Column(db.String)
-    wednesday_close         = db.Column(db.String)
-    thursday_open           = db.Column(db.String)
-    thursday_close          = db.Column(db.String)
-    friday_open             = db.Column(db.String)
-    friday_close            = db.Column(db.String)
-    saturday_open           = db.Column(db.String)
-    saturday_close          = db.Column(db.String)
-    sunday_open             = db.Column(db.String)
-    sunday_close            = db.Column(db.String)
+    monday_open             = db.Column(db.String, default="Closed")
+    monday_close            = db.Column(db.String, default="Closed")
+    tuesday_open            = db.Column(db.String, default="Closed")
+    tuesday_close           = db.Column(db.String, default="Closed")
+    wednesday_open          = db.Column(db.String, default="Closed")
+    wednesday_close         = db.Column(db.String, default="Closed")
+    thursday_open           = db.Column(db.String, default="Closed")
+    thursday_close          = db.Column(db.String, default="Closed")
+    friday_open             = db.Column(db.String, default="Closed")
+    friday_close            = db.Column(db.String, default="Closed")
+    saturday_open           = db.Column(db.String, default="Closed")
+    saturday_close          = db.Column(db.String, default="Closed")
+    sunday_open             = db.Column(db.String, default="Closed")
+    sunday_close            = db.Column(db.String, default="Closed")
+
+    def __init__(self, **kwargs):
+        self.monday_open             = kwargs.get("monday_open","Closed")
+        self.monday_close            = kwargs.get("monday_close", "Closed")
+        self.tuesday_open            = kwargs.get("tuesday_open", "Closed")
+        self.tuesday_close           = kwargs.get("tuesday_close", "Closed")
+        self.wednesday_open          = kwargs.get("wednesday_open", "Closed")
+        self.wednesday_close         = kwargs.get("wednesday_close", "Closed")
+        self.thursday_open           = kwargs.get("thursday_open", "Closed")
+        self.thursday_close          = kwargs.get("thursday_close", "Closed")
+        self.friday_open             = kwargs.get("friday_open", "Closed")
+        self.friday_close            = kwargs.get("friday_close", "Closed")
+        self.saturday_open           = kwargs.get("saturday_open", "Closed")
+        self.saturday_close          = kwargs.get("saturday_close", "Closed")
+        self.sunday_open             = kwargs.get("sunday_open", "Closed")
+        self.sunday_close            = kwargs.get("sunday_close", "Closed")
+
+
+    def todays_hours(self):
+        self.daily_hours = dict()
+        self.daily_hours[1] = (self.monday_open, self.monday_close)
+        self.daily_hours[2] = (self.tuesday_open, self.tuesday_close)
+        self.daily_hours[3] = (self.wednesday_open, self.wednesday_close)
+        self.daily_hours[4] = (self.thursday_open, self.thursday_close)
+        self.daily_hours[5] = (self.friday_open, self.friday_close)
+        self.daily_hours[6] = (self.saturday_open, self.saturday_close)
+        self.daily_hours[7] = (self.sunday_open, self.sunday_close)
+        return self.daily_hours[datetime.date.today().isoweekday()]
 
 
 class LocationSerializer(JSONSerializer):
