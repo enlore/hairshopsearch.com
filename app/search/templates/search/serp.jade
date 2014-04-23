@@ -29,6 +29,7 @@ block body
                         h2
                           a(href="")
                             p #{provider.address.street_1}#{ provider.address.city}, #{provider.address.state} #{provider.address.zip_code}
+                        p Today's hours: #{provider.hours.todays_hours()[0]}
 
                         .favs
                           span.glyphicon.glyphicon-star
