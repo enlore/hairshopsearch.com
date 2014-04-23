@@ -28,6 +28,7 @@ html.no-js
 
     = css('css')
 
+    script(src="#{ url_for('static', filename='js/vendor/respond.min.js') }")
     script(src="#{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }")
 
   -if request.path == url_for('frontend.index')
