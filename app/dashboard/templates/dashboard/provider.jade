@@ -231,6 +231,23 @@ block body
               .row
                 .col-sm-12
                   a(href="#{url_for('frontend.consumer_url', consumer_url=share.consumer_url)}")= shared.user.first_name
+
+      .row.dash-group
+        .col-sm-12
+          h2 Customer Comments
+          -if provider.comments | count == 0
+            h4. 
+              Nobody's left a comment on your business yet. Let you customers
+              know that they can sing your praises!
+          -else
+            -each comment in provider.comments
+              .row
+                .col-sm-12
+                  .comment.media
+                    img.media-object.pull-left(src="http://placehold.it/65x65")
+                    .media-body
+                      h5.customer-name.media-heading= comment.consumer.user.first_name
+                      p.body= comment.body
       
       .row.dash-group
         .col-sm-12
