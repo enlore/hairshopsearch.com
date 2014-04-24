@@ -96,7 +96,7 @@ class HairRoutine(db.Model, HairRoutineSerializer):
 
     def __init__(self, **kwargs):
         self.hair_condition      = kwargs.get('hair_condition', '')
-        self.chemical_treat      = kwargs.get('chemical_treat', '')
+        self.chemical_treat      = kwargs.get('chemical_treat', False)
         self.last_treatment      = kwargs.get('last_treatment', '')
         self.fav_style           = kwargs.get('fav_style', '')
         self.shampoo_type        = kwargs.get('shampoo_type', '')
@@ -109,11 +109,11 @@ class HairRoutine(db.Model, HairRoutineSerializer):
 
     id                  = db.Column(db.Integer, primary_key=True)
     consumer_id         = db.Column(db.Integer, db.ForeignKey('consumer.id'))
-    hair_condition      = db.Column(db.String()) # text
-    chemical_treat      = db.Column(db.String()) # bool
-    last_treatment      = db.Column(db.String()) # text
-    fav_style           = db.Column(db.String()) # text
-    shampoo_type        = db.Column(db.String()) # text
+    hair_condition      = db.Column(db.Text()) # text
+    chemical_treat      = db.Column(db.Boolean()) # bool
+    last_treatment      = db.Column(db.Text()) # text
+    fav_style           = db.Column(db.Text()) # text
+    shampoo_type        = db.Column(db.Text()) # text
     shampoo_frequency   = db.Column(db.String()) # string
     conditioner_type    = db.Column(db.String()) # string
     condition_frequency = db.Column(db.String()) # string
