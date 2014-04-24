@@ -27,7 +27,7 @@ block body
                     .col-xs-9
                       .serp-format
                         h2
-                          a(href="#{provider.business_url}")
+                          a(href="/#{provider.business_url}")
                             p #{provider.address.street_1}#{ provider.address.city}, #{provider.address.state} #{provider.address.zip_code}
                         p Today's hours: #{provider.hours.todays_hours()[0]}
 
