@@ -2,7 +2,7 @@ extends layouts/base.jade
 block body
   .consumer.profile.container
     .row
-      .col-sm-4.col-sm-push-8
+      .col-sm-5.col-sm-push-7
          .thumb-container.large
            -if consumer.avatar
              img(src="#{consumer.avatar.lg_thumb}")
@@ -11,11 +11,12 @@ block body
 
          h1 #{consumer.user.first_name} #{consumer.user.last_name}
 
-      .col-sm-8.col-sm-pull-4
+      .col-sm-7.col-sm-pull-5
         .row
-          .col-sm-12
+          .col-sm-12.well
+            p Tell the world about the status of your hair...
             -if consumer.hair_status == ''
-              h2 Default
+              h2 Is lovely.
             -else
               h2= consumer.hair_status
 
@@ -29,18 +30,11 @@ block body
 
         .row
           .col-sm-12
-            h3 My Hair Consultation:
-            p= consumer.hair_routine.hair_condition
-            p= consumer.hair_routine.chemical_treat
-            p= consumer.hair_routine.last_treatment
-            p= consumer.hair_routine.fav_style
-            p= consumer.hair_routine.shampoo_style
-            p= consumer.hair_routine.shampoo_frequency
-            p= consumer.hair_routine.scalp_condition
-            p= consumer.hair_routine.last_trim
-
-        .row
-          .col-sm-12
             h3 My Favorite HairShops:
             -each fav in consumer.favorites
-              fav.business_name 
+              .row
+                .col-sm-12
+                  .fav-hairshop.media
+                    img.media-object.pull-left(src="http://placehold.it/65x65")
+                    .media-body
+                      h4.media-header= fav.business_name 
